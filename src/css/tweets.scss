@@ -1,34 +1,31 @@
 article {
-    //change flex when profile img is added
+  //change flex when profile img is added
+  display: flex;
+  flex-direction: column;
+  padding: 1em;
+
+  .user-credentials {
     display: flex;
-    flex-direction: column;
-    padding: 1em;
+    color: white;
 
-    .user-credentials {
-        display: flex;
-        color: white;
-
-        .name {
-            font-weight: 600;
-        }
-
-        .username {
-            margin-left: 1em;
-            color: lightblue;
-            opacity: 0.5;
-        }
-        
+    .name {
+      font-weight: 600;
     }
 
-    .tweet-content {
-        display: block;
-        color: white;
-
-        img {
-            width: 100%;
-            border-radius: 10px;
-        }
-
+    .username {
+      margin-left: 1em;
+      color: lightblue;
+      opacity: 0.5;
     }
+  }
 
+  .tweet-content {
+    display: block;
+    color: white;
+
+    img {
+      width: 100%;
+      border-radius: 10px;
+    }
+  }
 }
