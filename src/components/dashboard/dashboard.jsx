@@ -6,11 +6,12 @@ export default class Dashboard extends Component {
     render(){
         return (
             <section className="dashboard">
-            <div className="left-sidebar"></div>
+            <div className="left-sidebar"><h1 style={{color: "white"}}>Profile options</h1></div>
             <div className="middle">
-            <Tweet/>
+            <h1 style={{color: "white"}}>Tweet Box</h1>
+            {/* <Tweet/> */}
             </div>
-            <div className="right-sidebar"></div>
+            <div className="right-sidebar"><h1 style={{color: "white"}}>Follow box</h1></div>
             </section>
         );
     }
