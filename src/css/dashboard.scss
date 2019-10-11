@@ -16,7 +16,8 @@
   width: 60%;
   height: 100vh;
   display: flex;
-  justify-content: center;
+  flex-direction: column;
+  // justify-content: center;
   border-right: 1px solid;
   border-left: 1px solid;
   border-color: rgba(114, 173, 212, 0.3);

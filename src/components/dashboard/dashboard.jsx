@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import "../../css/dashboard.scss";
 import Tweet from "../dashboard/tweet";
+import Tweets from "../tweets";
 
 export default class Dashboard extends Component {
     render(){
@@ -10,6 +11,7 @@ export default class Dashboard extends Component {
             <div className="middle">
             <Tweet/>
             {/* <h1 style={{color: "white"}}>Tweet + Feeds area</h1> */}
+            <Tweets/>
             </div>
             <div className="right-sidebar"><h1 style={{color: "white"}}>Follow/Unfollow snippet</h1></div>
             </section>

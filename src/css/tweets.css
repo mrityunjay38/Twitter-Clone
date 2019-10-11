@@ -1,0 +1,25 @@
+article {
+  display: flex;
+  flex-direction: column;
+  padding: 1em;
+}
+article .user-credentials {
+  display: flex;
+  color: white;
+}
+article .user-credentials .name {
+  font-weight: 600;
+}
+article .user-credentials .username {
+  margin-left: 1em;
+  color: lightblue;
+  opacity: 0.5;
+}
+article .tweet-content {
+  display: block;
+  color: white;
+}
+article .tweet-content img {
+  width: 100%;
+  border-radius: 10px;
+}
