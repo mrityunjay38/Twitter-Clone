@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import fire from '../../firebaseConfig/config';
+import StyledFirebaseAuth from "react-firebaseui/StyledFirebaseAuth"
 
 class Login extends Component {
   constructor(props) {
@@ -8,10 +9,29 @@ class Login extends Component {
     this.handleChange = this.handleChange.bind(this);
     this.state = {
       email: '',
-      password: ''
+      password: '',
+      isSignedIn: false
     };
+    this.uiConfig = {
+      signInFlow: "popup",
+      signInOptions: [
+        fire.auth.GoogleAuthProvider.PROVIDER_ID,
+        fire.auth.FacebookAuthProvider.PROVIDER_ID,
+        fire.auth.TwitterAuthProvider.PROVIDER_ID,
+        fire.auth.GithubAuthProvider.PROVIDER_ID,
+        fire.auth.EmailAuthProvider.PROVIDER_ID
+      ],
+      callbacks: {
+        signInSuccess: () => false
+      }
+    }
   }
-
+  componentDidMount(){
+    fire.auth().onAuthStateChanged(user => {
+      this.setState({ isSignedIn: !!user })
+      console.log("user", user)
+    })
+  }
   handleChange(e) {
     this.setState({ [e.target.name]: e.target.value });
   }
@@ -42,7 +62,22 @@ class Login extends Component {
           <button type="submit" onClick={this.login} class="btn btn-primary">Login</button><br/>
           <p>{this.state.errorMessage}{this.props.errorMessage}</p>
         </form>
-      
+        {this.state.isSignedIn ? (
+          <span>
+            <div>Signed In!</div>
+            <button onClick={() => fire.auth().signOut()}>Sign out!</button>
+            <h1>Welcome {fire.auth().currentUser.displayName}</h1>
+            <img
+              alt="profile picture"
+              src={fire.auth().currentUser.photoURL}
+            />
+          </span>
+        ) : (
+          <StyledFirebaseAuth
+            uiConfig={this.uiConfig}
+            firebaseAuth={fire.auth()}
+          />
+        )}
       </div>
     );
   }
