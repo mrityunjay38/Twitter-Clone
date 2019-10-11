@@ -51,7 +51,7 @@ export default class Homepage extends Component {
           </div>
         </div>
       </section>
-      {this.state.redirect ? (<Redirect to="/dashboard"/>) : null}
+      {this.state.redirect ?  (<Redirect to="/dashboard"/>) : null}
       </React.Fragment>
     );
   }
