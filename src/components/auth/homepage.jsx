@@ -1,10 +1,6 @@
 import React, { Component } from 'react';
-<<<<<<< HEAD
-// import "../../css/homepage.scss";
-=======
 import { Link, Redirect } from "react-router-dom";
-import "../../css/homepage.scss";
->>>>>>> c3cf5fca63beb6a8979fab7f1748ab7ccb409eed
+// import "../../css/homepage.scss";
 
 export default class Homepage extends Component {
 

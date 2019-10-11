@@ -1,6 +1,4 @@
-<<<<<<< HEAD
 import React, { Component } from 'react';
-import { Link } from 'react-router-dom';
 import fire from '../../firebaseConfig/config';
 
 class Login extends Component {
@@ -21,7 +19,7 @@ class Login extends Component {
   login(e) {
     e.preventDefault();
     fire.auth().signInWithEmailAndPassword(this.state.email, this.state.password).then((u)=>{
-        this.props.history.push("/UserRegistration")
+        this.props.history.push("/dashboard")
     }).catch((error) => {
         this.setState({errorMessage : "Invalid username/password"})
       });
@@ -32,12 +30,13 @@ class Login extends Component {
     return (
       <div className="col-md-6">
         <form>
+        <h3>Log in to Twitter</h3>
           <div class="form-group">
-            <label for="exampleInputEmail1">Email address</label>
+            <label for="Email">Email address</label>
             <input  value={this.state.email} onChange={this.handleChange} type="email" name="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Enter email" />
           </div>
           <div class="form-group">
-            <label for="exampleInputPassword1">Password</label>
+            <label for="Password">Password</label>
             <input  value={this.state.password} onChange={this.handleChange} type="password" name="password" class="form-control" id="exampleInputPassword1" placeholder="Password" />
           </div>
           <button type="submit" onClick={this.login} class="btn btn-primary">Login</button><br/>
@@ -50,46 +49,3 @@ class Login extends Component {
 }
 export default Login;
 
-=======
-import React, { Component } from 'react'
-
-export default class Login extends Component {
-
-    state = {
-        username: '',
-        password: ''
-    }
-
-    handleChange = (e) => {
-        this.setState({
-            [e.target.id]: e.target.value
-        })
-    }
-
-    handleSubmit = (e) => {
-        e.preventDefault();
-        console.log(this.state)
-    }
-
-    render() {
-        return (
-            <div className="container">
-            <form onSubmit={this.handleSubmit}>
-                <h3>Log in to Twitter</h3>
-                <div className="input-field">
-                    <label htmlFor="username">Username</label>
-                    <input type="text" id="username" onChange={this.handleChange}/>
-                </div>
-                <div className="input-field">
-                    <label htmlFor="password">Password</label>
-                    <input type="password" id="password" onChange={this.handleChange}/>
-                </div>
-                <div className="input-field">
-                    <button>Login</button>
-                </div>
-            </form>
-            </div>            
-        )
-    }
-}
->>>>>>> c3cf5fca63beb6a8979fab7f1748ab7ccb409eed

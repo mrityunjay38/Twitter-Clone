@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import "../../css/dashboard.scss";
+// import "../../css/dashboard.scss";
 import Tweet from "../dashboard/tweet";
 
 export default class Dashboard extends Component {
