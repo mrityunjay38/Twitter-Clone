@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import { Link } from "react-router-dom";
 import "../../css/homepage.scss";
 
 export default class Homepage extends Component {
@@ -32,8 +33,8 @@ export default class Homepage extends Component {
             <h1>See what's happening in the world right now</h1>
             <div>
             <h2>Join Twitter today</h2>
-            <a href="/signup">Sign up</a>
-            <a href="/login">Log in</a>
+            <Link to="/signup">Sign up</Link>
+            <Link to="/login">Log in</Link>
             </div>
             </div>
             </div>

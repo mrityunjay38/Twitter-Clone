@@ -1,0 +1,45 @@
+.dashboard {
+    background: #15202b;
+    height: 100vh;
+    display: flex;
+}
+
+.left-sidebar {
+    width: 35%;
+}
+
+.right-sidebar {
+    width: 40%;
+}
+
+.middle {
+    width: 60%;
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    border-right:1px solid;
+    border-left: 1px solid;
+    border-color: rgba(114, 173, 212, 0.3);
+}
+
+.tweets-section {
+    width: 100%;
+    border-top: 2px solid;
+    border-bottom: 5px solid;
+    border-color:rgb(37, 51, 65);
+}
+
+.tweets-section span {
+
+        position: relative;
+        top: 20px;
+        width: 100%;
+        color: white;
+        font-size: 1.5em;
+        font-weight: bold;
+        border: 1px solid;
+        border-color: rgba(114, 173, 212, 0.3);
+        padding: 1em;
+        text-align: center;
+
+}
