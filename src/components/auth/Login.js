@@ -17,7 +17,6 @@ class Login extends Component {
       signInOptions: [
         fire.auth.GoogleAuthProvider.PROVIDER_ID,
         fire.auth.FacebookAuthProvider.PROVIDER_ID,
-        fire.auth.TwitterAuthProvider.PROVIDER_ID,
         fire.auth.GithubAuthProvider.PROVIDER_ID,
         fire.auth.EmailAuthProvider.PROVIDER_ID
       ],
