@@ -42,7 +42,7 @@ export default class Homepage extends Component {
                             <a href="/login">Log in</a>
                         </div>
                     </div>
-                </div>
+            </div>
             </section>
         );
     }
