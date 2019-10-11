@@ -2,8 +2,8 @@ import React from 'react';
 import {BrowserRouter as Router, Switch, Route} from "react-router-dom";
 import './App.css';
 import Homepage from "./components/auth/homepage";
-import login from './components/auth/login';
-import register from './components/auth/register';
+import Login from './components/auth/Login';
+import Register from './components/auth/Register';
 
 function App() {
   return (
@@ -11,8 +11,8 @@ function App() {
     <Router>
       <Switch>
         <Route exact path="/" component={Homepage} />
-        <Route path="/login" component={login} />
-        <Route path="/register" component={register} />
+        <Route path="/login" component={Login} />
+        <Route path="/register" component={Register} />
       </Switch>
     </Router>
     </div>
