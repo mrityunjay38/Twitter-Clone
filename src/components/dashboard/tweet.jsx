@@ -5,7 +5,7 @@ export default class Tweet extends Component {
         return (
             <div className="tweets-section">
             <span>Home</span>
-            <div className="new-tweet">
+            <div className="add-tweet">
             <form>
                 <input type="text" maxLength="140" placeholder="What's happening?"/>
                 <input type="submit" value="Tweet"/>

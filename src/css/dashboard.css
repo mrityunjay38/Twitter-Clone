@@ -20,19 +20,45 @@
 }
 .tweets-section {
   width: 100%;
-  border-top: 2px solid;
-  border-bottom: 5px solid;
-  border-color: #253341;
 }
 .tweets-section span {
-  position: relative;
-  top: 20px;
-  width: 100%;
+  display: block;
   color: white;
   font-size: 1.5em;
   font-weight: bold;
-  border: 1px solid;
-  border-color: rgba(114, 173, 212, 0.3);
-  padding: 1em;
-  text-align: center;
+  border-bottom: 1px solid;
+  border-color: rgba(114, 173, 212, 0.2);
+  padding: 0.5em;
+  text-align: left;
+}
+.add-tweet {
+  border-bottom: 10px solid;
+  border-color: rgba(114, 173, 212, 0.2);
+}
+.add-tweet form {
+  display: flex;
+  flex-direction: column;
+  padding-bottom: 1em;
+}
+.add-tweet form input::placeholder {
+  font-weight: 400;
+}
+.add-tweet form input[type="text"] {
+  background: transparent;
+  border: none;
+  padding: 2em 0 2em 1em;
+  font-size: 1em;
+  color: white;
+  outline: 0;
+}
+.add-tweet form input[type="submit"] {
+  color: white;
+  font-weight: bold;
+  background: #1da1f2;
+  border: none;
+  padding: 1em 2em 1em 2em;
+  border-radius: 50px;
+  align-self: flex-end;
+  margin-right: 1.5em;
+  outline: 0;
 }
