@@ -3,9 +3,11 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
+    "firebase": "^4.13.1",
     "node-sass": "^4.12.0",
     "react": "^16.10.2",
     "react-dom": "^16.10.2",
+    "react-firebaseui": "^4.0.0",
     "react-router-dom": "^5.1.2",
     "react-scripts": "3.2.0"
   },
@@ -13,7 +15,12 @@
     "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",
+    "sass": "node-sass sass/ -o build/css/",
+    "dev": "rerun-script",
     "eject": "react-scripts eject"
+  },
+  "watches": {
+    "sass": "sass/**"
   },
   "eslintConfig": {
     "extends": "react-app"
