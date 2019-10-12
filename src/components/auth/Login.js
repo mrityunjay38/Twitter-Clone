@@ -1,10 +1,33 @@
 import React, { Component } from 'react'
+import fire from '../../firebaseConfig/config';
 
 export class login extends Component {
 
-    state = {
-        username: '',
-        password: ''
+    constructor(props) {
+        super(props);
+        this.state = {
+            email: '',
+            password: ''
+        }
+        this.login = this.login.bind(this);
+        this.handleChange = this.handleChange.bind(this);
+    }
+
+    // state = {
+    //     email: '',
+    //     password: ''
+    // }
+
+    login = (e) => {
+        e.preventDefault();
+        fire.auth().signInWithEmailAndPassword(this.state.email, this.state.password)
+            .then((u) => {
+                // this.props.history = 
+                console.log('Successfully Logged in.')
+
+            }).catch((error) => {
+                console.log(error);
+            })
     }
 
     handleChange = (e) => {
@@ -15,7 +38,8 @@ export class login extends Component {
 
     handleSubmit = (e) => {
         e.preventDefault();
-        console.log(this.state)
+        // console.log(this.state)
+
     }
 
     render() {
@@ -24,15 +48,15 @@ export class login extends Component {
             <form onSubmit={this.handleSubmit}>
                 <h3>Log in to Twitter</h3>
                 <div className="input-field">
-                    <label htmlFor="username">Username</label>
-                    <input type="text" id="username" onChange={this.handleChange}/>
+                    <label htmlFor="email">Username</label>
+                    <input type="email" id="email" onChange={this.handleChange}/>
                 </div>
                 <div className="input-field">
                     <label htmlFor="password">Password</label>
                     <input type="password" id="password" onChange={this.handleChange}/>
                 </div>
                 <div className="input-field">
-                    <button>Login</button>
+                    <button onClick={this.login}>Login</button>
                 </div>
             </form>
             </div>            
