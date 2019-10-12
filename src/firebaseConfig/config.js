@@ -1,12 +1,6 @@
-<<<<<<< HEAD
 import firebase from 'firebase/app'
 import 'firebase/firestore'
 import 'firebase/auth'
-||||||| merged common ancestors
-import firebase from 'firebase'
-=======
-import firebase from 'firebase';
->>>>>>> Ashish
 
 var firebaseConfig = {
     apiKey: "AIzaSyAICrLGtnbXcFpQ6shi67XVpXjHw_F8AUI",
@@ -21,13 +15,4 @@ var firebaseConfig = {
   // Initialize Firebase
   const fire = firebase.initializeApp(firebaseConfig);
 
-<<<<<<< HEAD
-firebase.initializeApp(firebaseConfig);
-// firebase.firestore().settings({timestampsInSnapshots: true})
-
-export default firebase;
-||||||| merged common ancestors
-firebase.initializeApp(firebaseConfig);
-=======
-  export default fire;
->>>>>>> Ashish
+export default fire;
