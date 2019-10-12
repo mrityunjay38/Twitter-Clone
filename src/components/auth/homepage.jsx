@@ -26,7 +26,9 @@ export default class Homepage extends Component {
           <form>
             <input type="text" placeholder="Username" />
             <input type="password" placeholder="Password" />
-            <input type="submit" value="Log in" />
+            <Link to="/login">
+              <input type="submit" value="Log in" />
+            </Link>
           </form>
           <div className="join-twitter">
             <span className="Icon Icon--bird Icon--extraLarge" />

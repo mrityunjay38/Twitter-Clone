@@ -1,4 +1,6 @@
 import React, { Component } from 'react'
+import fire from '../../firebaseConfig/config';
+// import StyledFirebaseAuth from 'react-firebaseui/StyledFirebaseAuth'
 
 class Login extends Component {
   constructor(props) {
@@ -8,23 +10,15 @@ class Login extends Component {
     this.state = {
       email: '',
       password: '',
-      isSignedIn: false
+      isSignedIn: false,
+      uid: ''
     };
-    this.uiConfig = {
-      signInFlow: "popup",
-      signInOptions: [
-        fire.auth.GoogleAuthProvider.PROVIDER_ID,
-        fire.auth.FacebookAuthProvider.PROVIDER_ID
-      ],
-      callbacks: {
-        signInSuccess: () => false
-      }
-    }
   }
   componentDidMount(){
     fire.auth().onAuthStateChanged(user => {
       this.setState({ isSignedIn: !!user })
       if(user != null) {
+          
           this.props.history.push("/dashboard")
       }
       console.log("user", user)
@@ -36,38 +30,35 @@ class Login extends Component {
 
   login(e) {
     e.preventDefault();
-    fire.auth().signInWithEmailAndPassword(this.state.email, this.state.password).then((u)=>{
-        
-    }).catch((error) => {
+    fire.auth().signInWithEmailAndPassword(this.state.email, this.state.password).then((user)=>{
+console.log(user.Q)   }).catch((error) => {
         this.setState({errorMessage : "Invalid username/password"})
       });
   }
 
     handleSubmit = (e) => {
         e.preventDefault();
-        console.log(this.state)
     }
 
     render() {
         return (
-            <div className="container">
-            <form onSubmit={this.handleSubmit}>
-                <h3>Log in to Twitter</h3>
-                <div className="input-field">
-                    <label htmlFor="username">Username</label>
-                    <input type="text" id="username" onChange={this.handleChange}/>
+            <div className="col-md-6">
+              <form onSubmit={this.handleSubmit}>
+              <h3>Log in to Twitter</h3>
+                <div class="form-group">
+                  <label for="Email">Email address</label>
+                  <input  value={this.state.email} onChange={this.handleChange} type="email" name="email" class="form-control" id="email1" aria-describedby="emailHelp" placeholder="Enter email" />
                 </div>
-                <div className="input-field">
-                    <label htmlFor="password">Password</label>
-                    <input type="password" id="password" onChange={this.handleChange}/>
+                <div class="form-group">
+                  <label for="Password">Password</label>
+                  <input  value={this.state.password} onChange={this.handleChange} type="password" name="password" class="form-control" id="password1" placeholder="Password" />
                 </div>
-                <div className="input-field">
-                    <button>Login</button>
-                </div>
-            </form>
-            </div>            
-        )
+                <button type="submit" onClick={this.login} class="btn btn-primary">Login</button><br/>
+                <p>{this.state.errorMessage}{this.props.errorMessage}</p>
+              </form>
+            </div>
+          );
     }
 }
 
-export default login
+export default Login
