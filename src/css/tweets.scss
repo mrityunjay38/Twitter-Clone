@@ -1,0 +1,33 @@
+article {
+  //change flex when profile img is added
+  display: flex;
+  flex-direction: column;
+  padding: 1em;
+  border-bottom: 1px solid;
+  border-color: rgba(114, 173, 212, 0.3);
+
+  .user-credentials {
+    display: flex;
+    color: white;
+
+    .name {
+      font-weight: 600;
+    }
+
+    .username {
+      margin-left: 1em;
+      color: lightblue;
+      opacity: 0.5;
+    }
+  }
+
+  .tweet-content {
+    display: block;
+    color: white;
+
+    img {
+      width: 100%;
+      border-radius: 10px;
+    }
+  }
+}
