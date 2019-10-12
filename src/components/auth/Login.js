@@ -26,6 +26,9 @@ class Login extends Component {
   componentDidMount(){
     fire.auth().onAuthStateChanged(user => {
       this.setState({ isSignedIn: !!user })
+      if(user != null) {
+          this.props.history.push("/dashboard")
+      }
       console.log("user", user)
     })
   }
@@ -36,7 +39,7 @@ class Login extends Component {
   login(e) {
     e.preventDefault();
     fire.auth().signInWithEmailAndPassword(this.state.email, this.state.password).then((u)=>{
-        this.props.history.push("/dashboard")
+        
     }).catch((error) => {
         this.setState({errorMessage : "Invalid username/password"})
       });
