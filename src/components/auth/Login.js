@@ -16,9 +16,7 @@ class Login extends Component {
       signInFlow: "popup",
       signInOptions: [
         fire.auth.GoogleAuthProvider.PROVIDER_ID,
-        fire.auth.FacebookAuthProvider.PROVIDER_ID,
-        fire.auth.GithubAuthProvider.PROVIDER_ID,
-        fire.auth.EmailAuthProvider.PROVIDER_ID
+        fire.auth.FacebookAuthProvider.PROVIDER_ID
       ],
       callbacks: {
         signInSuccess: () => false
