@@ -6,7 +6,7 @@ import Login from './components/auth/Login';
 import Signup from './components/auth/Signup';
 // import Register from './components/auth/Register';
 // import firebaseConfig from './firebaseConfig/config';
-import Dashboard from './components/dashboard/Dashboard'
+import Dashboard from './components/dashboard/dashboard'
 
 function App() {
   return (
