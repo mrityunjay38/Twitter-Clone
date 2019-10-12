@@ -3,6 +3,8 @@ article {
   display: flex;
   flex-direction: column;
   padding: 1em;
+  border-bottom: 1px solid;
+  border-color: rgba(114, 173, 212, 0.3);
 
   .user-credentials {
     display: flex;

@@ -8,11 +8,18 @@ export default class Tweet extends Component {
     img: ""
   };
 
-  handleChange = e => {
+  handleChange = (e) => {
     this.setState({
       text: e.target.value
     });
   };
+
+  handleImgUpload = (e) => {
+    this.setState({
+      img : URL.createObjectURL(e.target.files[0])
+    });
+  }
+
 
   newTweet = e => {
     e.preventDefault();
@@ -20,17 +27,28 @@ export default class Tweet extends Component {
       username: "godlevel",
       name: "Xyz",
       text: this.state.text,
-      img: ""
+      img: this.state.img
     };
 
     this.props.newTweet(tweet);
 
     this.setState({
-        text : ""
+        text : "",
+        img : ""
     });
   };
 
   render() {
+
+    const uploadedImgStyle = {
+      background: "url(" + this.state.img + ")",
+      backgroundSize: "cover",
+      width: "90%",
+      paddingBottom: "20em",
+      backgroundPosition: "center center",
+      alignSelf: "center"
+    }
+
     return (
       <div className="tweets-section">
         <span>Home</span>
@@ -42,7 +60,13 @@ export default class Tweet extends Component {
               maxLength="140"
               placeholder="What's happening?"
             />
+            {/* <div className="uploadImg" style={uploadedImgStyle}/> */}
+            <img src={this.state.img}/>
+            <div>
+            <input onChange={this.handleImgUpload} type="file" name="imgUpload"/>
+            <span/>
             <input type="submit" value="Tweet" />
+            </div>
           </form>
         </div>
       </div>

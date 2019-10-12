@@ -8,17 +8,29 @@ export default class Dashboard extends Component {
     tweets: [
       {
         username: "godlevel",
-        name: "Xyz",
+        name: "Night King",
         text: "Isn't it kinda cold up here?",
         img:
           "https://purewows3.imgix.net/images/articles/2018_06/the_night_king_game_of_thrones.jpg"
+      },
+      {
+        username: "johnIknow",
+        name: "John",
+        text: "I don't know.",
+        img : "https://cdn.vox-cdn.com/uploads/chorus_image/image/45629458/Jon_snow.0.jpg"
+      },
+      {
+        username: "letsdrink",
+        name: "Tyrion",
+        text: "I'm surprised.",
+        img: "https://wikiofthrones.com/static/uploads/2018/10/Peter-Dinklage-talks-about-the-journey-with-Game-of-Thrones-and-Tyrion-Lannister-6.jpg"
       }
     ]
   };
 
   addTweet = tweet => {
     this.setState({
-      tweets: [...this.state.tweets, tweet]
+      tweets: [tweet,...this.state.tweets]
     });
   };
 
