@@ -2,9 +2,13 @@ import React, { Component } from "react";
 import "../../css/dashboard.scss";
 import Tweet from "../dashboard/tweet";
 import Tweets from "../tweets";
+import { Link } from "react-router-dom";
+import fire from "../../firebaseConfig/config";
 
 export default class Dashboard extends Component {
+
   state = {
+    isSignedIn: false,
     tweets: [
       {
         username: "godlevel",
@@ -28,6 +32,18 @@ export default class Dashboard extends Component {
     ]
   };
 
+
+  componentDidMount() {
+    fire.auth().onAuthStateChanged(user => {
+      this.setState({ isSignedIn: !!user });
+      console.log(user.uid);
+      if (user == null) {
+      }
+      console.log(this.props.history);
+    });
+  }
+
+
   addTweet = tweet => {
     this.setState({
       tweets: [tweet,...this.state.tweets]
@@ -41,6 +57,9 @@ export default class Dashboard extends Component {
       <section className="dashboard">
         <div className="left-sidebar">
           <h1 style={{ color: "white" }}>Profile area</h1>
+          <Link to="/">
+            <button onClick={() => fire.auth().signOut()}>Log out!</button>
+          </Link>
         </div>
         <div className="middle">
           <Tweet newTweet={this.addTweet} />
