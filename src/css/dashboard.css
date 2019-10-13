@@ -4,13 +4,13 @@
   display: flex;
 }
 .left-sidebar {
-  width: 35%;
+  min-width: 25%;
 }
 .right-sidebar {
-  width: 40%;
+  width: 35%;
 }
 .middle {
-  width: 60%;
+  width: 45%;
   height: 100vh;
   display: flex;
   flex-direction: column;
@@ -25,11 +25,11 @@
 .tweets-section span {
   display: block;
   color: white;
-  font-size: 1.5em;
-  font-weight: bold;
+  font-size: 1.2em;
+  font-weight: 900;
   border-bottom: 1px solid;
   border-color: rgba(114, 173, 212, 0.2);
-  padding: 0.5em;
+  padding: 1em;
   text-align: left;
 }
 .add-tweet {
@@ -47,7 +47,7 @@
 .add-tweet form input[type="text"] {
   background: transparent;
   border: none;
-  padding: 2em 0 1em 1em;
+  padding: 2em 0 0 1em;
   font-size: 1em;
   color: white;
   outline: 0;
@@ -62,11 +62,12 @@
   font-weight: bold;
   background: #1da1f2;
   border: none;
-  padding: 1em 2em 1em 2em;
+  padding: 1em 1.5em 1em 1.5em;
   border-radius: 50px;
   align-self: flex-end;
   margin-right: 1.5em;
   outline: 0;
+  font-size: 1em;
 }
 .add-tweet form div {
   position: relative;

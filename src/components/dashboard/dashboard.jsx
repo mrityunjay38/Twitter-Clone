@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import "../../css/dashboard.scss";
 import Tweet from "../dashboard/tweet";
 import Tweets from "../tweets";
+import LeftSideBar from "../sidebars/leftsidebar";
 
 export default class Dashboard extends Component {
   state = {
@@ -40,7 +41,8 @@ export default class Dashboard extends Component {
     return (
       <section className="dashboard">
         <div className="left-sidebar">
-          <h1 style={{ color: "white" }}>Profile area</h1>
+          {/* <h1 style={{ color: "white" }}>Profile area</h1> */}
+          <LeftSideBar/>
         </div>
         <div className="middle">
           <Tweet newTweet={this.addTweet} />
