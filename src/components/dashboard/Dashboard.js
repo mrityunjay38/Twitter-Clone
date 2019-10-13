@@ -8,14 +8,15 @@ export default class Dashboard extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            isSignedIn: false
+            isSignedIn: false,
+            user_id: null
         };
  }
 
     componentDidMount(){
         fire.auth().onAuthStateChanged(user => {
-        this.setState({ isSignedIn: !!user })
-        console.log(user.uid);
+            console.log(user);
+        this.setState({ isSignedIn: !!user, user_id: user.uid })
         if(user == null) {
         }
         console.log(this.props.history)
@@ -27,8 +28,17 @@ export default class Dashboard extends Component {
             <section className="dashboard">
             <div className="left-sidebar">
                 <h1 style={{color: "white"}}>Profile area</h1>
+                <Link to="/dashboard">
+                    <button>Home</button>
+                </Link>
+                <Link to={`/user/${this.state.user_id}`}>
+                    <button>Profile</button>
+                </Link>
                 <Link to="/">
                     <button onClick={() => fire.auth().signOut()}>Log out!</button>
+                </Link>
+                <Link to={`/user/${this.state.user_id}/addTweet`}>
+                    <button>Tweet</button>
                 </Link>
             </div>
             <div className="middle">

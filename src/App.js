@@ -7,6 +7,9 @@ import Signup from './components/auth/Signup';
 // import Register from './components/auth/Register';
 // import firebaseConfig from './firebaseConfig/config';
 import Dashboard from './components/dashboard/Dashboard'
+import UserProfile from './components/profile/UserProfile';
+import AddNewTweet from './components/tweets/AddNewTweets'
+import EditUserDetails from './components/profile/user/EditUserDetails';
 
 function App() {
   return (
@@ -17,6 +20,9 @@ function App() {
         <Route path="/login" component={Login} />
         <Route path="/signup" component={Signup} />
         <Route path="/dashboard" component={Dashboard} />
+        <Route path="/user/:id" component={UserProfile} />
+        <Route path="/user/:id/settings" component={EditUserDetails}/>
+        <Route path="/user/:id/addTweet" component={AddNewTweet} />
         </Switch>
       </Router>
     </div>
