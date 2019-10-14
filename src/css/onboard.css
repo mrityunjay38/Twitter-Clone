@@ -1,0 +1,86 @@
+.onboard{
+    height: 89.2vh;
+    background: white;/* rgb(177, 175, 175);*/
+    padding: 1rem;
+}
+
+.user-collection{
+   width:50vw;
+   background: #15202b;
+   height: 80vh;
+   position: fixed;
+   box-shadow: 1px 2px 2px 2px #b7a8a896;
+   padding: 2rem;
+   margin-left: 22%;
+   overflow: auto;
+   border-radius: .5rem; 
+   color:white;
+}
+
+.suggestions{
+    padding:1rem 0 .5rem 0;
+}
+.users{
+    display:relative;
+    margin-top: 2rem;
+}
+.user{
+    display:flex;
+    justify-content: space-between;
+}
+.user-name{
+    flex:5;
+}
+.follow-button{
+    align-self: flex-end;
+    flex:1;
+}
+
+.follow{
+    text-align: center;
+    color: #00adf4;
+    border-radius: 1.5rem;
+    border-style: solid;
+    border-width: 1px;
+    padding: .5rem;
+    border-color:#00adf4;
+}
+
+.follow:hover{
+    background: #00adf4;
+    cursor: pointer;
+    color: white;
+}
+
+.skip{
+    display: flex;
+    justify-content: space-around;
+}
+.skip-img{
+    flex:1;
+    text-align-last: right;
+}
+.skip-text{
+    flex:1;
+    text-align-last: right;
+    margin-top:1rem;
+
+   
+}
+.skip-img img{
+    width:5vw;
+    height: 7vh;
+}
+.skip-text a{
+    background: #00adf4;
+    text-decoration: none;
+    padding:.7rem 2rem .7rem 2rem;
+    color: white;
+    border-radius: 2rem;
+   
+}
+
+hr{
+    display: block; height: 1px;
+    border: 0; border-top: 1px solid rgb(231, 228, 228);
+}

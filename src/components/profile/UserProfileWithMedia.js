@@ -1,10 +1,10 @@
 import React, { Component } from 'react'
 import fire from '../../firebaseConfig/config'
-import { Link } from 'react-router-dom'
 import UserArea from './UserArea'
+import UserMedia from '../media/UserMedia'
+import LeftSidebars from '../sidebars/LeftSidebars'
 
-class UserProfile extends Component {
-
+class UserProfileWithMedia extends Component {
     state = {
         isSignedIn: false,
         user: {
@@ -53,6 +53,7 @@ class UserProfile extends Component {
                     tweet: 'Hello Everyone!',
                     photoURL: 'https://wallpaperplay.com/walls/full/6/7/7/275271.jpg',
                     likes: 1297,
+                    isReply: false,
                     reply: [
                         {
                             tweetID: 324,
@@ -65,53 +66,48 @@ class UserProfile extends Component {
                     ]
                 }
             ],
+            replies: [
+                {
+                    tweetID: 5,
+                    tweet: "skdfkugbfkjdsfhisgdfhibadsjkbvd",
+                    replied_to: 65,  
+                }
+            ], 
             headerPhotoURL: 'https://wallpaperplay.com/walls/full/f/c/d/275250.jpg',
-            CreatedAt: 'March 2016'
-        }
+            CreatedAt: 'March 2016', 
+            Media: []
+        }, 
+        sub: 'Media'
     }
 
     componentDidMount(){
         fire.auth().onAuthStateChanged(user => {
-            console.log(user);
+            // console.log(user);
         this.setState({ isSignedIn: !!user, userID: user.uid })
         if(user == null) {
         }
-        console.log(this.props.history)
+        // console.log(this.props.history)
         })
     }
 
     render() {
-        console.log(this.state.user);
+        // console.log(this.state.user);
         return (
             <section className="profile-area">
-            <div className="left-sidebar">
-                <h1 style={{color: "white"}}>Tabs area</h1>
-                <Link to="/dashboard">
-                    <button>Home</button>
-                </Link>
-                <Link to={`/user/${this.state.user_id}`}>
-                    <button>Profile</button>
-                </Link>
-                {/* <Link to={`/user/${this.state.user_id}/settings}`} >
-                    <button>Settings</button>
-                </Link> */}
-                <Link to="/">
-                    <button onClick={() => fire.auth().signOut()}>Log out!</button>
-                </Link>
-                <Link to={`/user/${this.state.user_id}/addTweet`}>
-                    <button>Tweet</button>
-                </Link>
-            </div>
-            <div className="user-area">
-                <UserArea user={this.state.user}/>
-            </div>
-            <div className="trends-who-to-follow-area">
-                
-            </div>
+                <div className="profile-area-container">
+                <LeftSidebars />
+                <div className="user-area">
+                    <UserArea user={this.state.user} sub={this.state.sub}/>
+                    <UserMedia />
+                </div>
+                <div className="trends-who-to-follow-area">
+                    <h1>Hello There will be Trends here in the future.</h1>
+                </div>
 
+                </div>
             </section>
         )
     }
 }
 
-export default UserProfile
+export default UserProfileWithMedia

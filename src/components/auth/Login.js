@@ -10,28 +10,26 @@ class Login extends Component {
     this.state = {
       email: '',
       password: '',
-      isSignedIn: false
+      isSignedIn: false, 
+      onBoarding: false
     };
   }
   
-  componentDidMount(){
-    fire.auth().onAuthStateChanged(user => {
-      this.setState({ isSignedIn: !!user })
-      if(user != null) {
-          this.props.history.push("/dashboard")
-      }
-      console.log("user", user)
-    })
-  }
   handleChange(e) {
     this.setState({ [e.target.name]: e.target.value });
   }
+
   login(e) {
     e.preventDefault();
     fire.auth().signInWithEmailAndPassword(this.state.email, this.state.password).then((u)=>{
-        
+        fire.auth().onAuthStateChanged(user => {
+          this.setState({ isSignedIn: !!user, onBoarding: true })
+          if(user && this.state.onBoarding) {
+            this.props.history.push(`/user/${user.uid}/onboarding`)
+          }
+        })
     }).catch((error) => {
-        this.setState({errorMessage : "Invalid username/password"})
+        this.setState({errorMessage : error})
       });
   }
  

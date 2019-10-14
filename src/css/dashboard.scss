@@ -1,20 +1,20 @@
 .dashboard {
     background: #15202b;
-    height: 100vh;
+    height: 100%;
     display: flex;
 }
 
 .left-sidebar {
-    width: 35%;
+    width: 20%;
+    align-items: center;
 }
 
 .right-sidebar {
-    width: 40%;
+    width: 25%;
 }
 
 .middle {
-    width: 60%;
-    height: 100vh;
+    width: 55%;
     display: flex;
     justify-content: center;
     border-right:1px solid;

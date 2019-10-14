@@ -1,46 +1,32 @@
 import React, { Component } from 'react';
 import "../../css/dashboard.scss";
 import fire from '../../firebaseConfig/config'
-import { Link } from 'react-router-dom'
+// import { Link } from 'react-router-dom'
+import LeftSidebars from '../sidebars/LeftSidebars';
+import { thisTypeAnnotation } from '@babel/types';
 
 export default class Dashboard extends Component {
 
     constructor(props) {
         super(props);
         this.state = {
-            isSignedIn: false,
             user_id: null
         };
  }
 
     componentDidMount(){
-        fire.auth().onAuthStateChanged(user => {
-            console.log(user);
-        this.setState({ isSignedIn: !!user, user_id: user.uid })
+        const user = fire.auth().currentUser;
+
         if(user == null) {
+            this.props.history.push('/');
         }
-        console.log(this.props.history)
-        })
+
     }
 
     render(){
         return (
             <section className="dashboard">
-            <div className="left-sidebar">
-                <h1 style={{color: "white"}}>Profile area</h1>
-                <Link to="/dashboard">
-                    <button>Home</button>
-                </Link>
-                <Link to={`/user/${this.state.user_id}`}>
-                    <button>Profile</button>
-                </Link>
-                <Link to="/">
-                    <button onClick={() => fire.auth().signOut()}>Log out!</button>
-                </Link>
-                <Link to={`/user/${this.state.user_id}/addTweet`}>
-                    <button>Tweet</button>
-                </Link>
-            </div>
+            <LeftSidebars />
             <div className="middle">
             {/* <Tweet/> */}
             <h1 style={{color: "white"}}>Tweet + Feeds area</h1>

@@ -1,13 +1,13 @@
 import React, { Component } from 'react'
 
-class DisplayTweets extends Component {
+class UserMedia extends Component {
     render() {
         return (
             <div>
-                <h1>Tweets</h1>
+                <h1>You can see the users media.</h1>
             </div>
         )
     }
 }
 
-export default DisplayTweets
+export default UserMedia

@@ -5,18 +5,14 @@ import UserInfo from './user/UserInfo'
 
 class UserArea extends Component {
 
-    state = {
-
-    }
-
     render() {
-        console.log(this.props.user)
+        // console.log(this.props.user)
 
         const { name, username, CreatedAt, Followers, Following, userPhotoURL, headerPhotoURL } = this.props.user;
 
         return (
             <div>
-                <UserHeader name={name}/> 
+                <UserHeader name={name} sub={this.props.sub}/> 
                 <HeaderImage photoURL={headerPhotoURL}/>  
                 <UserInfo 
                     name={name}
