@@ -29,6 +29,7 @@ export default class Dashboard extends Component {
     ]
   };
 
+
   addTweet = tweet => {
     this.setState({
       tweets: [tweet,...this.state.tweets]

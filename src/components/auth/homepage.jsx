@@ -1,22 +1,10 @@
 import React, { Component } from 'react';
-import { Link, Redirect } from "react-router-dom";
+import { Link } from "react-router-dom";
 import "../../css/homepage.scss";
 
-export default class Homepage extends Component {
-
-    state = {
-        redirect : false
-    }
-    
-    login = () => {
-        this.setState({
-            redirect : true
-        });
-    }
-
+export default class Homepage extends Component {      
     render(){
         return (
-            <React.Fragment>
             <section className="static-homepage">
             <div className="twitter-features">
             <div>
@@ -35,8 +23,8 @@ export default class Homepage extends Component {
             </div>
             </div>
             <div className="loggedout-homepage">
-            <form onSubmit={this.login}>
-                <input type="text" placeholder="Username"/>
+            <form>
+                <input type="email" placeholder="Email"/>
                 <input type="password" placeholder="Password"/>
                 <input type="submit" value="Log in"/>
             </form>
@@ -51,8 +39,6 @@ export default class Homepage extends Component {
             </div>
             </div>
             </section>
-            {this.state.redirect ? (<Redirect to="/dashboard"/>) : null}
-            </React.Fragment>
         );
     }
 }
