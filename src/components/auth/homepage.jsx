@@ -39,6 +39,7 @@ export default class Homepage extends Component {
       });
   }
 
+
   render() {
     return (
       <section className="static-homepage">

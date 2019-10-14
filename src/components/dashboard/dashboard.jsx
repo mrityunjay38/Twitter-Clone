@@ -2,8 +2,8 @@ import React, { Component } from "react";
 import "../../css/dashboard.scss";
 import Tweet from "../dashboard/tweet";
 import Tweets from "../tweets";
-import { Link } from "react-router-dom";
 import fire from "../../firebaseConfig/config";
+import LeftSideBar from "../sidebars/leftsidebar";
 
 export default class Dashboard extends Component {
 
@@ -32,7 +32,6 @@ export default class Dashboard extends Component {
     ]
   };
 
-
   componentDidMount() {
     fire.auth().onAuthStateChanged(user => {
       this.setState({ isSignedIn: !!user });
@@ -42,7 +41,6 @@ export default class Dashboard extends Component {
       console.log(this.props.history);
     });
   }
-
 
   addTweet = tweet => {
     this.setState({
@@ -56,10 +54,8 @@ export default class Dashboard extends Component {
     return (
       <section className="dashboard">
         <div className="left-sidebar">
-          <h1 style={{ color: "white" }}>Profile area</h1>
-          <Link to="/">
-            <button onClick={() => fire.auth().signOut()}>Log out!</button>
-          </Link>
+          {/* <h1 style={{ color: "white" }}>Profile area</h1> */}
+          <LeftSideBar/>
         </div>
         <div className="middle">
           <Tweet newTweet={this.addTweet} />

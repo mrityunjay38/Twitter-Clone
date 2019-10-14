@@ -51,7 +51,7 @@
   font-size: 1.5em;
   text-align: left;
 }
-.loggedout-homepage form input[type="text"],
+.loggedout-homepage form input[type="email"],
 .loggedout-homepage form [type="password"] {
   display: inline-block;
   width: 35%;
