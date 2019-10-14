@@ -22,7 +22,6 @@ export default class Homepage extends Component {
       if(user != null) {
           this.props.history.push("/dashboard")
       }
-      console.log("user", user)
     })
   }
 

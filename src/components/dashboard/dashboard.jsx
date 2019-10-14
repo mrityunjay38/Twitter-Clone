@@ -33,13 +33,11 @@ export default class Dashboard extends Component {
   };
 
   componentDidMount() {
-    fire.auth().onAuthStateChanged(user => {
-      this.setState({ isSignedIn: !!user });
-      console.log(user.uid);
-      if (user == null) {
-      }
-      console.log(this.props.history);
-    });
+    const user = fire.auth().currentUser;
+    if(user == null){
+    this.props.history.push('/');
+    }
+    console.log(user);
   }
 
   addTweet = tweet => {
