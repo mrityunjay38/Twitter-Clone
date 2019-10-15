@@ -12,8 +12,8 @@ class Login extends Component {
     this.state = {
       email: '',
       password: '',
-      isSignedIn: false, 
-      onBoarding: false
+      isSignedIn: false,
+      userId: ''
     };
   }
   
@@ -21,12 +21,12 @@ class Login extends Component {
     this.setState({ [e.target.name]: e.target.value });
   }
 
-  login(e) {
+  login (e) {
     e.preventDefault();
     fire.auth().signInWithEmailAndPassword(this.state.email, this.state.password).then((u)=>{
         fire.auth().onAuthStateChanged(user => {
-          this.setState({ isSignedIn: !!user, onBoarding: true })
-          if(user && this.state.onBoarding) {
+          this.setState({ isSignedIn: !!user, userId: user.uid})
+          if(user) {
             this.props.history.push(`/user/${user.uid}/onboarding`)
           }
         })
@@ -54,7 +54,9 @@ class Login extends Component {
             <label for="Password">Password</label>
             <input  value={this.state.password} onChange={this.handleChange} type="password" name="password" class="form-control" />
           </div>
-          <button type="submit" onClick={this.login} class="btn btn-login">Login</button><br/>
+          <Link to={`user/${this.state.userId}/onboarding`}>
+            <button type="submit" onClick={this.login} class="btn btn-login">Login</button><br/>
+          </Link>
           <p>{this.state.errorMessage}</p>
         </form>
       </div>

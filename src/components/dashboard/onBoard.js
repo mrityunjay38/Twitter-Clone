@@ -14,74 +14,76 @@ class OnBoard extends React.Component {
       follow:{},
       userId:'',
       followers:[]
+      
     };
   }
   componentDidMount() {
     
       fire.auth().onAuthStateChanged(user => {
-        this.setState({ isSignedIn: !!user ,userId : user.uid})
-        this.setState({userId:user.uid});
-        this.getCurrentUser();
+        let name = user.displayName.split('|')
+        this.setState({ isSignedIn: !!user ,userId : user.uid, name: name[0]})
+        console.log(this.state);
+        this.getAllUser();
+        // console.log(this.state.users);
         this.getUsers();
       })
   }
-  getCurrentUser(){
-    fire.firestore().collection("users").where("userId","==", this.state.userId)
-    .get()
-    .then(querySnapshot => {
-      querySnapshot.docs.map(doc => {
-        this.setState({user_name : doc.data().name}) 
+
+  getAllUser(){
+    let db = fire.firestore();
+    let userArr = [];
+    db.collection("users")
+      .get()
+      .then(querySnapshot => { 
+        querySnapshot.forEach(doc => {
+          if(doc.data().userId != this.state.userId) {
+            userArr.push(doc.data())
+          }
+        }
+        )
+        this.setState( { users: userArr} )
+      })
+  }
+
+  getUsers(){
+    FetchFollowers.FetchFollowers().then(followerData => {
+      let userArr = [];
+      followerData.forEach(follower => {
+        this.state.users.map(user => {
+
+          if(user.userId != follower.userId){
+            user.isFollow = false;
+            userArr.push(user);
+          }
+        }
+          )
+        this.setState({users : userArr});
       })
     })
   }
-  getUsers(){
-    FetchFollowers.FetchFollowers().then(data => {
-       this.setState({followers : JSON.parse(JSON.stringify(data))});
-    })
-    fire.firestore().collection("users")
-      .get()
-      .then(querySnapshot => {
-        const data = querySnapshot.docs.map(doc => {
-            var flag = 0;
-            if(this.state.followers.length > 0) {
-                 this.state.followers.map((follower) => {
-                 if(doc.data().userId == this.state.userId || doc.data().userId == follower.userId ){
-                   flag=1;
-                 }
-                })
-                if(flag==0){
-                  var userObj = doc.data();
-                  userObj.follow = "Follow";
-                    this.state.users.push(userObj)
-                }
-            } else {
-                 if(doc.data().userId != this.state.userId){
-                  var userObje = doc.data();
-                  userObje.follow = "Follow";
-                    this.state.users.push(userObje)
-                }
-            }
-          })
-        this.setState({ users:  this.state.users });
-      });
-  }
-  follow(event,user) {
-      this.state.follow = {
-              userId: user.userId,
-              user_name:user.name,
-              follower_id: this.state.userId,
-              follower_name:this.state.user_name
-          };
-       const data = {
-      ...this.state.follow,
-      id: uuid.v4()
+
+  follow(user) {
+
+    let db = fire.firestore();
+
+    this.setState({ 
+      follow: {
+        userId: user.userId,
+        user_name:user.name,
+        follower_id: this.state.userId,
+        follower_name:this.state.name   
+      }
+     })
+     
+     const data = {
+      ...this.state.follow
     };
-    if(user.follow == "Follow") {
-      fire.firestore().collection("followers")
-      .doc(data.id.toString())
+    if(!user.isFollow) {
+      db.collection("followers")
+      .doc(this.state.userId)
       .set(data)
       .then(() => {
-        fire.firestore().collection("followers")
+        db.collection("followers")
         .where("follower_id","==", this.state.follow.follower_id)
         .where("userId","==",this.state.follow.userId)
       .get()
@@ -90,7 +92,7 @@ class OnBoard extends React.Component {
           let filteredListRecord = this.state.users.filter(
             (list) => {
               if(list.userId == user.userId){
-                list.follow = "Unfollow";
+                list.follow = true;
                 list.collectionId = doc.data().id
               }
               return list;
@@ -151,8 +153,9 @@ class OnBoard extends React.Component {
                         <div className="user-name">
                             <h4>{user.name}</h4>
                           </div>
-                          <div className="follow-button">
-                            <p className="follow" onClick={() => this.follow(this,user)}>{user.follow}</p>
+                          <div className="follow-button " onClick={this.follow.bind(this, user)}>
+                            {user.isFollow ? (<p className="follow">Unfollow</p>): (<p className="follow">Follow</p>)}
+                            {/* <p className="follow" onClick={() => this.follow(this,user)}>{user.follow}</p> */}
                           </div>
                   </div>
                   <hr/>

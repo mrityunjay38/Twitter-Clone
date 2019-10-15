@@ -22,10 +22,9 @@ function App() {
       <Switch>
         <Route exact path="/" component={Homepage} />
         <Route path="/signup" component={Signup} />
-        <Route path="/login" component={Login} />
-        
-        <Route path="/user/:uid/onboarding" component={onBoard}/>
-        <Route path="/dashboard" component={Dashboard} />
+        <Route path="/login" component={Login} />       
+        <Route exact path="/user/:uid/onboarding" component={onBoard}/>
+        <Route exact path="/dashboard" component={Dashboard} />
         <Route exact path="/user/:id" component={UserProfileWithTweets} />
         <Route path="/user/:id/with_replies" component={UserProfileWithReplies}/>
         <Route path="/user/:id/media" component={UserProfileWithMedia} />
