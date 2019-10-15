@@ -1,28 +1,28 @@
 import React, { Component } from "react";
 import { Link } from "react-router-dom";
 import "../../css/homepage.scss";
-import fire from '../../firebaseConfig/config'
+import fire from "../../firebaseConfig/config";
 
 export default class Homepage extends Component {
-
   constructor(props) {
     super(props);
     this.login = this.login.bind(this);
     this.handleChange = this.handleChange.bind(this);
     this.state = {
-      email: '',
-      password: '',
-      isSignedIn: false
+      email: "",
+      password: "",
+      isSignedIn: false,
+      errorMessage: ""
     };
   }
 
-  componentDidMount(){
+  componentDidMount() {
     fire.auth().onAuthStateChanged(user => {
-      this.setState({ isSignedIn: !!user })
-      if(user != null) {
-          this.props.history.push("/dashboard")
+      this.setState({ isSignedIn: !!user });
+      if (user != null) {
+        this.props.history.push("/dashboard");
       }
-    })
+    });
   }
 
   handleChange(e) {
@@ -31,13 +31,14 @@ export default class Homepage extends Component {
 
   login(e) {
     e.preventDefault();
-    fire.auth().signInWithEmailAndPassword(this.state.email, this.state.password).then((u)=>{
-        
-    }).catch((error) => {
-        this.setState({errorMessage : "Invalid username/password"})
+    fire
+      .auth()
+      .signInWithEmailAndPassword(this.state.email, this.state.password)
+      .then(u => {})
+      .catch(error => {
+        this.setState({ errorMessage: "Invalid username or password" });
       });
   }
-
 
   render() {
     return (
@@ -60,11 +61,23 @@ export default class Homepage extends Component {
         </div>
         <div className="loggedout-homepage">
           <form>
-            <input type="email" onChange={this.handleChange} name="email" placeholder="Email" />
-            <input type="password" onChange={this.handleChange} name="password" placeholder="Password" />
-            
-              <input type="submit" onClick={this.login} value="Log in" />
-                      </form>
+            <div>
+            <input
+              type="email"
+              onChange={this.handleChange}
+              name="email"
+              placeholder="Email"
+            />
+            <input
+              type="password"
+              onChange={this.handleChange}
+              name="password"
+              placeholder="Password"
+            />
+            <input type="submit" onClick={this.login} value="Log in" />
+            </div>
+            <p>{this.state.errorMessage}</p>
+          </form>
           <div className="join-twitter">
             <span className="Icon Icon--bird Icon--extraLarge" />
             <h1>See what's happening in the world right now</h1>
