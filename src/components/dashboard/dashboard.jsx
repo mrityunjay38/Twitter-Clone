@@ -3,61 +3,71 @@ import "../../css/dashboard.scss";
 import Tweet from "../dashboard/tweet";
 import Tweets from "../tweets";
 import fire from "../../firebaseConfig/config";
+import db from "../../firebaseConfig/db.js";
+import file from "../../firebaseConfig/storage";
 import LeftSideBar from "../sidebars/leftsidebar";
 
 export default class Dashboard extends Component {
 
   state = {
     isSignedIn: false,
-    tweets: [
-      {
-        username: "godlevel",
-        name: "Night King",
-        text: "Isn't it kinda cold up here?",
-        img:
-          "https://purewows3.imgix.net/images/articles/2018_06/the_night_king_game_of_thrones.jpg"
-      },
-      {
-        username: "johnIknow",
-        name: "John",
-        text: "I don't know.",
-        img : "https://cdn.vox-cdn.com/uploads/chorus_image/image/45629458/Jon_snow.0.jpg"
-      },
-      {
-        username: "letsdrink",
-        name: "Tyrion",
-        text: "I'm surprised.",
-        img: "https://wikiofthrones.com/static/uploads/2018/10/Peter-Dinklage-talks-about-the-journey-with-Game-of-Thrones-and-Tyrion-Lannister-6.jpg"
-      }
-    ]
+    user : {},
+    tweets: []
   };
 
   componentDidMount() {
     const user = fire.auth().currentUser;
-    if(user == null){
-    this.props.history.push('/');
+    if(user){
+      console.log(user);
+      this.setState({
+        user : user
+      });
+
+      db.collection('tweets').doc(user.uid).collection('status').get().then( snap => {
+        snap.docs.forEach( doc => this.setState({
+          tweets : [doc.data(),...this.state.tweets]
+        }));
+      });
+
     }
-    console.log(user);
+    else{
+      this.props.history.push('/');
+    }
   }
 
-  addTweet = tweet => {
+  addTweet = (tweet,img,imgUrl) => {
+    const localTweet = tweet;
+    localTweet.img = imgUrl;
+    console.log(localTweet);
     this.setState({
-      tweets: [tweet,...this.state.tweets]
+      tweets: [localTweet,...this.state.tweets]
     });
+
+    const storageRef = file.ref('uploads/' + this.state.user.uid + '/tweets/' + img.name);
+    storageRef.put(img);
+    storageRef.getDownloadURL().then( url => {
+      tweet.img = `${url}`;
+      db.collection('tweets').doc(this.state.user.uid).collection('status').add(tweet);
+    });
+
+    // console.log(tweet);
+    
+    // db.collection('tweets').doc(this.state.user.uid).collection('status').add(tweet);
+    
   };
 
   render() {
-    const { tweets } = this.state;
+    const { user, tweets } = this.state;
+
+    // console.log(tweets);
 
     return (
       <section className="dashboard">
         <div className="left-sidebar">
-          {/* <h1 style={{ color: "white" }}>Profile area</h1> */}
           <LeftSideBar/>
         </div>
         <div className="middle">
-          <Tweet newTweet={this.addTweet} />
-          {/* <h1 style={{color: "white"}}>Tweet + Feeds area</h1> */}
+          <Tweet user={user} newTweet={this.addTweet} />
           <Tweets tweets={tweets} />
         </div>
         <div className="right-sidebar">

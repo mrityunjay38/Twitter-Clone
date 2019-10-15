@@ -2,44 +2,44 @@ import React, { Component } from "react";
 
 export default class Tweet extends Component {
   state = {
-    username: "godlevel",
-    name: "Xyz",
     text: "",
-    img: ""
+    imgUrl: "",
+    img: {}
   };
 
-  handleChange = (e) => {
+  handleChange = e => {
     this.setState({
       text: e.target.value
     });
   };
 
-  handleImgUpload = (e) => {
+  handleImgUpload = e => {
+    console.log(e.target.files[0]);
     this.setState({
-      img : URL.createObjectURL(e.target.files[0])
+      imgUrl: URL.createObjectURL(e.target.files[0]),
+      img: e.target.files[0]
     });
-  }
-
+  };
 
   newTweet = e => {
     e.preventDefault();
     const tweet = {
-      username: "godlevel",
-      name: "Xyz",
       text: this.state.text,
-      img: this.state.img
+      img: '',
+      is_retweet : false,
+      likes : 0
     };
 
-    this.props.newTweet(tweet);
+    this.props.newTweet(tweet,this.state.img,this.state.imgUrl);
 
     this.setState({
-        text : "",
-        img : ""
+      text: "",
+      img: "",
+      imgUrl: ""
     });
   };
 
   render() {
-
     const uploadedImgStyle = {
       background: "url(" + this.state.img + ")",
       backgroundSize: "cover",
@@ -47,25 +47,29 @@ export default class Tweet extends Component {
       paddingBottom: "20em",
       backgroundPosition: "center center",
       alignSelf: "center"
-    }
+    };
 
     return (
       <div className="tweets-section">
         <span>Home</span>
         <div className="add-tweet">
           <form onSubmit={this.newTweet}>
-            <input value={this.state.text}
+            <input
+              value={this.state.text}
               onChange={this.handleChange}
               type="text"
               maxLength="140"
               placeholder="What's happening?"
             />
-            {/* <div className="uploadImg" style={uploadedImgStyle}/> */}
-            <img src={this.state.img}/>
+            <img src={this.state.imgUrl} />
             <div>
-            <input onChange={this.handleImgUpload} type="file" name="imgUpload"/>
-            <span/>
-            <input type="submit" value="Tweet" />
+              <input
+                onChange={this.handleImgUpload}
+                type="file"
+                name="imgUpload"
+              />
+              <span />
+              <input type="submit" value="Tweet" />
             </div>
           </form>
         </div>
