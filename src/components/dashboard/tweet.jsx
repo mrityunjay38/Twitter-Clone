@@ -14,7 +14,7 @@ export default class Tweet extends Component {
   };
 
   handleImgUpload = e => {
-    console.log(e.target.files[0]);
+    // console.log(e.target.files[0]);
     this.setState({
       imgUrl: URL.createObjectURL(e.target.files[0]),
       img: e.target.files[0]
