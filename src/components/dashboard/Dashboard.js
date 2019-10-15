@@ -5,7 +5,7 @@ import Tweets from "../tweets";
 import fire from "../../firebaseConfig/config";
 import db from "../../firebaseConfig/db.js";
 import file from "../../firebaseConfig/storage";
-import LeftSideBar from "../sidebars/LeftSidebars";
+import LeftSideBar from "../sidebars/LeftSidebar";
 
 export default class Dashboard extends Component {
 
@@ -65,7 +65,7 @@ export default class Dashboard extends Component {
     return (
       <section className="dashboard">
         <div className="left-sidebar">
-          <LeftSideBar/>
+          <LeftSideBar user={user}/>
         </div>
         <div className="middle">
           <Tweet user={user} newTweet={this.addTweet} />
