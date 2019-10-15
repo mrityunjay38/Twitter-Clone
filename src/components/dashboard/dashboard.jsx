@@ -23,7 +23,7 @@ export default class Dashboard extends Component {
         user : user
       });
 
-      db.collection('tweets').doc(user.uid).collection('status').get().then( snap => {
+      db.collection('tweets').get().then( snap => {
         snap.docs.forEach( doc => this.setState({
           tweets : [doc.data(),...this.state.tweets]
         }));
@@ -44,31 +44,17 @@ export default class Dashboard extends Component {
     console.log(tweet.img);
     
     if(tweet.img == ''){
-      db.collection('tweets').doc(this.state.user.uid).collection('status').add(tweet);
+      db.collection('tweets').add(tweet);
     }
     else{
       const storageRef = file.ref('uploads/' + this.state.user.uid + '/tweets/' + img.name);
       storageRef.put(img);
       storageRef.getDownloadURL().then( url => {
         tweet.img = url;
-        // console.log('Here -> ' + tweet);
-        // console.log('start');
-        db.collection('tweets').doc(this.state.user.uid).collection('status').add(tweet);
-        // console.log('end');
+        db.collection('tweets').add(tweet);
       });
     }
 
-    // const storageRef = file.ref('uploads/' + this.state.user.uid + '/tweets/' + img.name);
-    // storageRef.put(img);
-    // storageRef.getDownloadURL().then( url => {
-    //   tweet.img = `${url}`;
-    //   db.collection('tweets').doc(this.state.user.uid).collection('status').add(tweet);
-    // });
-
-    // console.log(tweet);
-    
-    // db.collection('tweets').doc(this.state.user.uid).collection('status').add(tweet);
-    
   };
 
   render() {
