@@ -4,9 +4,7 @@ import './App.css';
 import Homepage from "./components/auth/homepage";
 import Login from './components/auth/Login';
 import Signup from './components/auth/Signup';
-// import Register from './components/auth/Register';
-// import firebaseConfig from './firebaseConfig/config';
-import Dashboard from './components/dashboard/dashboard'
+import Dashboard from './components/dashboard/Dashboard.jsx'
 
 function App() {
   return (

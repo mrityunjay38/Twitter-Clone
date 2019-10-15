@@ -1,11 +1,11 @@
 import React, { Component } from "react";
 import "../../css/dashboard.scss";
-import Tweet from "../dashboard/tweet";
+import Tweet from "./tweet";
 import Tweets from "../tweets";
 import fire from "../../firebaseConfig/config";
 import db from "../../firebaseConfig/db.js";
 import file from "../../firebaseConfig/storage";
-import LeftSideBar from "../sidebars/leftsidebar";
+import LeftSideBar from "../sidebars/LeftSidebars";
 
 export default class Dashboard extends Component {
 
