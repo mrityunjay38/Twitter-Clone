@@ -35,20 +35,35 @@ export default class Dashboard extends Component {
     }
   }
 
-  addTweet = (tweet,img,imgUrl) => {
-    const localTweet = tweet;
-    localTweet.img = imgUrl;
-    console.log(localTweet);
+  addTweet = (tweet,img) => {
+ 
     this.setState({
-      tweets: [localTweet,...this.state.tweets]
+      tweets: [tweet,...this.state.tweets]
     });
 
-    const storageRef = file.ref('uploads/' + this.state.user.uid + '/tweets/' + img.name);
-    storageRef.put(img);
-    storageRef.getDownloadURL().then( url => {
-      tweet.img = `${url}`;
+    console.log(tweet.img);
+    
+    if(tweet.img == ''){
       db.collection('tweets').doc(this.state.user.uid).collection('status').add(tweet);
-    });
+    }
+    else{
+      const storageRef = file.ref('uploads/' + this.state.user.uid + '/tweets/' + img.name);
+      storageRef.put(img);
+      storageRef.getDownloadURL().then( url => {
+        tweet.img = url;
+        // console.log('Here -> ' + tweet);
+        // console.log('start');
+        db.collection('tweets').doc(this.state.user.uid).collection('status').add(tweet);
+        // console.log('end');
+      });
+    }
+
+    // const storageRef = file.ref('uploads/' + this.state.user.uid + '/tweets/' + img.name);
+    // storageRef.put(img);
+    // storageRef.getDownloadURL().then( url => {
+    //   tweet.img = `${url}`;
+    //   db.collection('tweets').doc(this.state.user.uid).collection('status').add(tweet);
+    // });
 
     // console.log(tweet);
     

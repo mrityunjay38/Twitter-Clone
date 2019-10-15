@@ -25,16 +25,16 @@ export default class Tweet extends Component {
     e.preventDefault();
     const tweet = {
       text: this.state.text,
-      img: '',
+      img: this.state.imgUrl,
       is_retweet : false,
       likes : 0
     };
 
-    this.props.newTweet(tweet,this.state.img,this.state.imgUrl);
+    this.props.newTweet(tweet,this.state.img);
 
     this.setState({
       text: "",
-      img: "",
+      img: {},
       imgUrl: ""
     });
   };
