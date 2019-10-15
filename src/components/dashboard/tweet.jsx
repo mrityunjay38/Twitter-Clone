@@ -28,7 +28,9 @@ export default class Tweet extends Component {
       text: this.state.text,
       img: this.state.imgUrl,
       is_retweet : false,
-      likes : 0
+      retweet_count: 0,
+      likes : 0,
+      time: new Date().toISOString(),
     };
 
     this.props.newTweet(tweet,this.state.img);
