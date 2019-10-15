@@ -20,6 +20,7 @@ class OnBoard extends React.Component {
   componentDidMount() {
     
       fire.auth().onAuthStateChanged(user => {
+        console.log(user.displayName);
         let name = user.displayName.split('|')
         this.setState({ isSignedIn: !!user ,userId : user.uid, name: name[0]})
         console.log(this.state);

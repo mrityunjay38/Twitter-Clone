@@ -1,0 +1,71 @@
+.login-form {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  background: #15202b;
+  height: 100vh;
+}
+.login-form .form-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 50%;
+  margin-top: 2em;
+}
+.login-form .form-container span {
+  color: white;
+}
+.login-form .form-container form {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  overflow: auto;
+}
+.login-form .form-container form h1 {
+  font-size: 1.5em;
+  font-weight: 800;
+  color: white;
+}
+.login-form .form-container form p {
+  color: #fff;
+}
+.login-form .form-container form div input::placeholder {
+  text-align: left;
+}
+.login-form .form-container form div input[type="email"],
+.login-form .form-container form div [type="password"] {
+  display: inline-block;
+  width: 100%;
+  margin-right: 1em;
+  outline: 0;
+  background-color: #192734;
+  border: none;
+  border-bottom: 2px solid;
+  border-bottom-color: #8899a6;
+  border-radius: 3px;
+  padding: 1em;
+  margin-bottom: 2em;
+  color: white;
+  font-size: 1em;
+}
+.login-form .form-container form div input[type="email"]:focus,
+.login-form .form-container form div [type="password"]:focus {
+  border-bottom-color: #1da1f2;
+}
+.login-form .form-container form div button {
+  width: 100%;
+  background: #1da1f2;
+  color: #fff;
+  border: 1px solid #1da1f2;
+  text-decoration: none;
+  border-radius: 100px;
+  box-shadow: none;
+  cursor: pointer;
+  outline: 0;
+  font-size: 1em;
+  font-weight: bold;
+  line-height: 20px;
+  padding: 0.5em;
+  text-align: center;
+  white-space: nowrap;
+}
