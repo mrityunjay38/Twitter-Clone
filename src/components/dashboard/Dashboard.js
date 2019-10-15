@@ -21,6 +21,7 @@ export default class Dashboard extends Component {
             this.props.history.push('/');
         }
 
+        console.log(user);
     }
 
     render(){

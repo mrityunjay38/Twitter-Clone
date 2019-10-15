@@ -7,11 +7,7 @@ export default class Homepage extends Component {
 
   constructor(props) {
     super(props);
-    this.login = this.login.bind(this);
-    this.handleChange = this.handleChange.bind(this);
     this.state = {
-      email: '',
-      password: '',
       isSignedIn: false
     };
   }
@@ -24,19 +20,6 @@ export default class Homepage extends Component {
       }
       console.log("user", user)
     })
-  }
-
-  handleChange(e) {
-    this.setState({ [e.target.name]: e.target.value });
-  }
-
-  login(e) {
-    e.preventDefault();
-    fire.auth().signInWithEmailAndPassword(this.state.email, this.state.password).then((u)=>{
-        
-    }).catch((error) => {
-        this.setState({errorMessage : "Invalid username/password"})
-      });
   }
 
   render() {
@@ -59,12 +42,6 @@ export default class Homepage extends Component {
           </div>
         </div>
         <div className="loggedout-homepage">
-          <form>
-            <input type="email" onChange={this.handleChange} name="email" placeholder="Email" />
-            <input type="password" onChange={this.handleChange} name="password" placeholder="Password" />
-            
-              <input type="submit" onClick={this.login} value="Log in" />
-                      </form>
           <div className="join-twitter">
             <span className="Icon Icon--bird Icon--extraLarge" />
             <h1>See what's happening in the world right now</h1>

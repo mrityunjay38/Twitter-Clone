@@ -1,12 +1,11 @@
 .onboard{
     height: 89.2vh;
-    background: white;/* rgb(177, 175, 175);*/
     padding: 1rem;
 }
 
 .user-collection{
    width:50vw;
-   background: #15202b;
+   background: lightgrey;
    height: 80vh;
    position: fixed;
    box-shadow: 1px 2px 2px 2px #b7a8a896;
@@ -14,7 +13,7 @@
    margin-left: 22%;
    overflow: auto;
    border-radius: .5rem; 
-   color:white;
+   color:#15202b;
 }
 
 .suggestions{
@@ -38,16 +37,16 @@
 
 .follow{
     text-align: center;
-    color: #00adf4;
+    color: #15202b;
     border-radius: 1.5rem;
     border-style: solid;
     border-width: 1px;
     padding: .5rem;
-    border-color:#00adf4;
+    border-color:#15202b;
 }
 
 .follow:hover{
-    background: #00adf4;
+    background: #15202b;
     cursor: pointer;
     color: white;
 }
@@ -82,5 +81,9 @@
 
 hr{
     display: block; height: 1px;
-    border: 0; border-top: 1px solid rgb(231, 228, 228);
+    border: 0; border-top: 1px solid #15202b;
+}
+
+.user-collection h4 {
+    color: #15202b;
 }

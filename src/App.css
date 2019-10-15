@@ -161,3 +161,100 @@ h5 {
     text-decoration: none;
     color: lightgrey;
 }
+
+.col-md-6 {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 60%;
+    margin: auto;
+    flex-direction: column
+}
+
+.signUp-form h3 {
+    font: bolder 1.3rem/1rem helvetica;
+}
+
+.btn-signUp, .btn-login {
+    height: 2rem;
+    width: 5rem;
+    background: rgba(29,161,242,1.00);
+    border: none;
+    border-radius: 1rem;
+    color: whitesmoke;
+}
+
+.signUp-form-group input {
+    border: none;
+    background: none;
+    outline: 0;
+}
+
+.App {
+    height: 100vh;
+    background: #15202b;
+}
+
+.col-md-6 form {
+    width: 80%;
+    display: flex;
+    flex-direction: column;
+    margin: 2rem;
+    justify-content: center;
+    /* border: 0.1rem solid; */
+    padding: 1rem;
+    border-radius: 2rem;
+    background: white;
+}
+
+.form-group {
+    display: flex;
+    flex-direction: column;
+    font: lighter 0.8rem helvetica;
+    height: 3rem;
+    justify-content: center;
+    background: lightcyan;
+    color: dimgrey;
+    border-bottom: 0.1rem solid dimgrey;
+    padding: 0 0.5rem;
+    margin: 1rem 0;
+}
+
+.login-form h3 {
+    font: bolder 1.3rem/1rem helvetica;
+}
+
+.login-form-group input {
+    border: none;
+    background: none;
+    outline: 0;
+}
+
+.top-header-of-page {
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    width: 100%;
+    padding: 0 1rem;
+    margin-top: 1rem;
+}
+
+.top-header-of-page a {
+    position: relative;
+    right: 3rem;
+}
+
+.top-header-of-page button {
+    border: none;
+    background: white;
+    height: 1.5rem;
+    width: 4rem;
+    border-radius: 1rem;
+    color: rgba(29,161,242,1.00);
+}
+
+.top-header-of-page img {
+    right: 8rem;
+    width: 2.5rem;
+    position: relative;
+}

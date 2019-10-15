@@ -6,7 +6,7 @@ import uuid from 'uuid';
 import img from '../../img/twitter_icon.png'
 import { firestore, database } from 'firebase';
 import { Link } from "react-router-dom";
-class onBoard extends React.Component {
+class OnBoard extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -16,7 +16,6 @@ class onBoard extends React.Component {
       followers:[]
     };
   }
-
   componentDidMount() {
     
       fire.auth().onAuthStateChanged(user => {
@@ -27,12 +26,14 @@ class onBoard extends React.Component {
       })
   }
   getCurrentUser(){
-    let userRef = fire.firestore().collection("users").doc(`${this.state.userId}`)
-    let getDoc = userRef.get().then(doc => {
-      this.setState( { user_name: doc.data().name } );
+    fire.firestore().collection("users").where("userId","==", this.state.userId)
+    .get()
+    .then(querySnapshot => {
+      querySnapshot.docs.map(doc => {
+        this.setState({user_name : doc.data().name}) 
+      })
     })
   }
-
   getUsers(){
     FetchFollowers.FetchFollowers().then(data => {
        this.setState({followers : JSON.parse(JSON.stringify(data))});
@@ -44,7 +45,7 @@ class onBoard extends React.Component {
             var flag = 0;
             if(this.state.followers.length > 0) {
                  this.state.followers.map((follower) => {
-                 if(doc.data().userId == this.state.userId || doc.data().userId == follower.follower_id){
+                 if(doc.data().userId == this.state.userId || doc.data().userId == follower.userId ){
                    flag=1;
                  }
                 })
@@ -60,13 +61,10 @@ class onBoard extends React.Component {
                     this.state.users.push(userObje)
                 }
             }
-           
-            
-        })
+          })
         this.setState({ users:  this.state.users });
       });
   }
-
   follow(event,user) {
       this.state.follow = {
               userId: user.userId,
@@ -84,8 +82,8 @@ class onBoard extends React.Component {
       .set(data)
       .then(() => {
         fire.firestore().collection("followers")
-        .where("follower_id","==",this.state.follow.follower_id)
-        .where("userId","==",this.state.userId)
+        .where("follower_id","==", this.state.follow.follower_id)
+        .where("userId","==",this.state.follow.userId)
       .get()
       .then(querySnapshot => {
         const data = querySnapshot.docs.map(doc => {
@@ -125,7 +123,6 @@ class onBoard extends React.Component {
     }
    
   }
-
   render() {
     const { users } = this.state;
     return (
@@ -167,5 +164,4 @@ class onBoard extends React.Component {
     );
   }
 }
-
-export default onBoard;
+export default OnBoard;
