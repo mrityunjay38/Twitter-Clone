@@ -1,0 +1,92 @@
+.dashboard {
+  background: #15202b;
+  height: 100vh;
+  display: flex;
+}
+.left-sidebar {
+  min-width: 25%;
+}
+.right-sidebar {
+  width: 35%;
+}
+.middle {
+  width: 45%;
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  border-right: 1px solid;
+  border-left: 1px solid;
+  border-color: rgba(114, 173, 212, 0.3);
+  overflow-y: scroll;
+}
+.tweets-section {
+  width: 100%;
+}
+.tweets-section span {
+  display: block;
+  color: white;
+  font-size: 1.2em;
+  font-weight: 900;
+  border-bottom: 1px solid;
+  border-color: rgba(114, 173, 212, 0.2);
+  padding: 1em;
+  text-align: left;
+}
+.add-tweet {
+  border-bottom: 10px solid;
+  border-color: rgba(114, 173, 212, 0.2);
+}
+.add-tweet form {
+  display: flex;
+  flex-direction: column;
+  padding-bottom: 1em;
+}
+.add-tweet form input::placeholder {
+  font-weight: 400;
+}
+.add-tweet form input[type="text"] {
+  background: transparent;
+  border: none;
+  padding: 2em 0 0 1em;
+  font-size: 1em;
+  color: white;
+  outline: 0;
+}
+.add-tweet form input[type="file"] {
+  position: relative;
+  z-index: 1;
+  opacity: 0;
+}
+.add-tweet form input[type="submit"] {
+  color: white;
+  font-weight: bold;
+  background: #1da1f2;
+  border: none;
+  padding: 1em 1.5em 1em 1.5em;
+  border-radius: 50px;
+  align-self: flex-end;
+  margin-right: 1.5em;
+  outline: 0;
+  font-size: 1em;
+}
+.add-tweet form div {
+  position: relative;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-top: 1em;
+}
+.add-tweet form div span {
+  background: url("../img/upload image.png") no-repeat;
+  background-size: contain;
+  position: absolute;
+  color: cyan;
+  border: none;
+  color: #1da1f2;
+  margin-left: 1em;
+}
+.add-tweet form img {
+  width: 95%;
+  border-radius: 10px;
+  align-self: center;
+}
