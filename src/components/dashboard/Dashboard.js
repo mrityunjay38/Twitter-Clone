@@ -23,9 +23,9 @@ export default class Dashboard extends Component {
         user : user
       });
 
-      const followData = await db.collection('followers').where('userId', '==', user.uid).get();
+      const followData = await db.collection('followers').where('follower_id', '==', user.uid).get();
       const followerIds = [];
-      followData.docs.forEach( doc => followerIds.push(doc.data().follower_id));
+      followData.docs.forEach( doc => followerIds.push(doc.data().userId));
       console.log(followerIds);
 
       // tweets of followed users
