@@ -3,9 +3,10 @@ import fire from '../../firebaseConfig/config';
 import FetchFollowers from './FetchFollowers'
 import "../../css/onboard.css";
 import uuid from 'uuid';
-import img from '../../img/twitter_icon.png'
-import { firestore, database } from 'firebase';
+import img from '../../img/twitter_icon.png';
+import OnBoardListItem from './OnBoardListItem';
 import { Link } from "react-router-dom";
+
 class OnBoard extends React.Component {
   constructor(props) {
     super(props);
@@ -16,16 +17,15 @@ class OnBoard extends React.Component {
       followers:[]
       
     };
+    this.toggleFollow = this.toggleFollow.bind(this)
   }
   componentDidMount() {
     
       fire.auth().onAuthStateChanged(user => {
         let name = user.displayName.split('|')
         this.setState({ isSignedIn: !!user ,userId : user.uid, name: name[0]})
-        console.log(this.state);
         this.getAllUser();
-        // console.log(this.state.users);
-        this.getUsers();
+        this.filteringUsers();
       })
   }
 
@@ -36,7 +36,7 @@ class OnBoard extends React.Component {
       .get()
       .then(querySnapshot => { 
         querySnapshot.forEach(doc => {
-          if(doc.data().userId != this.state.userId) {
+          if(doc.data().userId !== this.state.userId) {
             userArr.push(doc.data())
           }
         }
@@ -45,86 +45,72 @@ class OnBoard extends React.Component {
       })
   }
 
-  getUsers(){
+  filteringUsers(){
     FetchFollowers.FetchFollowers().then(followerData => {
       let userArr = [];
       followerData.forEach(follower => {
         this.state.users.map(user => {
-
-          if(user.userId != follower.userId){
-            user.isFollow = false;
+          if(user.userId !== follower.userId){
+            user.isFollowing = false;
             userArr.push(user);
           }
-        }
-          )
+        })
         this.setState({users : userArr});
       })
     })
   }
 
-  follow(user) {
-
+  toggleFollow(user) {
     let db = fire.firestore();
-
-    this.setState({ 
-      follow: {
-        userId: user.userId,
-        user_name:user.name,
-        follower_id: this.state.userId,
-        follower_name:this.state.name   
-      }
-     })
-     
-     const data = {
-      ...this.state.follow
-    };
-    if(!user.isFollow) {
+    let follow = {
+      userId: user.userId,
+      user_name: user.name,
+      follower_id: this.state.userId,
+      follower_name:this.state.name,
+      id:uuid.v4()   
+    }
+    if(!user.isFollowing) {
       db.collection("followers")
-      .doc(this.state.userId)
-      .set(data)
+      .doc(follow.id)
+      .set(follow)
       .then(() => {
-        db.collection("followers")
-        .where("follower_id","==", this.state.follow.follower_id)
-        .where("userId","==",this.state.follow.userId)
-      .get()
-      .then(querySnapshot => {
-        const data = querySnapshot.docs.map(doc => {
-          let filteredListRecord = this.state.users.filter(
-            (list) => {
-              if(list.userId == user.userId){
-                list.follow = true;
-                list.collectionId = doc.data().id
-              }
-              return list;
-            } );
-           this.setState({users : []});
-          this.setState({
-            users: filteredListRecord
-          });
-        })
-      })
-        
-      })
+          db.collection("followers")
+          .where("follower_id","==", follow.follower_id)
+          .where("userId","==", follow.userId)
+          .get()
+          .then(querySnapshot => {
+             querySnapshot.docs.map(doc => {
+               let filteredListRecord = this.state.users.filter((list) => {
+                    if(list.userId === user.userId){
+                        list.isFollowing = true;
+                        list.collectionId = doc.data().id
+                    }
+                  return list;
+                });
+                this.setState({users : []});
+                this.setState({users: filteredListRecord});
+              })
+          })
+    })
     } else {
       fire.firestore().collection("followers")
       .doc(user.collectionId)
       .delete()
       .then(() => {
-        let filteredListRecord = this.state.users.filter(
-          (list) => {
-            if(list.userId == user.userId){
-              list.follow = "Follow";
+        let filteredListRecord = this.state.users.filter((list) => {
+            if(list.userId === user.userId){
+              list.isFollowing = false;
             }
             return list;
-          } );
+          });
          this.setState({users : []});
         this.setState({
           users: filteredListRecord
         });
       })
     }
-   
   }
+  
   render() {
     const { users } = this.state;
     return (
@@ -132,7 +118,7 @@ class OnBoard extends React.Component {
         <div className="user-collection">
          <div className="skip">
               <div className="skip-img">
-                <img src={img}/>
+                <img src={img} alt="Twitter-Logo"/>
               </div>
               <div className="skip-text">
                 <Link to={"/dashboard"}>Skip</Link>
@@ -148,18 +134,7 @@ class OnBoard extends React.Component {
           </div>
           <div className="users">
               {users.map(user => (
-                <div>
-                  <div key={user.userId} className="user">
-                        <div className="user-name">
-                            <h4>{user.name}</h4>
-                          </div>
-                          <div className="follow-button " onClick={this.follow.bind(this, user)}>
-                            {user.isFollow ? (<p className="follow">Unfollow</p>): (<p className="follow">Follow</p>)}
-                            {/* <p className="follow" onClick={() => this.follow(this,user)}>{user.follow}</p> */}
-                          </div>
-                  </div>
-                  <hr/>
-               </div>
+                <OnBoardListItem user={user} toggleFollow={this.toggleFollow}/>
               ))}
           </div>
         </div>

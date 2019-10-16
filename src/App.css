@@ -1,0 +1,172 @@
+.profile-area {
+    background: #15202b;
+    max-height: 100%;
+}
+
+.profile-area-container {
+    display: flex;
+}
+
+
+.user-area {
+    width: 55%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    border-right:1px solid;
+    border-left: 1px solid;
+    border-color: rgba(114, 173, 212, 0.3);
+}
+
+.profile-user-header-container-1 {
+    background: #15202b;
+    padding: 0 0.5rem;
+}
+
+.profile-user-header-container-2 {
+    padding: 0.5rem 0;
+}
+
+.profile-user-header-container-2 h4,h5 {
+    margin: 0;
+}
+
+h4 {
+    color: whitesmoke;
+}
+
+h5 {
+    color: #657786;
+}
+
+.user-header-image-container img{
+    max-width: 100%;
+}
+
+.trends-who-to-follow-area {
+    width: 25%;
+    align-items: center;
+    color: white;
+}
+
+.profile-pic-edit-tab-container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    position: relative;
+    height: 5rem;
+}
+
+.user-profile-edit-tab-container {
+    padding: 0 1rem;
+}
+
+.profile-pic-edit-tab-container img {
+    max-width: 8rem;
+        border-radius: 50%;
+        border: 0.3rem solid #15202b;
+        position: relative;
+        top: -2rem;
+}
+
+.edit-profile-btn {
+    background: none;
+    border: 0.1rem solid white;
+    color: white;
+    width: 6rem;
+    height: 2rem;
+    border-radius: 0 1rem;
+}
+
+.user-details-area {
+    padding: 0 1rem;
+}
+
+.user-name-on-profile-page {
+    margin: 0;
+    color: whitesmoke;
+}
+
+.users-choosen-name-as-username {
+    margin: 0.5rem 0;
+    color: #657786;
+    font: lighter 0.9rem/0.9rem helvetica;
+}
+
+.joining-our-app-date-with-little-calender {
+    display: flex;
+    align-items: center;
+    color: #657786;
+    font: lighter 0.9rem/2rem helvetica;
+}
+
+.joining-our-app-date-with-little-calender svg {
+    block-size: 1rem;
+    color: #657786;
+}
+
+.follower-following-btns {
+    margin: 0.5rem 0;
+}
+
+.btn-which-will-show-followers-follwing-users {
+    background: none;
+    border: none;
+    color: white;
+    font-variant: petite-caps;
+}
+
+.navigation-links-to-different-pages button {
+    background: none;
+    border: none;
+    color: #657786;
+    font: bolder 1rem/1.5rem helvetica;
+}
+
+.navigation-links-to-different-pages {
+    display: flex;
+    justify-content: space-between;
+}
+
+.col-md-6 {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 60%;
+    margin: auto;
+    flex-direction: column
+}
+
+.App {
+    height: 100vh;
+    background: #15202b;
+}
+
+.top-header-of-page {
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    width: 100%;
+    padding: 0 1rem;
+    margin-top: 1rem;
+}
+
+.top-header-of-page a {
+    position: relative;
+    right: 3rem;
+}
+
+.top-header-of-page button {
+    border: none;
+    background: white;
+    height: 1.5rem;
+    width: 4rem;
+    border-radius: 1rem;
+    color: rgba(29,161,242,1.00);
+}
+
+.top-header-of-page img {
+    right: 8rem;
+    width: 2.5rem;
+    position: relative;
+}

@@ -34,6 +34,7 @@ export default class Tweet extends Component {
       text: this.state.text,
       img: this.state.imgUrl,
       is_retweet : false,
+      retweet_count: 0,
       likes : 0,
       created: new Date()
       // firebase.database.ServerValue.TIMESTAMP

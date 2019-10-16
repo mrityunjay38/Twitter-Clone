@@ -12,7 +12,7 @@ class UserArea extends Component {
 
         return (
             <div>
-                <UserHeader name={name} sub={this.props.sub}/> 
+                {/* <UserHeader name={name} sub={this.props.sub}/> 
                 <HeaderImage photoURL={headerPhotoURL}/>  
                 <UserInfo 
                     name={name}
@@ -21,7 +21,8 @@ class UserArea extends Component {
                     Following={Following}
                     Followers={Followers}
                     userPhoto={userPhotoURL}
-                />             
+                />              */}
+                <h1>Hello</h1>
             </div>
         )
     }

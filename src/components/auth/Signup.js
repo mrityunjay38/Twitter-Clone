@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
-import { Link } from 'react-router-dom';
 import fire from '../../firebaseConfig/config';
-import TwitterIcon from '../../img/twitter_icon.png'
+import "../../css/signup.scss";
 
 class Signup extends Component {
   constructor(props) {
@@ -26,6 +25,7 @@ class Signup extends Component {
     fire.auth().createUserWithEmailAndPassword(this.state.email, this.state.password).then((u)=>{
 
         fire.auth().onAuthStateChanged(user => {
+          console.log(user);
 
           user.updateProfile({
             displayName: this.state.name + '|' + this.state.username 
@@ -40,7 +40,7 @@ class Signup extends Component {
               username: this.state.username,
               email:this.state.email,
               photo:'',
-              userId:user.uid
+              userId: user.uid
               };
           
           const data = {
@@ -64,35 +64,21 @@ class Signup extends Component {
 
   render() {
     return (
-      <div className="col-md-6">
-      <div class="top-header-of-page">
-          <Link to="/">
-            <button>Home</button>
-          </Link>
-          <img style={{ width: '2.5rem' }} src={TwitterIcon} alt="login icon"/>
-        </div>
-        <form className="signUp-form form">
-          <h3>Create your Account</h3>
-        <div className="signUp-form-group form-group">
-            <label htmlFor="FirstName">Name</label>
-            <input  value={this.state.name} onChange={this.handleChange} onSelect={this.handleCSS} type="text" name="name" class="form-control" />
+      <div className="signup-form">
+      <div className="form-container">
+      <span className="Icon Icon--bird Icon--extraLarge"/>
+        <form>
+          <h1>Create your Account</h1>
+          <div>
+            <input value={this.state.name} onChange={this.handleChange} type="text" name="name" placeholder="Name"/>
+            <input value={this.state.username} onChange={this.handleChange} type="text" name="username" placeholder="Username" />
+            <input value={this.state.email} onChange={this.handleChange} type="email" name="email" placeholder="Email" />
+            <input value={this.state.password} onChange={this.handleChange} type="password" name="password" placeholder="Password" />
+            <button onClick={this.signup} className="btn btn-signUp">Signup</button>
           </div>
-          <div class="signUp-form-group form-group">
-            <label for="Email">Username</label>
-            <input  value={this.state.username} onChange={this.handleChange} type="text" name="username" class="form-control" />
-          </div>
-          <div class="signUp-form-group form-group">
-            <label for="Email">Email address</label>
-            <input  value={this.state.email} onChange={this.handleChange} type="email" name="email" class="form-control" />
-          </div>
-          <div class="signUp-form-group form-group">
-            <label for="Password">Password</label>
-            <input  value={this.state.password} onChange={this.handleChange} type="password" name="password" class="form-control" />
-          </div>
-          <button onClick={this.signup} className="btn btn-signUp">Signup</button>
           <p>{this.state.errorMessage}</p>
         </form>
-      
+      </div>
       </div>
     );
   }

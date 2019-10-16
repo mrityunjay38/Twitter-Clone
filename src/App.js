@@ -21,8 +21,8 @@ function App() {
         <Route exact path="/" component={Homepage} />
         <Route path="/signup" component={Signup} />
         <Route path="/login" component={Login} />       
-        <Route exact path="/user/:uid/onboarding" component={OnBoard}/>
-        <Route exact path="/dashboard" component={Dashboard} />
+        <Route path="/user/:uid/onboarding" component={OnBoard}/>
+        <Route path="/dashboard" component={Dashboard} />
         <Route exact path="/user/:id" component={UserProfileWithTweets} />
         <Route path="/user/:id/with_replies" component={UserProfileWithReplies}/>
         <Route path="/user/:id/media" component={UserProfileWithMedia} />
