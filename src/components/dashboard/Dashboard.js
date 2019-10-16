@@ -5,7 +5,7 @@ import Tweets from "../tweets";
 import fire from "../../firebaseConfig/config";
 import db from "../../firebaseConfig/db.js";
 import file from "../../firebaseConfig/storage";
-import LeftSideBar from "../sidebars/LeftSidebars";
+import LeftSideBar from "../sidebars/LeftSidebar";
 
 export default class Dashboard extends Component {
 
@@ -15,19 +15,39 @@ export default class Dashboard extends Component {
     tweets: []
   };
 
-  componentDidMount() {
+  async componentDidMount() {
     const user = fire.auth().currentUser;
     if(user){
-      console.log(user);
+      const username = user.displayName.split('|');
+      console.log(user.uid);
       this.setState({
-        user : user
+        user : {
+          uid : user.uid,
+          name : username[0],
+          username: username[1]
+        }
       });
 
-      db.collection('tweets').get().then( snap => {
-        snap.docs.forEach( doc => this.setState({
-          tweets : [doc.data(),...this.state.tweets]
-        }));
+      // tweets of followed users
+      const followData = await db.collection('followers').where('follower_id', '==', user.uid).get();
+      const followerIds = [];
+      followData.docs.forEach( doc => followerIds.push(doc.data().userId));
+      console.log(followerIds);
+
+      followerIds.forEach( id => {
+        db.collection('tweets').where('uid', '==', id).get().then( snap => {
+          snap.docs.forEach( doc => this.setState({
+            tweets : [doc.data(),...this.state.tweets]
+          }));
+        });
       });
+
+      // particular user tweets
+      // db.collection('tweets').where('uid', '==', user.uid ).get().then( snap => {
+      //   snap.docs.forEach( doc => this.setState({
+      //     tweets : [doc.data(),...this.state.tweets]
+      //   }));
+      // });
 
     }
     else{
@@ -65,7 +85,7 @@ export default class Dashboard extends Component {
     return (
       <section className="dashboard">
         <div className="left-sidebar">
-          <LeftSideBar/>
+          <LeftSideBar user={user}/>
         </div>
         <div className="middle">
           <Tweet user={user} newTweet={this.addTweet} />

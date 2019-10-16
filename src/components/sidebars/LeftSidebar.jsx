@@ -9,7 +9,7 @@ export default class LeftSideBar extends Component {
             <div>
             <span className="Icon Icon--bird Icon--extraLarge"/>
             <Link className="home-btn" to="/dashboard"><span className="Icon Icon--homeFilled Icon--extraLarge"/><span>Home</span></Link>
-            <Link to="/profile"><span className="Icon Icon--follower Icon--extraLarge"/><span>Profile</span></Link>
+            <Link to="/user/undefined"><span className="Icon Icon--follower Icon--extraLarge"/><span>Profile</span></Link>
             <Link to="/" onClick={() => fire.auth().signOut()} className="logout">Logout</Link>
             </div>
         );

@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import "../css/tweets.scss";
+import moment from "moment";
 
 export default class Tweets extends Component {
   // sample state
@@ -22,6 +23,7 @@ export default class Tweets extends Component {
         <div className="user-credentials">
           <span className="name">{tweet.name}</span>
           <span className="username">@{tweet.username}</span>
+          <span className="username">{moment(tweet.time.toDate()).fromNow()}</span>
         </div>
         <div className="tweet-content">
           <p>{tweet.text}</p>

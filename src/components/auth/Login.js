@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import fire from '../../firebaseConfig/config';
-import TwitterIcon from '../../img/twitter_icon.png'
-import { Link } from 'react-router-dom'
+import { Link } from 'react-router-dom';
+import "../../css/login.scss";
 
 class Login extends Component {
   constructor(props) {
@@ -12,7 +12,8 @@ class Login extends Component {
       email: '',
       password: '',
       isSignedIn: false,
-      userId: ''
+      userId: '',
+      errorMessage: ''
     };
   }
   
@@ -30,34 +31,26 @@ class Login extends Component {
           }
         })
     }).catch((error) => {
-        this.setState({errorMessage : error})
+      console.log(error);
+        this.setState({errorMessage : "Wrong email or password."})
       });
   }
  
   render() {
     return (
-      <div className="col-md-6">
-        <div class="top-header-of-page">
-          <Link to="/">
-            <button>Home</button>
-          </Link>
-          <img style={{ width: '2.5rem' }} src={TwitterIcon} alt="login icon"/>
+      <div className="login-form">
+      <div className="form-container">
+        <span className="Icon Icon--bird Icon--extraLarge"/>
+        <form>
+        <h1>Log in to Twitter</h1>
+          <div>
+            <input value={this.state.email} onChange={this.handleChange} type="email" name="email" placeholder="Email"/>
+            <input value={this.state.password} onChange={this.handleChange} type="password" name="password" placeholder="Password"/>
+            <button type="submit" onClick={this.login} class="btn btn-login">Login</button>
         </div>
-        <form className="login-form form">
-        <h3>Log in to Twitter</h3>
-          <div class="login-form-group form-group">
-            <label for="Email">Email address</label>
-            <input  value={this.state.email} onChange={this.handleChange} type="email" name="email" class="form-control" />
-          </div>
-          <div class="login-form-group form-group">
-            <label for="Password">Password</label>
-            <input  value={this.state.password} onChange={this.handleChange} type="password" name="password" class="form-control" />
-          </div>
-          <Link to={`user/${this.state.userId}/onboarding`}>
-            <button type="submit" onClick={this.login} class="btn btn-login">Login</button><br/>
-          </Link>
-          <p>{this.state.errorMessage}</p>
+        <p>{this.state.errorMessage}</p>
         </form>
+        </div>
       </div>
     );
   }
