@@ -1,13 +1,8 @@
 import React, { Component } from 'react';
 import fire from '../../firebaseConfig/config';
-<<<<<<< HEAD
 import TwitterIcon from '../../img/twitter_icon.png'
-import { Link } from 'react-router-dom'
-=======
-import { Link } from 'react-router-dom';
 import "../../css/login.scss";
->>>>>>> refs/remotes/origin/develop
-
+import { Link } from 'react-router-dom';
 class Login extends Component {
   constructor(props) {
     super(props);

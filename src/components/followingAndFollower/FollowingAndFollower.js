@@ -1,9 +1,7 @@
 import React from "react";
 import "../../css/dashboard.scss";
 import "../../css/following.css";
-
-import db from "../../firebaseConfig/db.js";
-import LeftSideBar from "../sidebars/LeftSidebars";
+import LeftSideBar from "../sidebars/LeftSidebar";
 import UserFollowingList from "./UserFollowingList"
 
 export default class FollowingAndFollower extends React.Component {

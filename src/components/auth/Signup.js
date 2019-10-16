@@ -40,11 +40,7 @@ class Signup extends Component {
               email:this.state.email,
               photo:'',
               userId: user.uid
-<<<<<<< HEAD
-              }
-=======
-              };
->>>>>>> refs/remotes/origin/develop
+            }
           
           const data = {
               ...this.state.signup

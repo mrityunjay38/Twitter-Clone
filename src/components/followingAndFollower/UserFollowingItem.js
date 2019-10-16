@@ -13,7 +13,7 @@ class UserFollowingItem extends React.Component {
               <div className="user-name">
                   <h3>{this.props.user.user_name}</h3>
                 </div>
-                <div className="follow-button " onClick={this.props.toggleFollow.bind(this, this.props.user)}>
+                <div className="follow-button " onClick={this.props.toggleFollow.bind(this, this.props.user,this.props.users)}>
                   {this.props.user.isFollowing ? (<p className="follow">Unfollow</p>): (<p className="follow">Follow</p>)}
                 </div>
         </div>

@@ -48,7 +48,7 @@ class UserFollowingList extends React.Component {
       });
   }
 
-  toggleFollow(user) {
+  toggleFollow(user,users) {
       let follow = {
               userId: user.userId,
               user_name: user.user_name,
@@ -56,24 +56,22 @@ class UserFollowingList extends React.Component {
               follower_name: user.follower_name,
               id: uuid.v4()
           };
-          console.log("user : ", user)
-          console.log("follow : ", follow)
 
-    if(user.follow == "Follow") {
+    if(!user.isFollowing) {
       fire.firestore().collection("followers")
       .doc(follow.id.toString())
       .set(follow)
       .then(() => {
         fire.firestore().collection("followers")
-        .where("follower_id","==",this.state.follow.follower_id)
-        .where("userId","==",this.state.follow.userId)
+        .where("follower_id","==",follow.follower_id)
+        .where("userId","==",follow.userId)
       .get()
       .then(querySnapshot => {
           querySnapshot.docs.map(doc => {
-          let filteredListRecord = this.state.users.filter(
+          let filteredListRecord = users.filter(
             (list) => {
               if(list.userId == user.userId){
-                list.follow = "Unfollow";
+                list.isFollowing = true;
                 list.id = doc.data().id
               }
               return list;
@@ -91,10 +89,10 @@ class UserFollowingList extends React.Component {
       .doc(user.id)
       .delete()
       .then(() => {
-        let filteredListRecord = this.state.users.filter(
+        let filteredListRecord = users.filter(
           (list) => {
             if(list.follower_id == user.follower_id){
-              list.follow = "Follow";
+              list.isFollowing = false;
             }
             return list;
           } );
@@ -112,7 +110,7 @@ class UserFollowingList extends React.Component {
         <div>
               {users.map(user => (
                 <div>
-                  <UserFollowingItem user={user} toggleFollow={this.toggleFollow}/>
+                  <UserFollowingItem user={user} users={users} toggleFollow={this.toggleFollow}/>
                </div>
               ))}
         
