@@ -6,6 +6,7 @@ import fire from "../../firebaseConfig/config";
 import db from "../../firebaseConfig/db.js";
 import file from "../../firebaseConfig/storage";
 import LeftSideBar from "../sidebars/LeftSidebars";
+import { firestore } from "firebase";
 
 export default class Dashboard extends Component {
 
@@ -41,17 +42,21 @@ export default class Dashboard extends Component {
       tweets: [tweet,...this.state.tweets]
     });
 
+    
+    // let docRef = db.collection('tweets')
+
     console.log(tweet.img);
     
     if(tweet.img == ''){
-      db.collection('tweets').add(tweet);
+      db.collection('tweets').doc().set(tweet)
+      // db.collection('tweets')
     }
     else{
       const storageRef = file.ref('uploads/' + this.state.user.uid + '/tweets/' + img.name);
       storageRef.put(img);
       storageRef.getDownloadURL().then( url => {
         tweet.img = url;
-        db.collection('tweets').add(tweet);
+        db.collection('tweets').doc().set(tweet)
       });
     }
 
@@ -60,7 +65,7 @@ export default class Dashboard extends Component {
   render() {
     const { user, tweets } = this.state;
 
-    // console.log(tweets);
+    console.log(tweets);
 
     return (
       <section className="dashboard">

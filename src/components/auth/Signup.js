@@ -39,7 +39,8 @@ class Signup extends Component {
               name: this.state.name,
               username: this.state.username,
               email:this.state.email,
-              photo:''
+              photo:'',
+              userId:user.uid
               };
           
           const data = {
