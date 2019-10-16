@@ -32,6 +32,21 @@ export default class Dashboard extends Component {
       followData.docs.forEach( doc => followerIds.push(doc.data().userId));
       console.log(followerIds);
 
+      let tweetsRef = db.collection('tweets');
+
+      let orderedTweets = tweetsRef.orderBy('time', 'desc');
+
+
+    orderedTweets
+      .get()
+      .then(snap => {
+        console.log("snap : ",snap)
+        snap.docs.map(doc => {
+          console.log("doc : ", doc)
+          this.setState({ tweets: [...this.state.tweets, doc.data()] })
+        })
+      })
+      console.log("tweet :", this.state.tweets)
       // tweets of followed users
       followerIds.forEach( id => {
         db.collection('tweets').where('uid', '==', id).get().then( snap => {
@@ -55,6 +70,19 @@ export default class Dashboard extends Component {
   }
 
   addTweet = (tweet,img) => {
+
+    let tweetsRef = db.collection('tweets')
+      .where("uid", "==", this.state.user.userId);
+
+    let orderedTweets = tweetsRef.orderBy('created', 'desc');
+
+    orderedTweets
+      .get()
+      .then(snap => {
+        snap.docs.map(doc => {
+          this.setState({ tweets: [...this.state.tweets, doc.data()] })
+        })
+      })
  
     this.setState({
       tweets: [tweet,...this.state.tweets]
@@ -90,7 +118,7 @@ export default class Dashboard extends Component {
         </div>
         <div className="middle">
           <Tweet user={this.state.user} newTweet={this.addTweet} />
-          <Tweets tweets={this.state.tweets} />
+          <Tweets tweets={this.state.tweets} user={this.state.user}/>
         </div>
         <div className="right-sidebar">
           <h1 style={{ color: "white" }}>Follow/Unfollow snippet</h1>

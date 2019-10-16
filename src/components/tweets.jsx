@@ -15,13 +15,16 @@ export default class Tweets extends Component {
 
   render() {
     // const {name,username,content} = this.state;
+    console.log(this.props.tweets);
 
     return this.props.tweets.map(tweet => {
       // console.log(tweet);
       return (<article>
         <div className="user-credentials">
-          <span className="name">{tweet.name}</span>
-          <span className="username">@{tweet.username}</span>
+          <span className="name">{this.props.user.name}</span>
+          <span className="username">@{this.props.user.username}</span>
+          <span className="username">@{this.props.tweets.time}</span>
+
         </div>
         <div className="tweet-content">
           <p>{tweet.text}</p>

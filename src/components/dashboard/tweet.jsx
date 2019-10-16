@@ -26,11 +26,8 @@ export default class Tweet extends Component {
   newTweet = e => {
     e.preventDefault();
 
-    let CreatedAt = firestore.CreatedAt;
-
-
     const tweet = {
-      uid: this.props.user.uid,
+      uid: this.props.user.userId,
       text: this.state.text,
       img: this.state.imgUrl,
       is_retweet : false,
