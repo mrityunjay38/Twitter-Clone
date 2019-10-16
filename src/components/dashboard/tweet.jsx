@@ -24,13 +24,15 @@ export default class Tweet extends Component {
   newTweet = e => {
     e.preventDefault();
     const tweet = {
+      name: this.props.user.name,
+      username: this.props.user.username,
       uid: this.props.user.uid,
       text: this.state.text,
       img: this.state.imgUrl,
       is_retweet : false,
       retweet_count: 0,
       likes : 0,
-      time: new Date().toISOString(),
+      time: new Date()
     };
 
     this.props.newTweet(tweet,this.state.img);
