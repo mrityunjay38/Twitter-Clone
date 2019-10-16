@@ -2,7 +2,7 @@ import React, { Component } from 'react'
 import fire from '../../firebaseConfig/config'
 import UserArea from './UserArea'
 import RepliedTweet from '../tweets/RepliedTweet'
-import LeftSidebars from '../sidebars/LeftSidebars'
+import LeftSidebar from '../sidebars/LeftSidebar'
 
 class UserProfileWithReplies extends Component {
 
@@ -96,7 +96,7 @@ class UserProfileWithReplies extends Component {
         return (
             <section className="profile-area">
                 <div className="profile-area-container">
-                <LeftSidebars />
+                <LeftSidebar />
                 <div className="user-area">
                     <UserArea user={this.state.user} sub={this.state.sub}/>
                     <RepliedTweet />
