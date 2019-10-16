@@ -4,8 +4,11 @@ import Tweet from "./tweet";
 import Tweets from "../tweets";
 import fire from "../../firebaseConfig/config";
 import db from "../../firebaseConfig/db.js";
-import file from "../../firebaseConfig/storage";
+// import file from "../../firebaseConfig/storage";
 import LeftSideBar from "../sidebars/LeftSidebar";
+import firebase from 'firebase/app';
+import 'firebase/firestore';
+import 'firebase/storage';
 
 export default class Dashboard extends Component {
 
@@ -35,7 +38,7 @@ export default class Dashboard extends Component {
       console.log(followerIds);
 
       followerIds.forEach( id => {
-        db.collection('tweets').where('uid', '==', id).get().then( snap => {
+        db.collection('tweets').where('uid', '==', id).orderBy('time').get().then( snap => {
           snap.docs.forEach( doc => this.setState({
             tweets : [doc.data(),...this.state.tweets]
           }));
@@ -55,19 +58,17 @@ export default class Dashboard extends Component {
     }
   }
 
-  addTweet = (tweet,img) => {
+  addTweet = async (tweet,img) => {
  
     this.setState({
       tweets: [tweet,...this.state.tweets]
     });
-
-    console.log(tweet.img);
     
     if(tweet.img == ''){
       db.collection('tweets').add(tweet);
     }
     else{
-      const storageRef = file.ref('uploads/' + this.state.user.uid + '/tweets/' + img.name);
+      const storageRef = firebase.storage().ref('uploads/' + this.state.user.uid + '/tweets/' + img.name);
       storageRef.put(img);
       storageRef.getDownloadURL().then( url => {
         tweet.img = url;

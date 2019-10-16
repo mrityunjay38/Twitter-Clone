@@ -1,4 +1,6 @@
 import React, { Component } from "react";
+import firebase from 'firebase/app';
+import 'firebase/firestore';
 
 export default class Tweet extends Component {
   state = {
@@ -32,7 +34,7 @@ export default class Tweet extends Component {
       is_retweet : false,
       retweet_count: 0,
       likes : 0,
-      time: new Date()
+      time: firebase.firestore.Timestamp.fromDate(new Date())
     };
 
     this.props.newTweet(tweet,this.state.img);
