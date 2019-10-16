@@ -18,36 +18,22 @@ export default class Dashboard extends Component {
   async componentDidMount() {
     const user = fire.auth().currentUser;
     if(user){
-      let userName = user.displayName.split('|');
+      const username = user.displayName.split('|');
       console.log(user.uid);
       this.setState({
-        user: {
-          userId : user.uid,
-          name: userName[0],
-          username: userName[1]}
+        user : {
+          uid : user.uid,
+          name : username[0],
+          username: username[1]
+        }
       });
 
+      // tweets of followed users
       const followData = await db.collection('followers').where('follower_id', '==', user.uid).get();
       const followerIds = [];
       followData.docs.forEach( doc => followerIds.push(doc.data().userId));
       console.log(followerIds);
 
-      let tweetsRef = db.collection('tweets');
-
-      let orderedTweets = tweetsRef.orderBy('time', 'desc');
-
-
-    orderedTweets
-      .get()
-      .then(snap => {
-        console.log("snap : ",snap)
-        snap.docs.map(doc => {
-          console.log("doc : ", doc)
-          this.setState({ tweets: [...this.state.tweets, doc.data()] })
-        })
-      })
-      console.log("tweet :", this.state.tweets)
-      // tweets of followed users
       followerIds.forEach( id => {
         db.collection('tweets').where('uid', '==', id).get().then( snap => {
           snap.docs.forEach( doc => this.setState({

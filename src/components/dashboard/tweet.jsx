@@ -27,15 +27,16 @@ export default class Tweet extends Component {
     e.preventDefault();
 
     const tweet = {
-      uid: this.props.user.userId,
+      name: this.props.user.name,
+      username: this.props.user.username,
+      uid: this.props.user.uid,
       text: this.state.text,
       img: this.state.imgUrl,
       is_retweet : false,
       retweet_count: 0,
       likes : 0,
-      created: new Date()
-      // firebase.database.ServerValue.TIMESTAMP
-        };
+      time: new Date()
+    };
 
     this.props.newTweet(tweet,this.state.img);
 
