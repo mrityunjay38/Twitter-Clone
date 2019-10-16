@@ -22,46 +22,52 @@ class OnBoard extends React.Component {
   componentDidMount() {
     
       fire.auth().onAuthStateChanged(user => {
-        let name = user.displayName.split('|')
-        this.setState({ isSignedIn: !!user ,userId : user.uid, name: name[0]})
+        // let name = user.displayName.split('|')
+        this.setState({ isSignedIn: !!user ,userId : user.uid, name: "",db:fire.firestore()})
+        FetchFollowers.FetchFollowers().then(data => {
+          this.setState({followers : data});  
+       })
         this.getAllUser();
-        this.filteringUsers();
       })
+      
   }
 
   getAllUser(){
-    let db = fire.firestore();
     let userArr = [];
-    db.collection("users")
+    this.state.db.collection("users")
       .get()
       .then(querySnapshot => { 
         querySnapshot.forEach(doc => {
           if(doc.data().userId !== this.state.userId) {
             userArr.push(doc.data())
+          } else {
+            this.setState({name: doc.data().name})
           }
         }
         )
         this.setState( { users: userArr} )
+        this.filteringUsers();
       })
+
   }
 
   filteringUsers(){
-    FetchFollowers.FetchFollowers().then(followerData => {
-      let userArr = [];
-      followerData.forEach(follower => {
+       let userArr = [];
         this.state.users.map(user => {
-          if(user.userId !== follower.userId){
-            user.isFollowing = false;
-            userArr.push(user);
-          }
+          let isExist = false
+          this.state.followers.filter(follower => {
+            console.log(user.userId == follower.userId && follower.follower_id == this.state.userId)
+            if(user.userId == follower.userId && follower.follower_id == this.state.userId){
+              isExist = true;
+            }})
+            if(!isExist){
+              userArr.push(user)
+            }
         })
         this.setState({users : userArr});
-      })
-    })
   }
-
+ 
   toggleFollow(user) {
-    let db = fire.firestore();
     let follow = {
       userId: user.userId,
       user_name: user.name,
@@ -70,11 +76,11 @@ class OnBoard extends React.Component {
       id:uuid.v4()   
     }
     if(!user.isFollowing) {
-      db.collection("followers")
+      this.state.db.collection("followers")
       .doc(follow.id)
       .set(follow)
       .then(() => {
-          db.collection("followers")
+          this.state.db.collection("followers")
           .where("follower_id","==", follow.follower_id)
           .where("userId","==", follow.userId)
           .get()
