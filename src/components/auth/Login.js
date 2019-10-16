@@ -2,7 +2,6 @@ import React, { Component } from 'react';
 import fire from '../../firebaseConfig/config';
 import TwitterIcon from '../../img/twitter_icon.png'
 import { Link } from 'react-router-dom'
-// import StyledFirebaseAuth from "react-firebaseui/StyledFirebaseAuth"
 
 class Login extends Component {
   constructor(props) {

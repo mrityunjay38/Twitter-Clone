@@ -14,7 +14,6 @@ export default class Tweet extends Component {
   };
 
   handleImgUpload = e => {
-    // console.log(e.target.files[0]);
     this.setState({
       imgUrl: URL.createObjectURL(e.target.files[0]),
       img: e.target.files[0]
@@ -62,7 +61,7 @@ export default class Tweet extends Component {
               maxLength="140"
               placeholder="What's happening?"
             />
-            <img src={this.state.imgUrl} />
+            <img src={this.state.imgUrl} alt="Tweet image"/>
             <div>
               <input
                 onChange={this.handleImgUpload}

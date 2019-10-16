@@ -43,7 +43,7 @@ export default class Dashboard extends Component {
 
     console.log(tweet.img);
     
-    if(tweet.img == ''){
+    if(tweet.img === ''){
       db.collection('tweets').add(tweet);
     }
     else{

@@ -35,22 +35,24 @@ class Signup extends Component {
             console.log(error)
           })
 
-        this.state.signup = {
+        let signup ={
               name: this.state.name,
               username: this.state.username,
               email:this.state.email,
-              photo:''
-              };
+              photo:'',
+              userId: user.uid
+              }
           
           const data = {
               ...this.state.signup
            };
-
+           console.log("u data : ", signup)
           fire.firestore().collection("users")
             .doc(user.uid.toString())
-            .set(data)
+            .set(signup)
             .then(() => {
-              this.props.history.push(`/user/${user.uid}/onboarding`)
+              window.history = `/user/${user.uid}/onboarding`;
+              // this.props.history.push(`/user/${user.uid}/onboarding`)
             })
         })
 
