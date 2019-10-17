@@ -52,6 +52,7 @@ export default class Dashboard extends Component {
   }
 
   addTweet = (tweet,img) => {
+    console.log(this.state.user);
  
     this.setState({
       tweets: [tweet,...this.state.tweets]

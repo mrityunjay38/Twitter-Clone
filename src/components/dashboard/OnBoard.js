@@ -23,6 +23,7 @@ class OnBoard extends React.Component {
       fire.auth().onAuthStateChanged(user => {
         // let name = user.displayName.split('|')
         this.setState({ isSignedIn: !!user ,userId : user.uid, name: "",db:fire.firestore()})
+        // console.log(FetchFollowers.FetchFollowers())
         FetchFollowers.FetchFollowers().then(data => {
           this.setState({followers : data});  
        })

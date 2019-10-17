@@ -26,14 +26,14 @@ function App() {
           <Route path="/login" component={Login} />       
           <Route path="/user/:uid/onboarding" component={OnBoard}/>
           <Route path="/dashboard" component={Dashboard} />
-          <Route exact path="/user/:id" component={UserProfileWithTweets} />
+          <Route exact path="/:id" component={UserProfileWithTweets} />
           <Route path="/user/:id/with_replies" component={UserProfileWithReplies}/>
           <Route path="/user/:id/media" component={UserProfileWithMedia} />
           <Route path="/user/:id/likes" component={UserProfileWithLikes}/>
           <Route path="/user/:id/settings" component={EditUserDetails}/>
           <Route path="/user/:id/addTweet" component={AddNewTweet} />
           <Route exact path="/:username/following" component={FollowingAndFollower} />
-          <Route exact path="/:username/follower" component={FollowingAndFollower} />
+          <Route path="/:username/follower" component={FollowingAndFollower} />
         </Switch>
       </Router>
     </div>

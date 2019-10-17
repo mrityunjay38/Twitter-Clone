@@ -47,7 +47,9 @@ class Signup extends Component {
               email:this.state.email,
               profilePhotoURL:'',
               userId: u.user.uid,
-              headerPhotoURL: ''
+              headerPhotoURL: '',
+              noOfFollowing: 0,
+              noOfFollower: 0
             }
          
            console.log("u data : ", signup)
