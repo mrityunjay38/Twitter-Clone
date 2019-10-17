@@ -3,6 +3,7 @@ import "../css/tweets.scss";
 import moment from "moment";
 
 export default class Tweets extends Component {
+
   // sample state
 
   // state = {
@@ -16,15 +17,17 @@ export default class Tweets extends Component {
 
   render() {
     // const {name,username,content} = this.state;
-    console.log(this.props.tweets);
+    // new date();
+    // console.log(moment().format('LL','at', 'LTS'));
 
     return this.props.tweets.map(tweet => {
-      // console.log(tweet);
+      console.log(tweet.time);
       return (<article>
         <div className="user-credentials">
           <span className="name">{tweet.name}</span>
           <span className="username">@{tweet.username}</span>
-          <span className="username">{moment(tweet.time.toDate()).fromNow()}</span>
+          {/* <span className="username">{moment().format('LTS')}</span> */}
+          {/* moment(tweet.time.toDate()).fromNow() */}
         </div>
         <div className="tweet-content">
           <p>{tweet.text}</p>

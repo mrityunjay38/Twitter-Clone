@@ -36,7 +36,7 @@ class UserProfileWithReplies extends Component {
         return (
             <section className="profile-area">
                 <div className="profile-area-container">
-                <LeftSidebar user={this.state.user}/>
+                <LeftSidebar username={this.state.user.username}/>
                 <div className="user-area">
                     <h1>Hello</h1>
                     {/* <UserArea user={this.state.user} sub={this.state.sub}/>

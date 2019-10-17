@@ -36,9 +36,9 @@ class UserProfileWithLikes extends Component {
         return (
             <section className="profile-area">
                 <div className="profile-area-container">
-                <LeftSidebar />
+                <LeftSidebar username={this.state.username}/>
                 <div className="user-area">
-                    <UserArea user={this.state.user} sub={this.state.sub}/>
+                    {/* <UserArea user={this.state.user} sub={this.state.sub}/> */}
                     <LikedTweets />
                 </div>
                 <div className="trends-who-to-follow-area">

@@ -35,7 +35,7 @@ class UserProfileWithMedia extends Component {
         return (
             <section className="profile-area">
                 <div className="profile-area-container">
-                <LeftSidebar />
+                <LeftSidebar username={this.state.user.username}/>
                 <div className="user-area">
                     <UserArea user={this.state.user} sub={this.state.sub}/>
                     <UserMedia />

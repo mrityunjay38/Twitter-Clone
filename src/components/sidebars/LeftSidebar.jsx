@@ -20,17 +20,12 @@ export default class LeftSideBar extends Component {
     // }
 
     render(){
-        console.log(this.props.user);
-        const { username } = this.props.user;
-        // if(username != undefined) {
-
-        // }
         
         return (
             <div>
             <span className="Icon Icon--bird Icon--extraLarge"/>
             <Link className="home-btn" to="/dashboard"><span className="Icon Icon--homeFilled Icon--extraLarge"/><span>Home</span></Link>
-            <Link to={`/user/${username}`}>
+            <Link to={`/user/${this.props.username}`}>
                 <span className="Icon Icon--follower Icon--extraLarge"/> 
                 <span>
                     Profile

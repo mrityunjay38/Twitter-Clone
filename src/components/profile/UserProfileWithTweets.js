@@ -14,87 +14,11 @@ class UserProfileWithTweets extends Component {
     tweets: []
   };
 
-  // state = {
-  //   isSignedIn: false,
-  //   user: {
-  //     name: "Ashish Padhi",
-  //     username: "Zodiac0606",
-  //     Followers: [
-  //       {
-  //         uid: 1,
-  //         name: "Halo",
-  //         username: "game_of_the_year",
-  //         userPhotoURL: "https://i.redd.it/tqr6vf9i34l21.jpg"
-  //       }
-  //     ],
-  //     Following: [
-  //       {
-  //         uid: 3,
-  //         name: "One Piece",
-  //         username: "best_anime",
-  //         userPhotoURL:
-  //           "https://en.wikipedia.org/wiki/List_of_One_Piece_characters#/media/File:Main_characters_of_One_Piece.png"
-  //       }
-  //     ],
-  //     userPhotoURL:
-  //       "https://i.pinimg.com/474x/41/bf/4b/41bf4b466baf974aa6b50cab301c77d9--scorpio-sign-tattoos-symbol-tattoos.jpg",
-  //     likes: [
-  //       {
-  //         tweetID: 1,
-  //         tweet:
-  //           "Hey, Its been a long time since I've posted any new songs. So I've just come up with a new song. plz like it.",
-  //         uid: 2,
-  //         username: "SanjanaSinger007",
-  //         name: "Sanjana Singh",
-  //         likes: 23,
-  //         reply: [
-  //           {
-  //             tweetID: 324,
-  //             tweet: "abscskfbsdjkfb",
-  //             uid: 5,
-  //             username: "qwerty12345",
-  //             name: "keyboard",
-  //             likes: 453
-  //           }
-  //         ]
-  //       }
-  //     ],
-  //     tweets: [
-  //       {
-  //         tweetID: 1,
-  //         tweet: "Hello Everyone!",
-  //         photoURL: "https://wallpaperplay.com/walls/full/6/7/7/275271.jpg",
-  //         likes: 1297,
-  //         isReply: false,
-  //         reply: [
-  //           {
-  //             tweetID: 324,
-  //             tweet: "abscskfbsdjkfbafnajafjbafjsafjbdsfjkbdsjkb",
-  //             uid: 5,
-  //             username: "qwerty12345",
-  //             name: "keyboard",
-  //             likes: 4
-  //           }
-  //         ]
-  //       }
-  //     ],
-  //     replies: [
-  //       {
-  //         tweetID: 5,
-  //         tweet: "skdfkugbfkjdsfhisgdfhibadsjkbvd",
-  //         replied_to: 65
-  //       }
-  //     ],
-  //     headerPhotoURL: "https://wallpaperplay.com/walls/full/f/c/d/275250.jpg",
-  //     CreatedAt: "March 2016",
-  //     Media: []
-  //   },
-  //   sub: "Tweets"
-  // };
-
-  componentDidMount() {
+  async componentDidMount() {
     const user = fire.auth().currentUser;
+    
     if(user){
+      
       const username = user.displayName.split('|');
       console.log(user.uid);
       this.setState({
@@ -104,17 +28,27 @@ class UserProfileWithTweets extends Component {
           username: username[1]
         }
       });
+      console.log(this.state);
 
       // particular user tweets
-      db.collection('tweets').where('uid', '==', user.uid ).get().then( snap => {
-        snap.docs.forEach( doc => this.setState({
-          tweets : [doc.data(),...this.state.tweets]
-        }));
-      });
+      
     }
+
+    await db.collection('tweets').where('username', '==', this.props.match.params.id ).get().then( snap => {
+      // console.log(snap.docs);
+      snap.docs.forEach( doc => {
+        console.log(doc.data());
+
+        this.setState({
+            tweets : [doc.data(),...this.state.tweets]
+          })
+        }
+      );
+    });
   }
 
   render() {
+    console.log(this.props.match.params)
     
     const { tweets } = this.state;
 
@@ -122,11 +56,14 @@ class UserProfileWithTweets extends Component {
       <section className="profile-area">
         <div className="profile-area-container">
           <div className="left-sidebar">
-            <LeftSidebar user={this.state.user}/>
+            <LeftSidebar username={this.props.match.params.id}/>
           </div>
-          <div className="user-area">
+          <div className="middle">
             {/* <UserArea user={user} /> */}
+            <div>
             <Tweets tweets={tweets}/>
+
+            </div>
           </div>
           <div className="trends-who-to-follow-area">
             <h1>Hello There will be Trends here in the future.</h1>

@@ -57,18 +57,18 @@ export default class Dashboard extends Component {
 
   addTweet = (tweet,img) => {
 
-    let tweetsRef = db.collection('tweets')
-      .where("uid", "==", this.state.user.userId);
+    // let tweetsRef = db.collection('tweets')
+    //   .where("uid", "==", this.state.user.uid);
 
-    let orderedTweets = tweetsRef.orderBy('created', 'desc');
+    // let orderedTweets = tweetsRef.orderBy('created', 'desc');
 
-    orderedTweets
-      .get()
-      .then(snap => {
-        snap.docs.map(doc => {
-          this.setState({ tweets: [...this.state.tweets, doc.data()] })
-        })
-      })
+    // orderedTweets
+    //   .get()
+    //   .then(snap => {
+    //     snap.docs.map(doc => {
+    //       this.setState({ tweets: [...this.state.tweets, doc.data()] })
+    //     })
+    //   })
  
     this.setState({
       tweets: [tweet,...this.state.tweets]
@@ -100,7 +100,7 @@ export default class Dashboard extends Component {
     return (
       <section className="dashboard">
         <div className="left-sidebar">
-          <LeftSideBar user={this.state.user}/>
+          <LeftSideBar username={this.state.user.username}/>
         </div>
         <div className="middle">
           <Tweet user={this.state.user} newTweet={this.addTweet} />
