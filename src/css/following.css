@@ -12,6 +12,9 @@
     display: flex;
     justify-content: space-around;
 }
+.follow-menu a{
+    text-decoration: none;
+}
 .menu-item{
     color:rgb(214, 214, 214);
 }

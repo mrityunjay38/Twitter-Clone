@@ -6,7 +6,6 @@ import uuid from 'uuid';
 import img from '../../img/twitter_icon.png';
 import OnBoardListItem from './OnBoardListItem';
 import { Link } from "react-router-dom";
-
 class OnBoard extends React.Component {
   constructor(props) {
     super(props);
@@ -31,7 +30,6 @@ class OnBoard extends React.Component {
       })
       
   }
-
   getAllUser(){
     let userArr = [];
     this.state.db.collection("users")
@@ -50,7 +48,6 @@ class OnBoard extends React.Component {
       })
 
   }
-
   filteringUsers(){
        let userArr = [];
        let userArrayLimit = 8;
@@ -153,3 +150,7 @@ class OnBoard extends React.Component {
   }
 }
 export default OnBoard;
+// Collapse
+
+
+

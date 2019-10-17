@@ -6,8 +6,8 @@ export class UserHeader extends Component {
         return (
             <div className="profile-user-header-container-1">
                 <div className="profile-user-header-container-2">
-                    <h4>{this.props.name}</h4>
-                    <h5>{this.props.sub}</h5>
+                    <h4>Ashish Padhi</h4>
+                    <h5>Tweet</h5>
                 </div>
             </div>
         )

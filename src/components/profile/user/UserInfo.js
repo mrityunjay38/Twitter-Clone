@@ -4,30 +4,30 @@ import fire from '../../../firebaseConfig/config'
 
 export class UserInfo extends Component {
 
-    state = {
-        isSignedIn: false 
-    }
+    // state = {
+    //     isSignedIn: false 
+    // }
 
-    componentDidMount(){
-        fire.auth().onAuthStateChanged(user => {
-            // console.log(user);
-        this.setState({ isSignedIn: !!user, userID: user.uid })
-        if(user == null) {
-        }
-        // console.log(this.props.history)
-        })
-    }
+    // componentDidMount(){
+    //     fire.auth().onAuthStateChanged(user => {
+    //         // console.log(user);
+    //     this.setState({ isSignedIn: !!user, userID: user.uid })
+    //     if(user == null) {
+    //     }
+    //     // console.log(this.props.history)
+    //     })
+    // }
 
     render() {
 
-        const { name, username, CreatedAt, Followers, Following, userPhoto } = this.props
+        const { name, username } = this.props;
 
         return (
             <div>
                 <div className="user-profile-edit-tab-container">
                     <div className="profile-pic-edit-tab-container">
-                        <img alt="User Profile Pic" src={userPhoto} />
-                        <Link to={`/user/${this.state.userID}/settings`}>
+                        <img alt="User Profile Pic" src="" />
+                        <Link to={`/user/settings/profile`}>
                             <button className="btn edit-profile-btn direct-to-pop-up-btn">Edit Profile</button>
                         </Link>
                     </div>
@@ -48,34 +48,34 @@ export class UserInfo extends Component {
                                 <circle cx="7.032" cy="17.486" r="1.285"></circle>
                                 <circle cx="12" cy="17.486" r="1.285"></circle>
                             </g>
-                        </svg> joined {CreatedAt}
+                        </svg> joined Oct 2019
                     </div>
                     <div className="follower-following-btns">
-                        <Link to={`/user/${this.state.userID}/Followers`}>
-                            <button className="btn-which-will-show-followers-follwing-users">{Followers.length} Followers</button>
+                        <Link to={`/user/ashish.padhi/Followers`}>
+                            <button className="btn-which-will-show-followers-follwing-users">1 Followers</button>
                         </Link>
-                        <Link to={`/user/${this.state.userID}/Following`}>
-                            <button className="btn-which-will-show-followers-follwing-users">{Following.length} Following</button>
+                        <Link to={`/user/ashish.padhi/Following`}>
+                            <button className="btn-which-will-show-followers-follwing-users">2 Following</button>
                         </Link>
                     </div>
                 </div>
                 <nav className="navigation-links-to-different-pages">
-                    <Link to={`/user/${this.state.userID}`} >
+                    <Link to={`/user/ashish.padhi`} >
                         <button className="btn-style-for-Tweets-link">
                             Tweets
                         </button>
                     </Link>
-                    <Link to={`/user/${this.state.userID}/with_replies`} >
+                    <Link to={`/user/ashish.padhi/with_replies`} >
                         <button className="btn-style-for-Replies-link">
                             Tweets & Replies
                         </button>
                     </Link>
-                    <Link to={`/user/${this.state.userID}/media`} >
+                    <Link to={`/user/ashish.padhi/media`} >
                         <button className="btn-style-for-Media-link">
                             Media
                         </button>
                     </Link>
-                    <Link to={`/user/${this.state.userID}/likes`} >
+                    <Link to={`/user/ashish.padhi/likes`} >
                         <button className="btn-style-for-Likes-link">
                             Likes
                         </button>

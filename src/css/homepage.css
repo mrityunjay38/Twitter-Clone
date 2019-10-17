@@ -46,13 +46,14 @@
   flex-direction: column;
   align-items: center;
   position: relative;
-  top: -10em;
+  top: -6em;
 }
 .loggedout-homepage form p {
   color: white;
 }
 .loggedout-homepage form div {
   display: flex;
+  height: 2rem;
 }
 .loggedout-homepage form div input::placeholder {
   text-align: left;
@@ -86,7 +87,7 @@
   cursor: pointer;
   font-size: 1em;
   font-weight: bold;
-  line-height: 20px;
+  line-height: 10px;
   padding: 0em 1em 0em 1em;
   position: relative;
   text-align: center;
