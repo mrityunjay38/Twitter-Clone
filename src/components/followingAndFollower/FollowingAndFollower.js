@@ -18,7 +18,6 @@ constructor(props){
     }
     fire.auth().onAuthStateChanged(user => {
       let name = user.displayName.split('|')
-      console.log("calling : ", name)
       this.setState({ name:name[0], username: name[1]})
   })
     this.getUserData = this.getUserData.bind(this);
@@ -48,7 +47,7 @@ constructor(props){
     return (
       <section className="dashboard">
         <div className="left-sidebar">
-          <LeftSideBar/>
+          <LeftSideBar username={this.state.username}/>
         </div>
         <div className="middle">
           <div className="head-follow">

@@ -51,17 +51,24 @@ class RightSideBar extends React.Component {
 
   filteringUsers(){
        let userArr = [];
-        this.state.users.map(user => {
-          let isExist = false
-          this.state.followers.filter(follower => {
-            if(user.userId === follower.userId && follower.follower_id === this.state.userId){
-              isExist = true;
-            }})
-            if(!isExist && userArr.length < 4){
-              userArr.push(user)
-            }
-            return user;
-        })
+       let userLimit = 4;
+       let userList = this.state.users;
+       for(let i = 0; userList.length;i++){
+        // this.state.users.map(user => {
+            let isExist = false
+            this.state.followers.filter(follower => {
+              if(userList[i].userId === follower.userId && follower.follower_id === this.state.userId){
+                isExist = true;
+              }})
+              if(userArr.length < userLimit){
+                if(!isExist){
+                  userArr.push(userList[i])
+                }
+              } else {
+                break;
+              }
+          // })
+        }
         this.setState({users : userArr});
   }
  
