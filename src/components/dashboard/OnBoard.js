@@ -53,14 +53,15 @@ class OnBoard extends React.Component {
 
   filteringUsers(){
        let userArr = [];
-       
+       let userArrayLimit = 8;
         this.state.users.map(user => {
           let isExist = false
           this.state.followers.filter(follower => {
             if(user.userId === follower.userId && follower.follower_id === this.state.userId){
               isExist = true;
             }})
-            if(!isExist){
+
+            if(!isExist && userArr.length < userArrayLimit){
               userArr.push(user)
             }
             return user;
