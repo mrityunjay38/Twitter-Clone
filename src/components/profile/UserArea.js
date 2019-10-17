@@ -8,13 +8,16 @@ class UserArea extends Component {
     render() {
         // console.log(this.props.user)
 
-        // const { name, username, CreatedAt, Followers, Following, userPhotoURL, headerPhotoURL } = this.props.user;
+        const { name, username } = this.props.user;
 
         return (
             <div>
                 <UserHeader /> 
                 <HeaderImage />  
-                <UserInfo />
+                <UserInfo 
+                    name={name}
+                    username={username}
+                />
                     {/* name={name}
                     username={username}
                     CreatedAt={CreatedAt}

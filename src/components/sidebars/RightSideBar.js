@@ -87,6 +87,7 @@ class RightSideBar extends React.Component {
                let filteredListRecord = this.state.users.filter((list) => {
                     if(list.userId === user.userId){
                         list.isFollowing = true;
+                        list.style ={background:"#00adf4",color:"white"};
                         list.collectionId = doc.data().id
                     }
                   return list;
@@ -103,6 +104,7 @@ class RightSideBar extends React.Component {
       .then(() => {
         let filteredListRecord = this.state.users.filter((list) => {
             if(list.userId === user.userId){
+              list.style ={background:""}
               list.isFollowing = false;
             }
             return list;

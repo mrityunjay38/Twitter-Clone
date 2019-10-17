@@ -20,7 +20,7 @@ export class UserInfo extends Component {
 
     render() {
 
-        // const { name, username, CreatedAt, Followers, Following, userPhoto } = this.props
+        const { name, username } = this.props;
 
         return (
             <div>
@@ -33,8 +33,8 @@ export class UserInfo extends Component {
                     </div>
                 </div>
                 <div className="user-details-area">
-                    <h3 className="user-name-on-profile-page">Ashish Padhi</h3>
-                    <p className="users-choosen-name-as-username">@ashish.padhi</p>
+                    <h3 className="user-name-on-profile-page">{name}</h3>
+                    <p className="users-choosen-name-as-username">@{username}</p>
                     <div className="joining-our-app-date-with-little-calender">
                         <svg viewBox="0 0 24 24" style={{ blockSize: '1rem' }}>
                             <g>

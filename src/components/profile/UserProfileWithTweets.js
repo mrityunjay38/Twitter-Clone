@@ -46,7 +46,7 @@ class UserProfileWithTweets extends Component {
   }
 
   render() {
-        
+
     const { tweets } = this.state;
 
     return (
@@ -56,7 +56,7 @@ class UserProfileWithTweets extends Component {
             <LeftSidebar username={this.props.match.params.id}/>
           </div>
           <div className="middle">
-            <UserArea />
+            <UserArea user={this.state.user}/>
             <div>
             <Tweets tweets={tweets}/>
 
