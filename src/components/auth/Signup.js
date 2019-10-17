@@ -24,11 +24,12 @@ class Signup extends Component {
 
     fire.auth().createUserWithEmailAndPassword(this.state.email, this.state.password).then((u)=>{
 
-        fire.auth().onAuthStateChanged(user => {
+        fire.auth().onAuthStateChanged( async user => {
 
-          user.updateProfile({
+          await user.updateProfile({
             displayName: this.state.name + '|' + this.state.username 
-          }).then(function() {
+          })
+          .then(function() {
             console.log('successfully Updated profile')
           }, function(error) {
             console.log(error)
@@ -46,11 +47,14 @@ class Signup extends Component {
               ...this.state.signup
            };
 
-          fire.firestore().collection("users")
+          await fire.firestore().collection("users")
             .doc(user.uid.toString())
             .set(data)
             .then(() => {
-              this.props.history.push(`/user/${user.uid}/onboarding`)
+              const redirect = `/user/${user.uid}/onboarding`;
+              this.props.history.push(redirect);
+            }).catch(error => {
+              this.setState({errorMessage : error.message})
             })
         })
 
@@ -66,14 +70,14 @@ class Signup extends Component {
       <div className="signup-form">
       <div className="form-container">
       <span className="Icon Icon--bird Icon--extraLarge"/>
-        <form>
+        <form onSubmit={this.signup}>
           <h1>Create your Account</h1>
           <div>
             <input value={this.state.name} onChange={this.handleChange} type="text" name="name" placeholder="Name"/>
             <input value={this.state.username} onChange={this.handleChange} type="text" name="username" placeholder="Username" />
             <input value={this.state.email} onChange={this.handleChange} type="email" name="email" placeholder="Email" />
             <input value={this.state.password} onChange={this.handleChange} type="password" name="password" placeholder="Password" />
-            <button onClick={this.signup} className="btn btn-signUp">Signup</button>
+            <input type="submit" className="btn btn-signUp" value="Signup"/>
           </div>
           <p>{this.state.errorMessage}</p>
         </form>

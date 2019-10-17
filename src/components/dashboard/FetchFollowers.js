@@ -10,7 +10,6 @@ import fire from '../../firebaseConfig/config';
     snapshot.forEach(doc => {
       const data = doc.data();
       arr.push(data);
-      console.log(arr);
     })
     resolve(arr)
   })

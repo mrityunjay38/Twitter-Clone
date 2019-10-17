@@ -15,23 +15,23 @@ import OnBoard from './components/dashboard/OnBoard';
 
 function App() {
   return (
-    <div className="App">
     <Router>
+    <div className="App">
       <Switch>
-        <Route exact path="/" component={Homepage} />
-        <Route path="/signup" component={Signup} />
-        <Route path="/login" component={Login} />       
-        <Route exact path="/user/:uid/onboarding" component={OnBoard}/>
-        <Route exact path="/dashboard" component={Dashboard} />
-        <Route exact path="/user/:id" component={UserProfileWithTweets} />
+        <Route path="/" exact component={Homepage} />
+        <Route path="/login" component={Login} />
+        <Route path="/signup" component={Signup} />       
+        <Route path="/dashboard" component={Dashboard} />
+        <Route path="/user/:uid/onboarding" component={OnBoard}/>
+        <Route path="/user/:id" exact component={UserProfileWithTweets} />
         <Route path="/user/:id/with_replies" component={UserProfileWithReplies}/>
         <Route path="/user/:id/media" component={UserProfileWithMedia} />
         <Route path="/user/:id/likes" component={UserProfileWithLikes}/>
         <Route path="/user/:id/settings" component={EditUserDetails}/>
         <Route path="/user/:id/addTweet" component={AddNewTweet} />
         </Switch>
-      </Router>
     </div>
+    </Router>
   );
 }
 

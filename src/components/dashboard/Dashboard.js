@@ -4,8 +4,9 @@ import Tweet from "./tweet";
 import Tweets from "../tweets";
 import fire from "../../firebaseConfig/config";
 import db from "../../firebaseConfig/db.js";
-// import file from "../../firebaseConfig/storage";
-import LeftSideBar from "../sidebars/LeftSidebar";
+import file from "../../firebaseConfig/storage";
+import LeftSidebar from "../sidebars/LeftSidebar";
+import RightSidebar from "../sidebars/RightSidebar"
 import firebase from 'firebase/app';
 import 'firebase/firestore';
 import 'firebase/storage';
@@ -58,7 +59,7 @@ export default class Dashboard extends Component {
     }
   }
 
-  addTweet = async (tweet,img) => {
+  addTweet = (tweet,img) => {
  
     this.setState({
       tweets: [tweet,...this.state.tweets]
@@ -68,11 +69,13 @@ export default class Dashboard extends Component {
       db.collection('tweets').add(tweet);
     }
     else{
-      const storageRef = firebase.storage().ref('uploads/' + this.state.user.uid + '/tweets/' + img.name);
-      storageRef.put(img);
-      storageRef.getDownloadURL().then( url => {
-        tweet.img = url;
-        db.collection('tweets').add(tweet);
+      let storageRef = file.ref('uploads/' + this.state.user.uid + '/tweets/' + img.name);
+      storageRef.put(img).then( snap => {
+        console.log(snap);
+        storageRef.getDownloadURL().then( url => {
+          tweet.img = url;
+          db.collection('tweets').add(tweet);
+        });
       });
     }
 
@@ -86,14 +89,15 @@ export default class Dashboard extends Component {
     return (
       <section className="dashboard">
         <div className="left-sidebar">
-          <LeftSideBar user={user}/>
+          <LeftSidebar user={user}/>
         </div>
         <div className="middle">
           <Tweet user={user} newTweet={this.addTweet} />
           <Tweets tweets={tweets} />
         </div>
         <div className="right-sidebar">
-          <h1 style={{ color: "white" }}>Follow/Unfollow snippet</h1>
+          {/* <h1 style={{ color: "white" }}>Follow/Unfollow snippet</h1> */}
+          <RightSidebar/>
         </div>
       </section>
     );
