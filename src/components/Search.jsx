@@ -32,7 +32,7 @@ export default class Search extends Component {
     console.log(escapeChar);
     if (e.target.value !== "" && escapeChar !== "\\" && escapeChar !== "?" && escapeChar !== "^" && escapeChar !== "." && escapeChar !== "|") {
       let foundUsers = this.state.users.filter(user => {
-        if (new RegExp(`^${e.target.value}`, "i").test(user.username)) {
+        if (new RegExp(`^${e.target.value}`, "i").test(user.username) || new RegExp(`^${e.target.value}`, "i").test(user.name)) {
           return true;
         }
         return false;

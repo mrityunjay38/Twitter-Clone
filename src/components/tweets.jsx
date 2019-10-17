@@ -1,4 +1,5 @@
 import React, { Component } from "react";
+import RespondToTweet from "./RespondToTweet";
 import "../css/tweets.scss";
 import moment from "moment";
 
@@ -18,7 +19,7 @@ export default class Tweets extends Component {
     // const {name,username,content} = this.state;
 
     return this.props.tweets.map(tweet => {
-      // console.log(tweet);
+      console.log(tweet);
       return (<article>
         <div className="user-credentials">
           <span className="name">{tweet.name}</span>
@@ -29,6 +30,7 @@ export default class Tweets extends Component {
           <p>{tweet.text}</p>
           <img src={tweet.img} />
         </div>
+        <RespondToTweet/>
       </article>)
     });
   }
