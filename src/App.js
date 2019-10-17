@@ -13,6 +13,8 @@ import UserProfileWithMedia from './components/profile/UserProfileWithMedia';
 import UserProfileWithLikes from './components/profile/UserProfileWithLikes';
 import OnBoard from './components/dashboard/OnBoard';
 
+
+{/* <Route path="" render={props => } */}
 function App() {
   return (
     <div className="App">
@@ -27,7 +29,7 @@ function App() {
         <Route path="/user/:id/with_replies" component={UserProfileWithReplies}/>
         <Route path="/user/:id/media" component={UserProfileWithMedia} />
         <Route path="/user/:id/likes" component={UserProfileWithLikes}/>
-        <Route path="/user/:id/settings" component={EditUserDetails}/>
+        <Route path="/user/settings/profile" component={EditUserDetails}/>
         <Route path="/user/:id/addTweet" component={AddNewTweet} />
         </Switch>
       </Router>

@@ -6,6 +6,7 @@ import fire from "../../firebaseConfig/config";
 import db from "../../firebaseConfig/db.js";
 import file from "../../firebaseConfig/storage";
 import LeftSideBar from "../sidebars/LeftSidebar";
+import getFollowerData from '../../firebaseConfig/Queries'
 
 export default class Dashboard extends Component {
 
@@ -18,6 +19,9 @@ export default class Dashboard extends Component {
   async componentDidMount() {
     const user = fire.auth().currentUser;
     if(user){
+      if(user.displayName === null) {
+        window.location.href = `/user/${user.uid}/onboarding`;
+      }
       const username = user.displayName.split('|');
       console.log(user.uid);
       this.setState({
@@ -29,9 +33,8 @@ export default class Dashboard extends Component {
       });
 
       // tweets of followed users
-      const followData = await db.collection('followers').where('follower_id', '==', user.uid).get();
-      const followerIds = [];
-      followData.docs.forEach( doc => followerIds.push(doc.data().userId));
+      const followerIds = await getFollowerData.getFollowerData(user.uid);   
+      
       console.log(followerIds);
 
       followerIds.forEach( id => {

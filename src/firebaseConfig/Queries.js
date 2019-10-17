@@ -1,6 +1,6 @@
 import db from './db'
 
-export default function getAllTweetOfSingleUser (username) {
+function getAllTweetOfSingleUser (username) {
     
         const tweetArr = [];
         const tweetRefs = db.collection('tweets').orderBy('time', 'desc');
@@ -14,4 +14,19 @@ export default function getAllTweetOfSingleUser (username) {
 
         //   console.log(tweetArr);
           return tweetArr;
+}
+
+async function getFollowerData(userId) {
+  const followerIds = [];
+  
+  const followData = await db.collection('followers').where('follower_id', '==', userId).get();
+
+  followData.docs.forEach(doc => followerIds.push(doc.data().userId));
+
+  return followerIds;
+
+}
+
+export default {
+  getFollowerData
 }

@@ -20,7 +20,7 @@ class UserProfileWithTweets extends Component {
     if(user){
       
       const username = user.displayName.split('|');
-      console.log(user.uid);
+      console.log(user);
       this.setState({
         user : {
           uid : user.uid,
@@ -48,7 +48,7 @@ class UserProfileWithTweets extends Component {
   }
 
   render() {
-    console.log(this.props.match.params)
+    // console.log(this.props.match.params)
     
     const { tweets } = this.state;
 
@@ -59,7 +59,7 @@ class UserProfileWithTweets extends Component {
             <LeftSidebar username={this.props.match.params.id}/>
           </div>
           <div className="middle">
-            {/* <UserArea user={user} /> */}
+            <UserArea />
             <div>
             <Tweets tweets={tweets}/>
 
