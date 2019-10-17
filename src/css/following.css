@@ -1,0 +1,37 @@
+.head-follow{
+    height: 22vh;
+    border-bottom:1px solid white;
+    display:flex;
+    flex-direction: column;
+}
+.user-data{
+    color:white;
+    padding-left: 1rem;
+}
+.follow-menu{
+    display: flex;
+    justify-content: space-around;
+}
+.menu-item{
+    color:rgb(214, 214, 214);
+}
+.user-list{
+    display: flex;
+    margin:1rem;
+}
+.user-name{
+    color:white;
+}
+.follow-button{
+    align-self: flex-end;
+    flex:1;
+}
+.follow{
+    text-align: center;
+    color: #00adf4;
+    border-radius: 1.5rem;
+    border-style: solid;
+    border-width: 1px;
+    padding: .5rem;
+    border-color:white;
+}

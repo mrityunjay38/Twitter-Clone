@@ -4,6 +4,8 @@ import db from "../../firebaseConfig/db.js";
 import UserArea from "./UserArea";
 import Tweets from "../../components/tweets";
 import LeftSidebar from "../sidebars/LeftSidebar";
+import RightSideBar from "../sidebars/RightSideBar";
+
 
 
 class UserProfileWithTweets extends Component {
@@ -28,14 +30,10 @@ class UserProfileWithTweets extends Component {
           username: username[1]
         }
       });
-      console.log(this.state);
-
-      // particular user tweets
-      
+      console.log(this.state);      
     }
 
     await db.collection('tweets').where('username', '==', this.props.match.params.id ).get().then( snap => {
-      // console.log(snap.docs);
       snap.docs.forEach( doc => {
         console.log(doc.data());
 
@@ -48,8 +46,7 @@ class UserProfileWithTweets extends Component {
   }
 
   render() {
-    // console.log(this.props.match.params)
-    
+        
     const { tweets } = this.state;
 
     return (
@@ -66,7 +63,7 @@ class UserProfileWithTweets extends Component {
             </div>
           </div>
           <div className="trends-who-to-follow-area">
-            <h1>Hello There will be Trends here in the future.</h1>
+            <RightSideBar/>
           </div>
         </div>
       </section>

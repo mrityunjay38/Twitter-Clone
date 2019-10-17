@@ -1,12 +1,11 @@
 import React from "react";
 import fire from '../../firebaseConfig/config';
-import FetchFollowers from './FetchFollowers'
+import FetchFollowers from '../dashboard/FetchFollowers'
 import "../../css/onboard.css";
 import uuid from 'uuid';
-import img from '../../img/twitter_icon.png';
-import OnBoardListItem from './OnBoardListItem';
-import { Link } from "react-router-dom";
-class OnBoard extends React.Component {
+import RightSideBarListItem from './RightSideBarListItem';
+
+class RightSideBar extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -30,9 +29,10 @@ class OnBoard extends React.Component {
       })
       
   }
+
   getAllUser(){
     let userArr = [];
-    this.state.db.collection("users")
+    fire.firestore().collection("users")
       .get()
       .then(querySnapshot => { 
         querySnapshot.forEach(doc => {
@@ -48,6 +48,7 @@ class OnBoard extends React.Component {
       })
 
   }
+
   filteringUsers(){
        let userArr = [];
         this.state.users.map(user => {
@@ -56,7 +57,7 @@ class OnBoard extends React.Component {
             if(user.userId === follower.userId && follower.follower_id === this.state.userId){
               isExist = true;
             }})
-            if(!isExist){
+            if(!isExist && userArr.length < 4){
               userArr.push(user)
             }
             return user;
@@ -77,7 +78,7 @@ class OnBoard extends React.Component {
       .doc(follow.id)
       .set(follow)
       .then(() => {
-          this.state.db.collection("followers")
+        fire.firestore().collection("followers")
           .where("follower_id","==", follow.follower_id)
           .where("userId","==", follow.userId)
           .get()
@@ -117,36 +118,17 @@ class OnBoard extends React.Component {
   render() {
     const { users } = this.state;
     return (
-      <div className="onboard">
-        <div className="user-collection">
-         <div className="skip">
-              <div className="skip-img">
-                <img src={img} alt="Twitter-Logo"/>
-              </div>
-              <div className="skip-text">
-                <Link to={"/dashboard"}>Done</Link>
-              </div>
+        
+      <div className="suggestion">
+          <div className="suggestion-head">
+              <h2>Who to follow </h2>
           </div>
-          <div className="suggestions">
-            <h2>Suggestions for you to follow</h2>
-          </div>
-          <div>
-            <hr/>
-              <h4>You may be interested in</h4>
-            <hr/>
-          </div>
-          <div className="users">
+           
               {users.map(user => (
-                <OnBoardListItem user={user} toggleFollow={this.toggleFollow}/>
+                <RightSideBarListItem user={user} toggleFollow={this.toggleFollow}/>
               ))}
-          </div>
-        </div>
       </div>
     );
   }
 }
-export default OnBoard;
-// Collapse
-
-
-
+export default RightSideBar;

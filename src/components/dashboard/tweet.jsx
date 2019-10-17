@@ -1,6 +1,8 @@
 import React, { Component } from "react";
-import fire from '../../firebaseConfig/config'
-import { firestore } from "firebase";
+// import fire from '../../firebaseConfig/config'
+// import { firestore } from "firebase";
+import firebase from 'firebase/app'
+import 'firebase/firestore'
 
 export default class Tweet extends Component {
   state = {
@@ -16,7 +18,6 @@ export default class Tweet extends Component {
   };
 
   handleImgUpload = e => {
-    // console.log(e.target.files[0]);
     this.setState({
       imgUrl: URL.createObjectURL(e.target.files[0]),
       img: e.target.files[0]
@@ -35,7 +36,7 @@ export default class Tweet extends Component {
       is_retweet : false,
       retweet_count: 0,
       likes : 0,
-      time: new Date()
+      time: firebase.firestore.Timestamp.fromDate(new Date())
     };
 
     this.props.newTweet(tweet,this.state.img);
@@ -69,7 +70,7 @@ export default class Tweet extends Component {
               maxLength="140"
               placeholder="What's happening?"
             />
-            <img src={this.state.imgUrl} />
+            <img src={this.state.imgUrl} alt="Tweet image"/>
             <div>
               <input
                 onChange={this.handleImgUpload}
