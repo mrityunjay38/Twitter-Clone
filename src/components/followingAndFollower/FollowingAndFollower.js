@@ -54,7 +54,7 @@ constructor(props){
           <div className="head-follow">
             <div className="user-data">
                 <h3>{this.state.name}</h3>
-                <small>{'@'+this.state.username}</small>
+                <small>{this.state.username}</small>
             </div>
             <div className="follow-menu">
                 <h4 onClick={this.getUserData.bind(this,"follower")} className="menu-item" style={this.state.followerStyle}>Followers</h4>
