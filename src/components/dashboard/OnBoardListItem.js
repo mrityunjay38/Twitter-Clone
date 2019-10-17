@@ -12,8 +12,8 @@ class OnBoardListItem extends React.Component {
               <div className="user-name">
                   <h4>{this.props.user.name}</h4>
                 </div>
-                <div className="follow-button " onClick={this.props.toggleFollow.bind(this, this.props.user)}>
-                  {this.props.user.isFollowing ? (<p className="follow">Unfollow</p>): (<p className="follow">Follow</p>)}
+                <div className="follow-button "  onClick={this.props.toggleFollow.bind(this, this.props.user)}>
+                  {this.props.user.isFollowing ? (<p className="follow" style={this.props.user.style}>Unfollow</p>): (<p className="follow" style={this.props.user.style}>Follow</p>)}
                 </div>
         </div>
         <hr/>

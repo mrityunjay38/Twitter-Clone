@@ -53,6 +53,7 @@ class OnBoard extends React.Component {
 
   filteringUsers(){
        let userArr = [];
+       
         this.state.users.map(user => {
           let isExist = false
           this.state.followers.filter(follower => {
@@ -89,6 +90,7 @@ class OnBoard extends React.Component {
                let filteredListRecord = this.state.users.filter((list) => {
                     if(list.userId === user.userId){
                         list.isFollowing = true;
+                        list.style ={background:"#00adf4",color:"white"};
                         list.collectionId = doc.data().id
                     }
                   return list;
@@ -105,6 +107,7 @@ class OnBoard extends React.Component {
       .then(() => {
         let filteredListRecord = this.state.users.filter((list) => {
             if(list.userId === user.userId){
+              list.style ={background:""}
               list.isFollowing = false;
             }
             return list;

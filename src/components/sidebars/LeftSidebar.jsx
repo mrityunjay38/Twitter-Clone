@@ -4,6 +4,15 @@ import "../../css/left-sidebar.scss";
 import fire from "../../firebaseConfig/config";
 
 export default class LeftSideBar extends Component {
+    constructor(props){
+        super(props)
+        fire.auth().onAuthStateChanged(user => {
+                         let name = user.displayName.split('|')[1]
+                         console.log("calling : ", name)
+                         this.setState({ isSignedIn: !!user ,userId : user.uid, username: name,db:fire.firestore()})
+                     })
+    }
+
     render(){
         return (
             <div>
@@ -13,7 +22,7 @@ export default class LeftSideBar extends Component {
                     <span className="Icon Icon--follower Icon--extraLarge"/>
                     <span>Followings</span>
                 </Link>
-                <Link className="profile-btn" to={`/name}/follower`}>
+                <Link className="profile-btn" to={`/name}/following`}>
                     <span className="Icon Icon--follower Icon--extraLarge"/>
                     <span>Followers</span>
                 </Link>
