@@ -6,6 +6,7 @@ import RightSideBar from "../sidebars/RightSideBar";
 import UserFollowingList from "./UserFollowingList"
 import UserFollowerList from "./UserFollowerList"
 import fire from "../../firebaseConfig/config";
+import { Link } from 'react-router-dom'
 
 export default class FollowingAndFollower extends React.Component {
 constructor(props){
@@ -48,7 +49,7 @@ constructor(props){
     return (
       <section className="dashboard">
         <div className="left-sidebar">
-          <LeftSideBar/>
+          <LeftSideBar username={this.state.username}/>
         </div>
         <div className="middle">
           <div className="head-follow">
@@ -57,8 +58,12 @@ constructor(props){
                 <small>{this.state.username}</small>
             </div>
             <div className="follow-menu">
+              <Link to={`/${this.state.username}/follower`}>
                 <h4 onClick={this.getUserData.bind(this,"follower")} className="menu-item" style={this.state.followerStyle}>Followers</h4>
+              </Link>
+              <Link to={`/${this.state.username}/following`}>
                 <h4 onClick={this.getUserData.bind(this,"following")} className="menu-item" style={this.state.followingStyle}>Following</h4>
+              </Link>
             </div>
           </div>
           <div className="content-list">

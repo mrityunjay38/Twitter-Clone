@@ -11,6 +11,7 @@ export default class LeftSideBar extends Component {
     //     username: this.props.user.username
     // }
 
+    
     // componentDidMount() {
     //     fire.auth().onAuthStateChanged(user => {
     //         this.setState({ isSignedIn: !!user ,userId : user.uid, name: name[0]})
@@ -42,7 +43,7 @@ export default class LeftSideBar extends Component {
                     <span className="Icon Icon--follower Icon--extraLarge"/>
                     <span>Followers</span>
                 </Link>
-            <Link to={`/user/${this.props.username}`}><span className="Icon Icon--follower Icon--extraLarge"/><span>Profile</span></Link>
+            <Link to={`/${this.props.username}`}><span className="Icon Icon--follower Icon--extraLarge"/><span>Profile</span></Link>
             <Link to="/" onClick={() => fire.auth().signOut()} className="logout">Logout</Link>
             </div>
         );
