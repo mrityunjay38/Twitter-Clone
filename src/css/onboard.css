@@ -86,3 +86,25 @@ hr{
 .user-collection h4 {
     color: #15202b;
 }
+
+.suggestion{
+    margin:3rem;
+    padding:1rem;
+    height: 80vh;
+    overflow:hidden;
+    /* overflow-y: scroll; */
+    background: #233a3a;
+    
+}
+.suggestion h2{
+    color:white;
+}
+.suggestion hr{
+    color: white;
+    border-bottom: 1px solid #00adf4;
+}
+.suggestion-head{
+    border-bottom: 1px solid white;
+    padding-bottom: 2rem;
+
+}

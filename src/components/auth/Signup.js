@@ -41,17 +41,13 @@ class Signup extends Component {
               photo:'',
               userId: user.uid
             }
-          
-          const data = {
-              ...this.state.signup
-           };
+         
            console.log("u data : ", signup)
           fire.firestore().collection("users")
             .doc(user.uid.toString())
             .set(signup)
             .then(() => {
-              window.history = `/user/${user.uid}/onboarding`;
-              // this.props.history.push(`/user/${user.uid}/onboarding`)
+              window.location.href = `/user/${this.state.username}/onboarding`;
             })
         })
 

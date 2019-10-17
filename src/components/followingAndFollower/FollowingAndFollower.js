@@ -2,11 +2,15 @@ import React from "react";
 import "../../css/dashboard.scss";
 import "../../css/following.css";
 import LeftSideBar from "../sidebars/LeftSidebar";
+import RightSideBar from "../sidebars/RightSideBar";
 import UserFollowingList from "./UserFollowingList"
+import UserFollowerList from "./UserFollowerList"
+
 
 export default class FollowingAndFollower extends React.Component {
 constructor(props){
     super(props);
+    console.log(this.props)
     this.state = {
         menu: this.props.match.url.split("/")[2],
         followerStyle:{},
@@ -15,11 +19,14 @@ constructor(props){
     this.getUserData = this.getUserData.bind(this);
 }
   componentDidMount() {
-      this.setCssStyle();
+      this.getUserData(this.props.match.url.split("/")[2]);
   }
 
-  setCssStyle(){
-    if(this.state.menu === "following"){
+  getUserData(dataType){
+    this.setState({
+      menu:dataType
+    })
+    if(dataType === "following"){
       this.setState({
         followingStyle : {color: "#4aa1f2"},
         followerStyle : {color: "rgb(214, 214, 214)"}
@@ -32,14 +39,7 @@ constructor(props){
     }
   }
 
-  getUserData(dataType){
-    this.setState({
-      menu:dataType
-    })
-  }
-
   render() {
-
     return (
       <section className="dashboard">
         <div className="left-sidebar">
@@ -57,67 +57,11 @@ constructor(props){
             </div>
           </div>
           <div className="content-list">
-            {this.state.menu == "following" ? (<UserFollowingList/>) : (
-              <React.Fragment>
-              
-            {/* </React.Fragment>
-            <React.Fragment> */}
-             <div className="user-list">
-              <div className="user-name">
-                <h3>Akshay</h3>
-              </div>
-              <div className="follow-button ">
-                  <p className="follow">Follow</p>
-              </div>
-             </div>
-            <div className="user-list">
-              <div className="user-name">
-                <h3>Pramod</h3>
-              </div>
-              <div className="follow-button ">
-                  <p className="follow">Follow</p>
-              </div>
-            </div>
-            <div className="user-list">
-              <div className="user-name">
-                <h3>Jumil</h3>
-              </div>
-              <div className="follow-button ">
-                  <p className="follow">Unfollow</p>
-              </div>
-            </div>
-            <div className="user-list">
-              <div className="user-name">
-                <h3>Ashish</h3>
-              </div>
-              <div className="follow-button ">
-                  <p className="follow">Follow</p>
-              </div>
-            </div>
-            <div className="user-list">
-              <div className="user-name">
-                <h3>Mrityunjay</h3>
-              </div>
-              <div className="follow-button ">
-                  <p className="follow">Unfollow</p>
-              </div>
-            </div>
-            <div className="user-list">
-                <div className="user-name">
-                  <h3>Arjun</h3>
-                </div>
-                <div className="follow-button ">
-                    <p className="follow">Follow</p>
-                </div>
-              </div>
-          {/* </React.Fragment>
-          <React.Fragment> */}           
-        </React.Fragment>
-            )}
+            {this.state.menu === "following" ? (<UserFollowingList/>) : (<UserFollowerList/>)}
         </div>
         </div>
         <div className="right-sidebar">
-          {/* <h1 style={{ color: "white" }}>Follow/Unfollow snippet</h1> */}
+          <RightSideBar/>
         </div>
       </section>
     );

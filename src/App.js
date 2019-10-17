@@ -14,7 +14,6 @@ import UserProfileWithLikes from './components/profile/UserProfileWithLikes';
 import OnBoard from './components/dashboard/OnBoard';
 import FollowingAndFollower from './components/followingAndFollower/FollowingAndFollower.js';
 
-
 function App() {
   return (
     <div className="App">

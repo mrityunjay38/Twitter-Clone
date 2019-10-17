@@ -1,7 +1,8 @@
 import React from "react";
 import fire from '../../firebaseConfig/config';
 import "../../css/onboard.css";
-import UserFollowingItem from './UserFollowingItem'
+import UserFollowerItem from './UserFollowerItem'
+import FetchFollowers from '../dashboard/FetchFollowers'
 import uuid from 'uuid';
 
 class UserFollowingList extends React.Component {
@@ -20,6 +21,9 @@ class UserFollowingList extends React.Component {
       fire.auth().onAuthStateChanged(user => {
         this.setState({ isSignedIn: !!user ,userId : user.uid})
         this.setState({userId:user.uid});
+        FetchFollowers.FetchFollowers().then(data => {
+            this.setState({followers : data});  
+         })
         this.getCurrentUser()
         this.getUsers();
       })
@@ -36,24 +40,48 @@ class UserFollowingList extends React.Component {
   }
 
   getUsers(){
-    fire.firestore().collection("followers").where("follower_id","==", this.state.userId)
+    fire.firestore().collection("followers").where("userId","==", this.state.userId)
       .get()
       .then(querySnapshot => {
         querySnapshot.docs.map(doc => {
             var newObj = doc.data();
-            newObj.isFollowing = true;
+            // newObj.isFollowing = true;
            this.state.users.push(newObj)
         })
         this.setState({ users:  this.state.users });
+        this.checkingForAlreadyFollowing();
       });
+  }
+
+  checkingForAlreadyFollowing(){
+    
+    let userArr = [];
+    this.state.users.map(user => {
+      let isExist = false;
+      let follower_collection_id =""; 
+      this.state.followers.filter(follower => {
+        if(user.follower_id === follower.userId && follower.follower_id === this.state.userId){
+          isExist = true;
+          follower_collection_id = follower.id;
+        }})
+        if(isExist){
+            user.isFollowing = true;
+        } else {
+            user.isFollowing = false;
+        }
+        user.follower_collection_id = follower_collection_id;
+        userArr.push(user)
+        return user;
+    })
+    this.setState({users : userArr});
   }
 
   toggleFollow(user,users) {
       let follow = {
-              userId: user.userId,
-              user_name: user.user_name,
-              follower_id: user.follower_id,
-              follower_name: user.follower_name,
+              userId: user.follower_id,
+              user_name: user.follower_name,
+              follower_id: user.userId,
+              follower_name: user.user_name,
               id: uuid.v4()
           };
 
@@ -86,7 +114,7 @@ class UserFollowingList extends React.Component {
       })
     } else {
       fire.firestore().collection("followers")
-      .doc(user.id)
+      .doc(user.follower_collection_id)
       .delete()
       .then(() => {
         let filteredListRecord = users.filter(
@@ -110,7 +138,7 @@ class UserFollowingList extends React.Component {
         <div>
               {users.map(user => (
                 <div>
-                  <UserFollowingItem user={user} users={users} toggleFollow={this.toggleFollow}/>
+                  <UserFollowerItem user={user} users={users} toggleFollow={this.toggleFollow}/>
                </div>
               ))}
         

@@ -56,13 +56,13 @@ class OnBoard extends React.Component {
         this.state.users.map(user => {
           let isExist = false
           this.state.followers.filter(follower => {
-            console.log(user.userId == follower.userId && follower.follower_id == this.state.userId)
-            if(user.userId == follower.userId && follower.follower_id == this.state.userId){
+            if(user.userId === follower.userId && follower.follower_id === this.state.userId){
               isExist = true;
             }})
             if(!isExist){
               userArr.push(user)
             }
+            return user;
         })
         this.setState({users : userArr});
   }
@@ -127,7 +127,7 @@ class OnBoard extends React.Component {
                 <img src={img} alt="Twitter-Logo"/>
               </div>
               <div className="skip-text">
-                <Link to={"/dashboard"}>Skip</Link>
+                <Link to={"/dashboard"}>Done</Link>
               </div>
           </div>
           <div className="suggestions">
