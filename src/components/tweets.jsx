@@ -20,18 +20,28 @@ export default class Tweets extends Component {
 
     return this.props.tweets.map(tweet => {
       console.log(tweet);
-      return (<article>
-        <div className="user-credentials">
-          <span className="name">{tweet.name}</span>
-          <span className="username">@{tweet.username}</span>
-          <span className="username">{moment(tweet.time.toDate()).fromNow()}</span>
-        </div>
-        <div className="tweet-content">
-          <p>{tweet.text}</p>
-          <img src={tweet.img} />
-        </div>
-        <RespondToTweet/>
-      </article>)
+      return (
+        <article>
+          {tweet.is_retweet ? (
+            <div className="isRetweet">
+              <span className="Icon Icon--retweet Icon--small" />
+              <span>You Retweeted</span>
+            </div>
+          ) : null}
+          <div className="user-credentials">
+            <span className="name">{tweet.name}</span>
+            <span className="username">@{tweet.username}</span>
+            <span className="username">
+              {moment(tweet.time.toDate()).fromNow()}
+            </span>
+          </div>
+          <div className="tweet-content">
+            <p>{tweet.text}</p>
+            <img src={tweet.img} />
+          </div>
+          <RespondToTweet tweet={tweet} />
+        </article>
+      );
     });
   }
 }

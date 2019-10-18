@@ -51,14 +51,14 @@ class Signup extends Component {
             .doc(user.uid.toString())
             .set(data)
             .then(() => {
-              const redirect = `/user/${user.uid}/onboarding`;
-              this.props.history.push(redirect);
+              this.props.history.push(`/user/${user.uid}/onboarding`);
             }).catch(error => {
               this.setState({errorMessage : error.message})
             })
         })
 
         this.setState({errorMessage : "Successfully Registered"})
+        this.props.history.push(`/user/${u.user.uid}/onboarding`);
         // console.log("Successfully Registered");
     }).catch((error) => {
         this.setState({errorMessage : error.message})
