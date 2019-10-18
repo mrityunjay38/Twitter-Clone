@@ -4,7 +4,7 @@ import db from "../../firebaseConfig/db.js";
 import UserArea from "./UserArea";
 import Tweets from "../../components/tweets";
 import LeftSidebar from "../sidebars/LeftSidebar";
-import RightSideBar from "../sidebars/RightSideBar";
+import RightSidebar from "../sidebars/RightSidebar";
 
 
 
@@ -101,7 +101,7 @@ class UserProfileWithTweets extends Component {
             </div>
           </div>
           <div className="trends-who-to-follow-area">
-            <RightSideBar />
+            <RightSidebar />
           </div>
         </div>
       </section>

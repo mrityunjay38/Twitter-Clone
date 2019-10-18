@@ -21,7 +21,7 @@ export default class RespondToTweet extends Component {
 
     retweet = (e) => {
 
-           
+        e.preventDefault();
 
         this.setState({
             tweet: this.props.tweet

@@ -130,7 +130,7 @@ export default class RightSidebar extends Component {
   render() {
     const { users } = this.state;
     return (
-      <div>
+      <div className="right-sidebar-align">
         <Search />
         <div className="suggestion">
           <div className="suggestion-head">

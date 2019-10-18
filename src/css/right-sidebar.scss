@@ -1,21 +1,34 @@
 .right-sidebar {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+
+  .right-sidebar-align {
     display: flex;
     flex-direction: column;
     align-items: center;
 
-    div {
-        width: 80%;
-
-        .search {
-            width: 100%;
-        }
-
-        .result {
-            width: 100%;
-            position: relative;
-            z-index: 999;
-        }
-
+    .suggestion {
+        width: 100%;
     }
 
+    .user {
+        width: 100%;
+    }
+
+  }
+
+  div {
+    width: 80%;
+
+    .search {
+      width: 100%;
+    }
+
+    .result {
+      width: 100%;
+      position: relative;
+      z-index: 999;
+    }
+  }
 }

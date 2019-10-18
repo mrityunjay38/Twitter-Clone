@@ -28,6 +28,10 @@ export default class Search extends Component {
   searchUsers = (e) => {
     console.log("hit");
     e.preventDefault();
+    // let char = e.target.value;
+    // if(char == "\\" && char == "?" && char == "^" && char == "." && char == "|"){
+    //   e.target.value = '';
+    // }
     let escapeChar = [...new Set([...e.target.value])].join('');
     console.log(escapeChar);
     if (e.target.value !== "" && escapeChar !== "\\" && escapeChar !== "?" && escapeChar !== "^" && escapeChar !== "." && escapeChar !== "|") {
