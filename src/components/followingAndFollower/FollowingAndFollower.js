@@ -21,6 +21,7 @@ constructor(props){
       let name = user.displayName.split('|')
       this.setState({ name:name[0], username: name[1]})
   })
+  this.getUserData(this.state.menu)
     this.getUserData = this.getUserData.bind(this);
 }
   componentDidMount() {
@@ -53,7 +54,8 @@ constructor(props){
         <div className="middle">
           <div className="head-follow">
             <div className="user-data">
-                <h3>{this.state.name}</h3>
+            {/* <p class="arrow"></p> */}
+              <h3>{this.state.name}</h3>
                 <small>{'@'+this.state.username}</small>
             </div>
             <div className="follow-menu">

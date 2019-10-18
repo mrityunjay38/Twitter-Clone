@@ -100,7 +100,7 @@ class UserFollowingList extends React.Component {
             (list) => {
               if(list.userId === user.userId){
                 list.isFollowing = true;
-                list.id = doc.data().id
+                list.follower_collection_id = doc.data().id
               }
               return list;
             } );
@@ -121,6 +121,7 @@ class UserFollowingList extends React.Component {
           (list) => {
             if(list.follower_id === user.follower_id){
               list.isFollowing = false;
+              list.follower_collection_id="";
             }
             return list;
           } );

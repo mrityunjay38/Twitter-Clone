@@ -39,9 +39,12 @@ export default class Dashboard extends Component {
 
       followerIds.forEach( id => {
         db.collection('tweets').where('uid', '==', id).orderBy('time').get().then( snap => {
-          snap.docs.forEach( doc => this.setState({
-            tweets : [doc.data(),...this.state.tweets]
-          }));
+          snap.docs.forEach( doc => {
+            let tweets = doc.data();
+            tweets.id = doc.id;
+            this.setState({
+            tweets : [tweets,...this.state.tweets]
+          })});
         });
       });
 
@@ -71,11 +74,20 @@ export default class Dashboard extends Component {
         db.collection('tweets').doc().set(tweet)
       });
     }
-
   };
 
-  render() {
+  addLikes(tweet){
+    let likeObj = {
+      tweetId : tweet.id,
+      userId: fire.auth().currentUser.uid
+    }
+    console.log("twt : " ,tweet)
+    db.collection('likes').add(likeObj);
+    tweet.likes += 1;
+    db.collection('tweets').doc(tweet.id).update({likes: tweet.likes});
+  }
 
+  render() {
 
     return (
       <section className="dashboard">
@@ -84,7 +96,7 @@ export default class Dashboard extends Component {
         </div>
         <div className="middle">
           <Tweet user={this.state.user} newTweet={this.addTweet} />
-          <Tweets tweets={this.state.tweets} user={this.state.user}/>
+          <Tweets tweets={this.state.tweets} user={this.state.user} addLikes={this.addLikes}/>
         </div>
         <div className="right-sidebar">
           <RightSideBar/>

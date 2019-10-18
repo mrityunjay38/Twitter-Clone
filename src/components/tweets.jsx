@@ -18,6 +18,9 @@ export default class Tweets extends Component {
           <p>{tweet.text}</p>
           <img src={tweet.img} />
         </div>
+        <div className="tweet-options">
+          <p onClick={this.props.addLikes.bind(this,tweet)}>Like</p> {tweet.likes}
+        </div>
       </article>)
     });
   }
