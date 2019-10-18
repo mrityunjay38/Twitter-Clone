@@ -6,7 +6,6 @@ import uuid from 'uuid';
 import img from '../../img/twitter_icon.png';
 import OnBoardListItem from './OnBoardListItem';
 import { Link } from "react-router-dom";
-
 class OnBoard extends React.Component {
   constructor(props) {
     super(props);
@@ -24,6 +23,7 @@ class OnBoard extends React.Component {
       fire.auth().onAuthStateChanged(user => {
         // let name = user.displayName.split('|')
         this.setState({ isSignedIn: !!user ,userId : user.uid, name: "",db:fire.firestore()})
+        // console.log(FetchFollowers.FetchFollowers())
         FetchFollowers.FetchFollowers().then(data => {
           this.setState({followers : data});  
        })
@@ -31,7 +31,6 @@ class OnBoard extends React.Component {
       })
       
   }
-
   getAllUser(){
     let userArr = [];
     this.state.db.collection("users")
@@ -50,20 +49,30 @@ class OnBoard extends React.Component {
       })
 
   }
-
   filteringUsers(){
        let userArr = [];
+       let userLimit = 5;
+       let userList = this.state.users;
+      //  for(let i = 0; userList.length;i++){
         this.state.users.map(user => {
           let isExist = false
           this.state.followers.filter(follower => {
-            console.log(user.userId == follower.userId && follower.follower_id == this.state.userId)
-            if(user.userId == follower.userId && follower.follower_id == this.state.userId){
+            if(user.userId === follower.userId && follower.follower_id === this.state.userId){
               isExist = true;
             }})
-            if(!isExist){
-              userArr.push(user)
-            }
+            if(userArr.length < userLimit){
+              if(!isExist){
+                userArr.push(user)
+              }
+            } 
+            // else {
+            //   break;
+            // }
+           
+            console.log("userArr : ",userArr)
         })
+      //  }
+        
         this.setState({users : userArr});
   }
  
@@ -89,6 +98,7 @@ class OnBoard extends React.Component {
                let filteredListRecord = this.state.users.filter((list) => {
                     if(list.userId === user.userId){
                         list.isFollowing = true;
+                        list.style ={background:"#00adf4",color:"white"};
                         list.collectionId = doc.data().id
                     }
                   return list;
@@ -105,6 +115,7 @@ class OnBoard extends React.Component {
       .then(() => {
         let filteredListRecord = this.state.users.filter((list) => {
             if(list.userId === user.userId){
+              list.style ={background:""}
               list.isFollowing = false;
             }
             return list;
@@ -127,7 +138,7 @@ class OnBoard extends React.Component {
                 <img src={img} alt="Twitter-Logo"/>
               </div>
               <div className="skip-text">
-                <Link to={"/dashboard"}>Skip</Link>
+                <Link to={"/dashboard"}>Done</Link>
               </div>
           </div>
           <div className="suggestions">
@@ -149,3 +160,7 @@ class OnBoard extends React.Component {
   }
 }
 export default OnBoard;
+// Collapse
+
+
+

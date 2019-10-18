@@ -4,114 +4,83 @@ import db from "../../firebaseConfig/db.js";
 import UserArea from "./UserArea";
 import Tweets from "../../components/tweets";
 import LeftSidebar from "../sidebars/LeftSidebar";
+import RightSideBar from "../sidebars/RightSideBar";
+
 
 
 class UserProfileWithTweets extends Component {
 
-  state = {
-    isSignedIn: false,
-    user : {},
-    tweets: []
-  };
+  constructor(props) {
 
-  // state = {
-  //   isSignedIn: false,
-  //   user: {
-  //     name: "Ashish Padhi",
-  //     username: "Zodiac0606",
-  //     Followers: [
-  //       {
-  //         uid: 1,
-  //         name: "Halo",
-  //         username: "game_of_the_year",
-  //         userPhotoURL: "https://i.redd.it/tqr6vf9i34l21.jpg"
-  //       }
-  //     ],
-  //     Following: [
-  //       {
-  //         uid: 3,
-  //         name: "One Piece",
-  //         username: "best_anime",
-  //         userPhotoURL:
-  //           "https://en.wikipedia.org/wiki/List_of_One_Piece_characters#/media/File:Main_characters_of_One_Piece.png"
-  //       }
-  //     ],
-  //     userPhotoURL:
-  //       "https://i.pinimg.com/474x/41/bf/4b/41bf4b466baf974aa6b50cab301c77d9--scorpio-sign-tattoos-symbol-tattoos.jpg",
-  //     likes: [
-  //       {
-  //         tweetID: 1,
-  //         tweet:
-  //           "Hey, Its been a long time since I've posted any new songs. So I've just come up with a new song. plz like it.",
-  //         uid: 2,
-  //         username: "SanjanaSinger007",
-  //         name: "Sanjana Singh",
-  //         likes: 23,
-  //         reply: [
-  //           {
-  //             tweetID: 324,
-  //             tweet: "abscskfbsdjkfb",
-  //             uid: 5,
-  //             username: "qwerty12345",
-  //             name: "keyboard",
-  //             likes: 453
-  //           }
-  //         ]
-  //       }
-  //     ],
-  //     tweets: [
-  //       {
-  //         tweetID: 1,
-  //         tweet: "Hello Everyone!",
-  //         photoURL: "https://wallpaperplay.com/walls/full/6/7/7/275271.jpg",
-  //         likes: 1297,
-  //         isReply: false,
-  //         reply: [
-  //           {
-  //             tweetID: 324,
-  //             tweet: "abscskfbsdjkfbafnajafjbafjsafjbdsfjkbdsjkb",
-  //             uid: 5,
-  //             username: "qwerty12345",
-  //             name: "keyboard",
-  //             likes: 4
-  //           }
-  //         ]
-  //       }
-  //     ],
-  //     replies: [
-  //       {
-  //         tweetID: 5,
-  //         tweet: "skdfkugbfkjdsfhisgdfhibadsjkbvd",
-  //         replied_to: 65
-  //       }
-  //     ],
-  //     headerPhotoURL: "https://wallpaperplay.com/walls/full/f/c/d/275250.jpg",
-  //     CreatedAt: "March 2016",
-  //     Media: []
-  //   },
-  //   sub: "Tweets"
-  // };
+    super(props);
 
-  componentDidMount() {
-    const user = fire.auth().currentUser;
-    if(user){
-      const username = user.displayName.split('|');
-      console.log(user.uid);
-      this.setState({
-        user : {
-          uid : user.uid,
-          name : username[0],
-          username: username[1]
+    this.state = {
+      isSignedIn: false,
+      user : {},
+      tweets: [],
+      noOfFollowing: 0,
+      noOfFollowers: 0, 
+      sub: 'Tweets',
+      withTweets: false,
+      withReplies: false,
+      media: false,
+      likes: false
+    };
+
+    fire.auth().onAuthStateChanged(user => {
+      console.log();
+      let CreatedTime = user.metadata.creationTime.split(' ');
+      console.log(CreatedTime)
+      let name = user.displayName.split('|')
+      // console.log("calling : ", name)
+      this.setState({ user:{ userId: user.uid, name:name[0], username: name[1] }, createdAt: CreatedTime[2] + ' ' + CreatedTime[3]})
+  })
+  }
+  
+
+  async componentDidMount() {
+    // fire.?
+    
+    // if(user){
+      
+    //   const username = user.displayName.split('|');
+    //   console.log(user);
+    //   this.setState({
+    //     user : {
+    //       uid : user.uid,
+    //       name : username[0],
+    //       username: username[1]
+    //     }
+    //   });
+    //   console.log(this.state);      
+    // }
+
+    await db.collection('users').where('username', '==', this.props.match.params.id ).get().then( snap => {
+      snap.docs.forEach( doc => {
+        console.log(doc.data())
+        this.setState( { user: doc.data() } );
+      } )
+    } )
+
+    await db.collection('tweets').where('username', '==', this.props.match.params.id ).get().then( snap => {
+      snap.docs.forEach( doc => {
+        console.log(doc.data());
+
+        this.setState({
+            tweets : [doc.data(),...this.state.tweets]
+          })
         }
-      });
+      );
+    });
 
-      // particular user tweets
-      db.collection('tweets').where('uid', '==', user.uid ).get().then( snap => {
-        snap.docs.forEach( doc => this.setState({
-          tweets : [doc.data(),...this.state.tweets]
-        }));
-      });
-    }
+    await db.collection('followers').where('follower_id', '==', this.state.user.userId).get().then( snap => {
+      this.setState({ noOfFollowing: snap.docs.length });
+      
+    } );
+
+    await db.collection('followers').where('userId', '==', this.state.user.userId).get().then( snap => {
+      this.setState( { noOfFollowers: snap.docs.length } );
+    } )
   }
 
   render() {
@@ -122,14 +91,17 @@ class UserProfileWithTweets extends Component {
       <section className="profile-area">
         <div className="profile-area-container">
           <div className="left-sidebar">
-            <LeftSidebar />
+            <LeftSidebar username={this.props.match.params.id}/>
           </div>
-          <div className="user-area">
-            {/* <UserArea user={user} /> */}
+          <div className="middle">
+            <UserArea state={this.state}/>
+            <div>
             <Tweets tweets={tweets}/>
+
+            </div>
           </div>
           <div className="trends-who-to-follow-area">
-            <h1>Hello There will be Trends here in the future.</h1>
+            <RightSideBar />
           </div>
         </div>
       </section>

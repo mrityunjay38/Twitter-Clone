@@ -12,6 +12,25 @@
     display: flex;
     justify-content: space-around;
 }
+.follow-menu a{
+    text-decoration: none;
+}
+
+.arrow {
+    box-sizing: border-box;
+    height: 1vw;
+    width: 1vw;
+    border-style: solid;
+    border-color: white;
+    border-width: 0px 3px 3px 0px;
+    transform: rotate(135deg);
+    transition: border-width 50ms ease-in-out;
+  }
+  
+  .arrow:hover {
+    border-bottom-width: 6px;
+    border-right-width: 6px;
+  }
 .menu-item{
     color:rgb(214, 214, 214);
 }

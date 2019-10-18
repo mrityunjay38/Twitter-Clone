@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import fire from '../../firebaseConfig/config';
 import "../../css/signup.scss";
+import {  Redirect } from 'react-router-dom'
 
 class Signup extends Component {
   constructor(props) {
@@ -11,8 +12,13 @@ class Signup extends Component {
         email: '',
         password: '',
         username: '',
-        name: ''
+        name: '', 
+        isLoading: true
     };
+  }
+
+  componentDidMount() {
+    // this.setState({ isLoading: !this.state.isLoading });
   }
 
   handleChange(e) {
@@ -23,37 +29,39 @@ class Signup extends Component {
     e.preventDefault();
 
     fire.auth().createUserWithEmailAndPassword(this.state.email, this.state.password).then((u)=>{
+      console.log(u.user);
+      u.user.updateProfile({
+        displayName: this.state.name + '|' + this.state.username 
+      }).then(function() {
+        console.log('successfully Updated profile')
+      }, function(error) {
+        console.log(error)
+      })
 
-        fire.auth().onAuthStateChanged(user => {
+        // fire.auth().onAuthStateChanged(user => {
+          // console.log(user);
 
-          user.updateProfile({
-            displayName: this.state.name + '|' + this.state.username 
-          }).then(function() {
-            console.log('successfully Updated profile')
-          }, function(error) {
-            console.log(error)
-          })
-
-        let signup ={
+        let signup = { 
               name: this.state.name,
               username: this.state.username,
               email:this.state.email,
-              photo:'',
-              userId: user.uid
+              profilePhotoURL:'',
+              userId: u.user.uid,
+              headerPhotoURL: '',
+              noOfFollowing: 0,
+              noOfFollower: 0
             }
-          
-          const data = {
-              ...this.state.signup
-           };
+         
            console.log("u data : ", signup)
           fire.firestore().collection("users")
-            .doc(user.uid.toString())
+            .doc(u.user.uid.toString())
             .set(signup)
             .then(() => {
-              window.history = `/user/${user.uid}/onboarding`;
-              // this.props.history.push(`/user/${user.uid}/onboarding`)
+              // window.location.href = `/user/${this.state.username}/onboarding`;
+              {/* <Redirect to={`/user/${this.state.username}/onboarding`} /> */}
+              this.setState({ isLoading: !this.state.isLoading });              
             })
-        })
+        // })
 
         this.setState({errorMessage : "Successfully Registered"})
         // console.log("Successfully Registered");
@@ -63,8 +71,16 @@ class Signup extends Component {
   }
 
   render() {
+
+    const { isLoading, username } = this.state;
+
+    console.log(isLoading, username);
+
     return (
-      <div className="signup-form">
+      <div>
+        {isLoading ? 
+              ( 
+              <div className="signup-form">
       <div className="form-container">
       <span className="Icon Icon--bird Icon--extraLarge"/>
         <form>
@@ -79,6 +95,13 @@ class Signup extends Component {
           <p>{this.state.errorMessage}</p>
         </form>
       </div>
+      </div>
+               ) : 
+              (
+                <Redirect to={`/user/${username}/onboarding`} />
+              )
+        }
+
       </div>
     );
   }

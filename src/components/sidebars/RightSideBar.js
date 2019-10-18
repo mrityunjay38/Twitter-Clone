@@ -1,13 +1,11 @@
 import React from "react";
 import fire from '../../firebaseConfig/config';
-import FetchFollowers from './FetchFollowers'
+import FetchFollowers from '../dashboard/FetchFollowers'
 import "../../css/onboard.css";
 import uuid from 'uuid';
-import img from '../../img/twitter_icon.png';
-import OnBoardListItem from './OnBoardListItem';
-import { Link } from "react-router-dom";
+import RightSideBarListItem from './RightSideBarListItem';
 
-class OnBoard extends React.Component {
+class RightSideBar extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -34,7 +32,7 @@ class OnBoard extends React.Component {
 
   getAllUser(){
     let userArr = [];
-    this.state.db.collection("users")
+    fire.firestore().collection("users")
       .get()
       .then(querySnapshot => { 
         querySnapshot.forEach(doc => {
@@ -53,17 +51,24 @@ class OnBoard extends React.Component {
 
   filteringUsers(){
        let userArr = [];
+       let userLimit = 4;
+       let userList = this.state.users;
+      //  for(let i = 0; userList.length;i++){
         this.state.users.map(user => {
-          let isExist = false
-          this.state.followers.filter(follower => {
-            console.log(user.userId == follower.userId && follower.follower_id == this.state.userId)
-            if(user.userId == follower.userId && follower.follower_id == this.state.userId){
-              isExist = true;
-            }})
-            if(!isExist){
-              userArr.push(user)
-            }
-        })
+            let isExist = false
+            this.state.followers.filter(follower => {
+              if(user.userId === follower.userId && follower.follower_id === this.state.userId){
+                isExist = true;
+              }})
+              if(userArr.length < userLimit){
+                if(!isExist){
+                  userArr.push(user)
+                }
+              // } else {
+              //   break;
+              }
+          })
+        // }
         this.setState({users : userArr});
   }
  
@@ -80,7 +85,7 @@ class OnBoard extends React.Component {
       .doc(follow.id)
       .set(follow)
       .then(() => {
-          this.state.db.collection("followers")
+        fire.firestore().collection("followers")
           .where("follower_id","==", follow.follower_id)
           .where("userId","==", follow.userId)
           .get()
@@ -89,6 +94,7 @@ class OnBoard extends React.Component {
                let filteredListRecord = this.state.users.filter((list) => {
                     if(list.userId === user.userId){
                         list.isFollowing = true;
+                        list.style ={background:"#00adf4",color:"white"};
                         list.collectionId = doc.data().id
                     }
                   return list;
@@ -105,6 +111,7 @@ class OnBoard extends React.Component {
       .then(() => {
         let filteredListRecord = this.state.users.filter((list) => {
             if(list.userId === user.userId){
+              list.style ={background:""}
               list.isFollowing = false;
             }
             return list;
@@ -120,32 +127,17 @@ class OnBoard extends React.Component {
   render() {
     const { users } = this.state;
     return (
-      <div className="onboard">
-        <div className="user-collection">
-         <div className="skip">
-              <div className="skip-img">
-                <img src={img} alt="Twitter-Logo"/>
-              </div>
-              <div className="skip-text">
-                <Link to={"/dashboard"}>Skip</Link>
-              </div>
+        
+      <div className="suggestion">
+          <div className="suggestion-head">
+              <h2>Who to follow </h2>
           </div>
-          <div className="suggestions">
-            <h2>Suggestions for you to follow</h2>
-          </div>
-          <div>
-            <hr/>
-              <h4>You may be interested in</h4>
-            <hr/>
-          </div>
-          <div className="users">
+           
               {users.map(user => (
-                <OnBoardListItem user={user} toggleFollow={this.toggleFollow}/>
+                <RightSideBarListItem user={user} toggleFollow={this.toggleFollow}/>
               ))}
-          </div>
-        </div>
       </div>
     );
   }
 }
-export default OnBoard;
+export default RightSideBar;

@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { Link } from "react-router-dom";
+import { Link, Redirect } from "react-router-dom";
 import "../../css/homepage.scss";
 import fire from "../../firebaseConfig/config";
 
@@ -12,16 +12,33 @@ export default class Homepage extends Component {
       email: "",
       password: "",
       isSignedIn: false,
-      errorMessage: ""
+      errorMessage: "",
+      loading: true
     };
   }
 
-  componentDidMount() {
+  // componentDidMount() {
+  //   fire.auth().onAuthStateChanged(user => {
+  //     this.setState({ isSignedIn: !!user });
+  //     console.log(this.state.isSignedIn);
+  //     // if (user != null) {
+  //     //   this.props.history.push("/dashboard");
+  //     // }
+  //   });
+  // }
+
+  
+
+  componentWillMount() {
     fire.auth().onAuthStateChanged(user => {
       this.setState({ isSignedIn: !!user });
-      if (user != null) {
-        this.props.history.push("/dashboard");
-      }
+      console.log(this.state.isSignedIn);
+      // setTimeout(() => {
+        if (user != null) {
+          // this.props.history.push("/dashboard");
+          this.setState({ loading: !this.state.loading })
+        }
+      // }, 1500)
     });
   }
 
@@ -41,7 +58,10 @@ export default class Homepage extends Component {
   }
 
   render() {
+    const { loading }= this.state
     return (
+      <div>
+        {loading ? (
       <section className="static-homepage">
         <div className="twitter-features">
           <div>
@@ -89,6 +109,11 @@ export default class Homepage extends Component {
           </div>
         </div>
       </section>
+        ) : (
+          <Redirect to="/dashboard"/>
+        )}
+
+        </div>
     );
   }
 }

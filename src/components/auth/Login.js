@@ -2,7 +2,6 @@ import React, { Component } from 'react';
 import fire from '../../firebaseConfig/config';
 import TwitterIcon from '../../img/twitter_icon.png'
 import "../../css/login.scss";
-import { Link } from 'react-router-dom';
 class Login extends Component {
   constructor(props) {
     super(props);
@@ -27,7 +26,7 @@ class Login extends Component {
         fire.auth().onAuthStateChanged(user => {
           this.setState({ isSignedIn: !!user, userId: user.uid})
           if(user) {
-            this.props.history.push(`/user/${user.uid}/onboarding`)
+            this.props.history.push(`/dashboard`)
           }
         })
     }).catch((error) => {
