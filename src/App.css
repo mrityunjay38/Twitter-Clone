@@ -241,6 +241,14 @@ h5 {
     width: 100%;
 }
 
+.edit-profile-header-image svg {
+    width: 2rem;
+    position: absolute;
+    top: 9.5rem;
+    left: 50%;
+    opacity: 0.9;
+}
+
 .edit-profile-profile-image {
     width: 10rem;
     height: 10rem;
@@ -263,6 +271,13 @@ h5 {
     width: 10rem;
     border-radius: 50%;
     border: 0.2rem solid;
+}
+
+.edit-profile-profile-image svg {
+    width: 2rem;
+    position: absolute;
+    top: 50%;
+    left: 44%;
 }
 
 .edit-profile-bio-textarea {
