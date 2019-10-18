@@ -1,8 +1,6 @@
 import React, { Component } from "react";
-// import fire from '../../firebaseConfig/config'
-// import { firestore } from "firebase";
-import firebase from 'firebase/app'
-import 'firebase/firestore'
+import firebase from 'firebase/app';
+import 'firebase/firestore';
 
 export default class Tweet extends Component {
   state = {

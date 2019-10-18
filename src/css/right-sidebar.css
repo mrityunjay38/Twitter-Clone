@@ -1,0 +1,16 @@
+.right-sidebar {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+.right-sidebar div {
+  width: 80%;
+}
+.right-sidebar div .search {
+  width: 100%;
+}
+.right-sidebar div .result {
+  width: 100%;
+  position: relative;
+  z-index: 999;
+}

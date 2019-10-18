@@ -35,7 +35,7 @@ function App() {
           <Route exact path="/:username/following" component={FollowingAndFollower} />
           <Route path="/:username/follower" component={FollowingAndFollower} />
         </Switch>
-      </Router>
+    </Router>
     </div>
   );
 }

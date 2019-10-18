@@ -2,7 +2,7 @@ import React from "react";
 import "../../css/dashboard.scss";
 import "../../css/following.css";
 import LeftSideBar from "../sidebars/LeftSidebar";
-import RightSideBar from "../sidebars/RightSideBar";
+import RightSideBar from "../sidebars/RightSidebar";
 import UserFollowingList from "./UserFollowingList"
 import UserFollowerList from "./UserFollowerList"
 import fire from "../../firebaseConfig/config";

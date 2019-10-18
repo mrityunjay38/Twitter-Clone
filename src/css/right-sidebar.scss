@@ -1,0 +1,21 @@
+.right-sidebar {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+
+    div {
+        width: 80%;
+
+        .search {
+            width: 100%;
+        }
+
+        .result {
+            width: 100%;
+            position: relative;
+            z-index: 999;
+        }
+
+    }
+
+}
