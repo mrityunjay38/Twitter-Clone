@@ -2,7 +2,7 @@ import React from "react";
 import "../../css/dashboard.scss";
 import "../../css/following.css";
 import LeftSideBar from "../sidebars/LeftSidebar";
-import RightSideBar from "../sidebars/RightSideBar";
+import RightSideBar from "../sidebars/RightSidebar";
 import UserFollowingList from "./UserFollowingList"
 import UserFollowerList from "./UserFollowerList"
 import fire from "../../firebaseConfig/config";
@@ -19,9 +19,9 @@ constructor(props){
     }
     fire.auth().onAuthStateChanged(user => {
       let name = user.displayName.split('|')
-      console.log("calling : ", name)
       this.setState({ name:name[0], username: name[1]})
   })
+  this.getUserData(this.state.menu)
     this.getUserData = this.getUserData.bind(this);
 }
   componentDidMount() {
@@ -54,8 +54,9 @@ constructor(props){
         <div className="middle">
           <div className="head-follow">
             <div className="user-data">
-                <h3>{this.state.name}</h3>
-                <small>{this.state.username}</small>
+            {/* <p class="arrow"></p> */}
+              <h3>{this.state.name}</h3>
+                <small>{'@'+this.state.username}</small>
             </div>
             <div className="follow-menu">
               <Link to={`/${this.state.username}/follower`}>

@@ -19,7 +19,7 @@
   display: flex;
   flex-direction: column;
   align-items: center;
-  overflow: auto;
+  overflow: hidden;
 }
 .signup-form .form-container form h1 {
   font-size: 1.5em;

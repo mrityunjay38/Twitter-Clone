@@ -241,12 +241,12 @@ h5 {
     width: 100%;
 }
 
-.edit-profile-header-image svg {
+.edit-page-header-image svg {
     width: 2rem;
     position: absolute;
     top: 9.5rem;
     left: 50%;
-    opacity: 0.9;
+    opacity: 0.8;
 }
 
 .edit-profile-profile-image {
@@ -278,6 +278,7 @@ h5 {
     position: absolute;
     top: 50%;
     left: 44%;
+    opacity: 0.8;
 }
 
 .edit-profile-bio-textarea {

@@ -1,0 +1,17 @@
+.respond-to-tweet {
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  padding-top: 1em;
+  color: lightblue;
+  opacity: 0.5;
+}
+.respond-to-tweet .Icon--reply:hover {
+  color: #1da1f2;
+}
+.respond-to-tweet .Icon--retweet:hover {
+  color: #17bf63;
+}
+.respond-to-tweet .Icon--heart:hover {
+  color: #e0245e;
+}

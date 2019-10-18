@@ -3,7 +3,7 @@ import fire from '../../firebaseConfig/config'
 import UserArea from './UserArea'
 import RepliedTweet from '../tweets/RepliedTweet'
 import LeftSidebar from '../sidebars/LeftSidebar'
-import RightSideBar from '../sidebars/RightSideBar'
+import RightSidebar from '../sidebars/RightSidebar'
 
 
 class UserProfileWithReplies extends Component {
@@ -45,7 +45,7 @@ class UserProfileWithReplies extends Component {
                     <RepliedTweet /> */}
                 </div>
                 <div className="trends-who-to-follow-area">
-                <RightSideBar/>
+                <RightSidebar/>
                 </div>
 
                 </div>

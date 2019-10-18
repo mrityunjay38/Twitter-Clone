@@ -51,18 +51,28 @@ class OnBoard extends React.Component {
   }
   filteringUsers(){
        let userArr = [];
-       
+       let userLimit = 5;
+       let userList = this.state.users;
+      //  for(let i = 0; userList.length;i++){
         this.state.users.map(user => {
           let isExist = false
           this.state.followers.filter(follower => {
             if(user.userId === follower.userId && follower.follower_id === this.state.userId){
               isExist = true;
             }})
-            if(!isExist){
-              userArr.push(user)
-            }
-            return user;
+            if(userArr.length < userLimit){
+              if(!isExist){
+                userArr.push(user)
+              }
+            } 
+            // else {
+            //   break;
+            // }
+           
+            console.log("userArr : ",userArr)
         })
+      //  }
+        
         this.setState({users : userArr});
   }
  

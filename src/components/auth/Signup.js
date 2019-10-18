@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import fire from '../../firebaseConfig/config';
 import "../../css/signup.scss";
-import {  Redirect } from 'react-router-dom'
+import { Redirect } from 'react-router-dom'
 
 class Signup extends Component {
   constructor(props) {

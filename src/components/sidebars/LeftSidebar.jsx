@@ -5,6 +5,8 @@ import fire from "../../firebaseConfig/config";
 
 export default class LeftSideBar extends Component {
     render(){
+
+        // const { username } = this.props.user
         
         return (
             <div>

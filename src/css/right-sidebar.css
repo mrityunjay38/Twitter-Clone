@@ -1,0 +1,27 @@
+.right-sidebar {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+.right-sidebar .right-sidebar-align {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+.right-sidebar .right-sidebar-align .suggestion {
+  width: 100%;
+}
+.right-sidebar .right-sidebar-align .user {
+  width: 100%;
+}
+.right-sidebar div {
+  width: 80%;
+}
+.right-sidebar div .search {
+  width: 100%;
+}
+.right-sidebar div .result {
+  width: 100%;
+  position: relative;
+  z-index: 999;
+}

@@ -3,7 +3,7 @@ import fire from '../../firebaseConfig/config'
 import UserArea from './UserArea'
 import UserMedia from '../media/UserMedia'
 import LeftSidebar from '../sidebars/LeftSidebar'
-import RightSideBar from '../sidebars/RightSideBar'
+import RightSidebar from '../sidebars/RightSidebar'
 
 
 class UserProfileWithMedia extends Component {
@@ -43,7 +43,7 @@ class UserProfileWithMedia extends Component {
                     <UserMedia />
                 </div>
                 <div className="trends-who-to-follow-area">
-                    <RightSideBar/>
+                    <RightSidebar/>
                 </div>
 
                 </div>

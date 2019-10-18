@@ -4,7 +4,7 @@ import UserArea from './UserArea'
 // import UserMedia from '../media/UserMedia'
 import LikedTweets from '../tweets/LikedTweets'
 import LeftSidebar from '../sidebars/LeftSidebar'
-import RightSideBar from '../sidebars/RightSideBar'
+import RightSidebar from '../sidebars/RightSidebar'
 
 
 class UserProfileWithLikes extends Component {
@@ -44,7 +44,7 @@ class UserProfileWithLikes extends Component {
                     <LikedTweets />
                 </div>
                 <div className="trends-who-to-follow-area">
-                    <RightSideBar/>
+                    <RightSidebar/>
                 </div>
 
                 </div>
