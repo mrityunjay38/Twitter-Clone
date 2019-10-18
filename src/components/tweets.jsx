@@ -14,7 +14,7 @@ export default class Tweets extends Component {
           {tweet.is_retweet ? (
             <div className="isRetweet">
               <span className="Icon Icon--retweet Icon--small" />
-              <span>You Retweeted</span>
+              <span>{tweet.who_retweeted} Retweeted</span>
             </div>
           ) : null}
           <div className="user-credentials">

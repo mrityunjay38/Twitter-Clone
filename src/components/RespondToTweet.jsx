@@ -6,7 +6,7 @@ import "../css/respond-to-tweet.scss";
 export default class RespondToTweet extends Component {
 
     state = {
-        tweet : this.props.tweet,
+        tweet : {},
         user : {}
     }
 
@@ -20,16 +20,24 @@ export default class RespondToTweet extends Component {
     }
 
     retweet = (e) => {
-        e.preventDefault();
-        console.log(this.state.tweet);
-        console.log(this.state.user);
 
+           
+
+        this.setState({
+            tweet: this.props.tweet
+        });
         const newRetweet = this.state.tweet;
+
+        let userName = this.state.user.displayName.split('|')[0];
         
         newRetweet.is_retweet = true;
+        newRetweet['who_retweeted'] = userName;
         newRetweet.retweet_count = newRetweet.retweet_count + 1;
         newRetweet.uid = this.state.user.uid
+        console.log(newRetweet);
 
+        console.log(this.state.tweet);
+        console.log(this.state.user);
         db.collection('tweets').add(newRetweet);
 
     }
