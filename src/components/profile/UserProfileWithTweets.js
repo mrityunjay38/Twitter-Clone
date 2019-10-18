@@ -33,27 +33,12 @@ class UserProfileWithTweets extends Component {
       console.log(CreatedTime)
       let name = user.displayName.split('|')
       // console.log("calling : ", name)
-      this.setState({ user:{ userId: user.uid, name:name[0], username: name[1] }, createdAt: CreatedTime[2] + ' ' + CreatedTime[3]})
+      this.setState({ currentUser:{ userId: user.uid, name:name[0], username: name[1] }, createdAt: CreatedTime[2] + ' ' + CreatedTime[3]})
   })
   }
   
 
   async componentDidMount() {
-    // fire.?
-    
-    // if(user){
-      
-    //   const username = user.displayName.split('|');
-    //   console.log(user);
-    //   this.setState({
-    //     user : {
-    //       uid : user.uid,
-    //       name : username[0],
-    //       username: username[1]
-    //     }
-    //   });
-    //   console.log(this.state);      
-    // }
 
     await db.collection('users').where('username', '==', this.props.match.params.id ).get().then( snap => {
       snap.docs.forEach( doc => {
@@ -62,7 +47,7 @@ class UserProfileWithTweets extends Component {
       } )
     } )
 
-    await db.collection('tweets').where('username', '==', this.props.match.params.id ).get().then( snap => {
+    await db.collection('tweets').where('uid', '==', this.state.user.userId ).get().then( snap => {
       snap.docs.forEach( doc => {
         console.log(doc.data());
 

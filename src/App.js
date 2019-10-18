@@ -24,9 +24,10 @@ function App() {
           <Route exact path="/" component={Homepage} />
           <Route path="/signup" component={Signup} />
           <Route path="/login" component={Login} />       
-          <Route path="/user/:uid/onboarding" component={OnBoard}/>
+          <Route path="/:username/onboarding" component={OnBoard}/>
           <Route path="/dashboard" component={Dashboard} />
           <Route exact path="/:id" component={UserProfileWithTweets} />
+          <Route exact path="/settings/:username/profile" component={EditUserDetails} />
           <Route path="/user/:id/with_replies" component={UserProfileWithReplies}/>
           <Route path="/user/:id/media" component={UserProfileWithMedia} />
           <Route path="/user/:id/likes" component={UserProfileWithLikes}/>

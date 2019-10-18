@@ -6,32 +6,37 @@ export class UserInfo extends Component {
 
     state = {
         isSignedIn: false ,
-        user: this.props.user
+        // user: this.props.user
     }
 
-
-    // componentDidMount(){
-    //     fire.auth().onAuthStateChanged(user => {
-    //         // console.log(user);
-    //     this.setState({ isSignedIn: !!user, userID: user.uid })
-    //     if(user == null) {
-    //     }
-    //     // console.log(this.props.history)
-    //     })
-    // }
+    componentDidMount(){
+        fire.auth().onAuthStateChanged(user => {
+            // console.log(user);
+        this.setState({ isSignedIn: !!user, userID: user.uid })
+        // if(user == null) {
+        // }
+        // console.log(this.props.history)
+        })
+    }
 
     render() {
 
         const { user, noOfFollowing, noOfFollowers, createdAt } = this.props;
 
+        const { isSignedIn } = this.state;
+
         return (
             <div>
                 <div className="user-profile-edit-tab-container">
                     <div className="profile-pic-edit-tab-container">
-                        <img alt="User Profile Pic" src="" />
-                        <Link to={`/user/settings/profile`}>
-                            <button className="btn edit-profile-btn direct-to-pop-up-btn">Edit Profile</button>
-                        </Link>
+                        <img alt="User Profile Pic" src={user.profilePhotoURL} />
+                        {isSignedIn ? (
+                            <Link to={`/settings/${user.username}/profile`}>
+                                <button className="btn edit-profile-btn direct-to-pop-up-btn">Edit Profile</button>
+                            </Link>
+                        ) : (
+                            <button>Follow</button>
+                        )}
                     </div>
                 </div>
                 <div className="user-details-area">

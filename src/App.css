@@ -190,8 +190,8 @@ h5 {
 .modal-main {
     position: fixed;
     background: white;
-    width: 80%;
-    height: auto;
+    width: 60%;
+    height: 80%;
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
@@ -199,3 +199,103 @@ h5 {
     display: flex;
     flex-direction: column;
 }
+
+.edit-profile-page-header {
+    display: flex;
+    align-items: center;
+    border-bottom: 0.1rem solid blue;
+    position: fixed;
+    z-index: 1;
+    width: 92%;
+    background: white;
+    padding: 1rem;
+}
+
+.edit-profile-page-header a {
+    position: relative;
+    /* left: -10rem; */
+    align-self: baseline;
+}
+
+.edit-profile-page-header button {
+    background: none;
+    border: none;
+    color: blue;
+    cursor: pointer;
+}
+
+.edit-profile-page-header h1 {
+    margin: 0;
+}
+
+.edit-page-header-image input {
+    position: relative;
+    top: 10rem;
+    left: 10rem;
+    /* width: 2rem; */
+    opacity: 0;
+    cursor: pointer;
+}
+
+.edit-page-header-image img {
+    width: 100%;
+}
+
+.edit-profile-profile-image {
+    width: 10rem;
+    height: 10rem;
+    /* margin: 0; */
+    position: relative;
+    top: -6rem;
+    padding: 0 2rem;
+}
+
+.edit-profile-profile-image input {
+    width: 5rem;
+    position: relative;
+    top: 5rem;
+    left: 2.5rem;
+    opacity: 0;
+    cursor: pointer;
+}
+
+.edit-profile-profile-image img {
+    width: 10rem;
+    border-radius: 50%;
+    border: 0.2rem solid;
+}
+
+.edit-profile-bio-textarea {
+    display: flex;
+    flex-direction: column;
+    position: relative;
+    top: -2rem;
+    padding: 1rem;
+}
+
+.edit-profile-bio-textarea label {
+    font: bolder 1rem/1rem helvetica;
+}
+
+edit-profile-bio-textarea textarea {
+    height: 3rem;
+    border: none;
+    outline: none;
+    border-bottom: 0.1rem solid blue;
+}
+
+.edit-profile-save-btn {
+    background: blue;
+    color: white;
+    border: none;
+    width: 4rem;
+    height: 2rem;
+    border-radius: 1rem;
+    margin: 0 1rem;
+}
+
+.edit-profile-overflow-scroll {
+    position: relative;
+    top: 2rem;
+}
+

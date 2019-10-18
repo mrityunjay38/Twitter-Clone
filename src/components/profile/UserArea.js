@@ -13,7 +13,7 @@ class UserArea extends Component {
         return (
             <div>
                 <UserHeader name={user.name} number={tweets.length} sub={sub}/> 
-                <HeaderImage />  
+                <HeaderImage headerImage={user.headerPhotoURL}/>  
                 <UserInfo 
                     createdAt={createdAt}
                     user={user}

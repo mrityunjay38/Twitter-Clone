@@ -16,19 +16,7 @@ export default class Homepage extends Component {
       loading: true
     };
   }
-
-  // componentDidMount() {
-  //   fire.auth().onAuthStateChanged(user => {
-  //     this.setState({ isSignedIn: !!user });
-  //     console.log(this.state.isSignedIn);
-  //     // if (user != null) {
-  //     //   this.props.history.push("/dashboard");
-  //     // }
-  //   });
-  // }
-
   
-
   componentWillMount() {
     fire.auth().onAuthStateChanged(user => {
       this.setState({ isSignedIn: !!user });
