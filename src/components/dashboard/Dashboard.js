@@ -10,13 +10,15 @@ import RightSidebar from "../sidebars/RightSidebar"
 import firebase from 'firebase/app';
 import 'firebase/firestore';
 import 'firebase/storage';
+import TweetAndReplyModal from '../tweets/TweetAndReplyModal'
 
 export default class Dashboard extends Component {
 
   state = {
     isSignedIn: false,
     user : {},
-    tweets: []
+    tweets: [],
+    show: false
   };
 
   async componentDidMount() {
@@ -26,7 +28,7 @@ export default class Dashboard extends Component {
       console.log(user.uid);
       this.setState({
         user : {
-          uid : user.uid,
+          userId : user.uid,
           name : username[0],
           username: username[1]
         }
@@ -40,18 +42,16 @@ export default class Dashboard extends Component {
 
       followerIds.forEach( id => {
         db.collection('tweets').where('uid', '==', id).orderBy('time').get().then( snap => {
-          snap.docs.forEach( doc => this.setState({
-            tweets : [doc.data(),...this.state.tweets]
-          }));
+          snap.docs.forEach( doc => {
+            let tweet = doc.data();
+            tweet.id = doc.id;
+            this.setState({
+            tweets : [tweet,...this.state.tweets]
+          })
+        
+        });
         });
       });
-
-      // particular user tweets
-      // db.collection('tweets').where('uid', '==', user.uid ).get().then( snap => {
-      //   snap.docs.forEach( doc => this.setState({
-      //     tweets : [doc.data(),...this.state.tweets]
-      //   }));
-      // });
 
     }
     else{
@@ -70,7 +70,7 @@ export default class Dashboard extends Component {
       db.collection('tweets').add(tweet);
     }
     else{
-      let storageRef = file.ref('uploads/' + this.state.user.uid + '/tweets/' + img.name);
+      let storageRef = file.ref('uploads/' + this.state.user.userId + '/tweets/' + img.name);
       storageRef.put(img).then( snap => {
         console.log(snap);
         storageRef.getDownloadURL().then( url => {
@@ -82,8 +82,57 @@ export default class Dashboard extends Component {
 
   };
 
+  addRepliedTweet = async (tweet, img) => {
+    tweet.isReply = true;
+    console.log(tweet, img);
+    let tweetId = '';
+    
+    if(tweet.img == ''){
+      let addTweetsRef = await db.collection('tweets').add(tweet)
+      this.setState({ tweetId: addTweetsRef.id });
+    }
+    else{
+      let storageRef = file.ref('uploads/' + tweet.uid + '/tweets/' + img.name);
+      storageRef.put(img).then( async snap => {
+        console.log(snap);
+        let url = await storageRef.getDownloadURL()
+        
+        tweet.img = url;
+        
+        let addTweetsRef = await db.collection('tweets').add(tweet)
+        this.setState({ tweetId: addTweetsRef.id });
+        
+      });
+    }
+
+    console.log(this.state.tweetId, this.state.tweet.id);
+
+    let replies = {
+      userId: tweet.uid,
+      repliedTo: this.state.tweet.id,
+      tweetId: this.state.tweetId  
+    }
+
+    db.collection('replies').add(replies);
+  }
+
+  showTweet = (id) => {
+    console.log(id)
+  }
+
+  openReplyModal = (tweet) => {
+    // console.log(id);
+    this.setState({show: true, tweet});
+  }
+
+  handleClose = () => {
+    this.setState({ show: false })
+  }
+
   render() {
-    const { user, tweets } = this.state;
+    const { user, tweets, tweet, show } = this.state;
+    
+    const showHideClassName = show ? { display: 'block'} : {display: 'none'};
 
     console.log(user);
 
@@ -93,13 +142,26 @@ export default class Dashboard extends Component {
           <LeftSidebar username={user.username}/>
         </div>
         <div className="middle">
+          <div style={{ padding: '1rem', color: 'white', fontSize: 'large' }}>
+            <span>Home</span>
+          </div>
+          <hr style={{ width: '100%', border: '0.02rem solid rgba(114, 173, 212, 0.3)' }}/>
           <Tweet user={user} newTweet={this.addTweet} />
-          <Tweets tweets={tweets} />
+          <Tweets tweets={tweets} showTweet={this.showTweet} openReplyModal={this.openReplyModal}/>
         </div>
         <div className="right-sidebar">
           {/* <h1 style={{ color: "white" }}>Follow/Unfollow snippet</h1> */}
           <RightSidebar/>
         </div>
+        <div>
+            <TweetAndReplyModal 
+              showHideClassName={showHideClassName}
+              handleClose={this.handleClose}
+              tweet={tweet}
+            >
+              <Tweet user={user} newTweet={this.addRepliedTweet}/>
+            </TweetAndReplyModal>
+          </div>
       </section>
     );
   }

@@ -4,39 +4,30 @@ import fire from '../../../firebaseConfig/config'
 
 export class UserInfo extends Component {
 
-    state = {
-        isSignedIn: false ,
-        // user: this.props.user
-    }
 
-    componentDidMount(){
-        fire.auth().onAuthStateChanged(user => {
-            // console.log(user);
-        this.setState({ isSignedIn: !!user, userID: user.uid })
-        // if(user == null) {
-        // }
-        // console.log(this.props.history)
-        })
-    }
+    // state = {
+    //     isSignedIn: false ,
+    //     // user: this.props.user
+    // }
+
+    // componentDidMount(){
+    //     fire.auth().onAuthStateChanged(user => {
+    //     this.setState({ isSignedIn: !!user, userID: user.uid })
+    //     })
+    // }
 
     render() {
 
         const { user, noOfFollowing, noOfFollowers, createdAt } = this.props;
-
-        const { isSignedIn } = this.state;
 
         return (
             <div>
                 <div className="user-profile-edit-tab-container">
                     <div className="profile-pic-edit-tab-container">
                         <img alt="User Profile Pic" src={user.profilePhotoURL} />
-                        {isSignedIn ? (
                             <Link to={`/settings/${user.username}/profile`}>
                                 <button className="btn edit-profile-btn direct-to-pop-up-btn">Edit Profile</button>
                             </Link>
-                        ) : (
-                            <button>Follow</button>
-                        )}
                     </div>
                 </div>
                 <div className="user-details-area">
@@ -67,23 +58,23 @@ export class UserInfo extends Component {
                     </div>
                 </div>
                 <nav className="navigation-links-to-different-pages">
-                    <Link to={`/user/ashish.padhi`} >
-                        <button className="btn-style-for-Tweets-link">
+                    <Link to={`/${user.username}`} >
+                        <button className="btn-style-for-Tweets-link" onClick={this.props.handleChange.bind(this, "tweet")}>
                             Tweets
                         </button>
                     </Link>
-                    <Link to={`/user/ashish.padhi/with_replies`} >
-                        <button className="btn-style-for-Replies-link">
+                    <Link to={`/${user.username}/with_replies`} >
+                        <button className="btn-style-for-Replies-link" onClick={this.props.handleChange.bind(this, "reply")}>
                             Tweets & Replies
                         </button>
                     </Link>
-                    <Link to={`/user/ashish.padhi/media`} >
-                        <button className="btn-style-for-Media-link">
+                    <Link to={`/${user.username}/media`} >
+                        <button className="btn-style-for-Media-link" onClick={this.props.handleChange.bind(this, 'media')}>
                             Media
                         </button>
                     </Link>
-                    <Link to={`/user/ashish.padhi/likes`} >
-                        <button className="btn-style-for-Likes-link">
+                    <Link to={`/${user.username}/likes`} >
+                        <button className="btn-style-for-Likes-link" onClick={this.props.handleChange.bind(this, 'like')}>
                             Likes
                         </button>
                     </Link>

@@ -14,7 +14,8 @@ export default class RespondToTweet extends Component {
         const user = fire.auth().currentUser;
         if(user){
             this.setState({
-                user : user
+                user : user,
+                tweet: this.props.tweet
             });
         }
     }
@@ -45,8 +46,8 @@ export default class RespondToTweet extends Component {
     render(){
         return (
             <div className="respond-to-tweet">
-            <span className="Icon Icon--reply Icon--medium"/>
-            <span onClick={this.retweet} className="Icon Icon--retweet Icon--medium"/>
+            <span onClick={this.props.openReplyModal.bind(this, this.props.tweet)} className="Icon Icon--reply Icon--medium"/>
+            <span className="Icon Icon--retweet Icon--medium"/>
             <span className="Icon Icon--heart Icon--medium"/>
             </div>
         );
