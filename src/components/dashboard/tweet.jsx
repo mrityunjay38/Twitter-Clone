@@ -25,13 +25,17 @@ export default class Tweet extends Component {
   newTweet = e => {
     e.preventDefault();
 
+    console.log(this.props.user);
+
     const tweet = {
       name: this.props.user.name,
       username: this.props.user.username,
-      uid: this.props.user.uid,
+      uid: this.props.user.userId,
       text: this.state.text,
       img: this.state.imgUrl,
       is_retweet : false,
+      isReply: false,
+      reply_count: 0,
       retweet_count: 0,
       likes : 0,
       time: firebase.firestore.Timestamp.fromDate(new Date())
@@ -58,7 +62,6 @@ export default class Tweet extends Component {
 
     return (
       <div className="tweets-section">
-        <span>Home</span>
         <div className="add-tweet">
         <img className="profile-pic" src={this.props.user.photoUrl}/>
           <form onSubmit={this.newTweet}>

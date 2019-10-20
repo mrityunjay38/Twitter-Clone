@@ -111,7 +111,7 @@ export default class RespondToTweet extends Component {
         return (
             <div className="respond-to-tweet">
             <div className={reply_count > 0 ? "hasReplies" : ""}>
-            <span  className={reply_count > 0 ? "Icon Icon--circleReply Icon--medium" : "Icon Icon--reply Icon--medium"}/>
+            <span onClick={this.props.openReplyModal.bind(this, this.props.tweet)} className={reply_count > 0 ? "Icon Icon--circleReply Icon--medium" : "Icon Icon--reply Icon--medium"}/>
             <span>{reply_count}</span>
             </div>
             <div className={retweet_count > 0 ? "hasRetweets" : ""}>

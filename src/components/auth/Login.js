@@ -26,7 +26,7 @@ class Login extends Component {
         fire.auth().onAuthStateChanged(user => {
           this.setState({ isSignedIn: !!user, userId: user.uid})
           if(user) {
-            this.props.history.push(`/dashboard`)
+            this.props.history.push(`/${this.state.username}/onboarding`)
           }
         })
     }).catch((error) => {

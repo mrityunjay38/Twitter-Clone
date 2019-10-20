@@ -48,8 +48,7 @@ class Signup extends Component {
               profilePhotoURL:'',
               userId: u.user.uid,
               headerPhotoURL: '',
-              noOfFollowing: 0,
-              noOfFollower: 0
+              bio: ''
             }
          
            console.log("u data : ", signup)
@@ -98,7 +97,7 @@ class Signup extends Component {
       </div>
                ) : 
               (
-                <Redirect to={`/user/${username}/onboarding`} />
+                <Redirect to={`/${username}/onboarding`} />
               )
         }
 
