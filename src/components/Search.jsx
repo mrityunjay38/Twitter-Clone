@@ -13,7 +13,7 @@ export default class Search extends Component {
       .get()
       .then(snap => {
         snap.docs.forEach(doc => {
-          console.log(doc.data());
+          // console.log(doc.data());
           this.setState({
             users: [doc.data(), ...this.state.users]
           });

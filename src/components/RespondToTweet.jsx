@@ -12,33 +12,77 @@ export default class RespondToTweet extends Component {
 
     componentDidMount () {
         const user = fire.auth().currentUser;
-        if(user){
-            this.setState({
-                user : user
-            });
-        }
+        if(user)
+        this.setState({user : user});
     }
 
-    retweet = (e) => {
+    addRetweet = (tweet) => {
+        const retweetInfo = {
+            tweetId : tweet.id,
+            userId : this.state.user.uid
+        }
 
-        e.preventDefault();
+        let isRetweeted = false;
+        let retweetCollectionId = "";
+
+        db.collection('retweets').where('tweetId', '==', tweet.id).where('userId', '==', tweet.uid).get().then( snap => {
+            console.log(snap);
+
+            if(snap.docs.length > 0){
+                isRetweeted = true;
+                retweetCollectionId = snap.docs[0].id;
+            }
+
+            if(isRetweeted){
+                db.collection('retweets').doc(retweetCollectionId).delete().then( snap => {
+                    tweet.retweet_count -= 1;
+                    console.log('-');
+                    console.log(tweet.retweet_count);
+                    db.collection('tweets').doc(tweet.id).update({
+                        retweet_count : tweet.retweet_count
+                    });
+                });
+            }
+            else{
+                db.collection('retweets').add(retweetInfo).then( snap => {
+                    console.log(tweet.retweet_count);
+                    tweet.retweet_count += 1;
+                    console.log('+');
+                    console.log(tweet.retweet_count);
+                    db.collection('tweets').doc(tweet.id).update({
+                        retweet_count : tweet.retweet_count
+                    });
+                });
+            }
+
+        });
+
+        db.collection('tweets').add(tweet);
+
+    }
+
+
+    retweet = () => {
+
+        console.log(this.props.tweet);
 
         this.setState({
-            tweet: this.props.tweet
-        });
+            tweet : this.props.tweet
+        }, () => {
+
         const newRetweet = this.state.tweet;
+        // delete newRetweet.retweet_count;
 
         let userName = this.state.user.displayName.split('|')[0];
         
         newRetweet.is_retweet = true;
         newRetweet['who_retweeted'] = userName;
-        newRetweet.retweet_count = newRetweet.retweet_count + 1;
         newRetweet.uid = this.state.user.uid
         console.log(newRetweet);
 
-        console.log(this.state.tweet);
-        console.log(this.state.user);
-        db.collection('tweets').add(newRetweet);
+        this.addRetweet(newRetweet);
+        
+        });
 
     }
 

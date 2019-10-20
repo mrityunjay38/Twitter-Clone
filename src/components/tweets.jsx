@@ -2,11 +2,10 @@ import React, { Component } from "react";
 import RespondToTweet from "./RespondToTweet";
 import "../css/tweets.scss";
 import moment from "moment";
+import db from "../firebaseConfig/db";
 
 export default class Tweets extends Component {
-
   render() {
-
     return this.props.tweets.map(tweet => {
       console.log(tweet);
       return (
