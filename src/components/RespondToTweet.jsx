@@ -87,11 +87,23 @@ export default class RespondToTweet extends Component {
     }
 
     render(){
+
+        const { reply_count, retweet_count, likes} = this.props.tweet;
+
         return (
             <div className="respond-to-tweet">
-            <span className="Icon Icon--reply Icon--medium"/>
-            <span onClick={this.retweet} className="Icon Icon--retweet Icon--medium"/>
-            <span className="Icon Icon--heart Icon--medium"/>
+            <div className={reply_count > 0 ? "hasReplies" : ""}>
+            <span  className={reply_count > 0 ? "Icon Icon--circleReply Icon--medium" : "Icon Icon--reply Icon--medium"}/>
+            <span>{reply_count}</span>
+            </div>
+            <div className={retweet_count > 0 ? "hasRetweets" : ""}>
+            <span onClick={this.retweet} className={retweet_count > 0 ? "Icon Icon--retweeted Icon--medium" : "Icon Icon--retweet Icon--medium"}/>
+            <span>{retweet_count}</span>
+            </div>
+            <div className={likes > 0 ? "hasLikes" : ""}>
+            <span  className={likes > 0 ? "Icon Icon--heartBadge Icon--medium" : "Icon Icon--heart Icon--medium"}/>
+            <span>{likes}</span>
+            </div>
             </div>
         );
     }

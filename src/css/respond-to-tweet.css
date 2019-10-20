@@ -4,7 +4,37 @@
   align-items: center;
   padding-top: 1em;
   color: lightblue;
+}
+.respond-to-tweet span {
   opacity: 0.5;
+}
+.respond-to-tweet div {
+  display: flex;
+}
+.respond-to-tweet .hasRetweets {
+  color: #17bf63;
+  font-weight: 600;
+}
+.respond-to-tweet .hasRetweets span {
+  opacity: 1;
+}
+.respond-to-tweet .hasLikes {
+  color: #e0245e;
+  font-weight: 600;
+}
+.respond-to-tweet .hasLikes span {
+  opacity: 1;
+}
+.respond-to-tweet .hasReplies {
+  color: #1da1f2;
+  font-weight: 600;
+}
+.respond-to-tweet .hasReplies span {
+  opacity: 1;
+}
+.respond-to-tweet .Icon {
+  margin-right: 0.5em;
+  font-weight: bold;
 }
 .respond-to-tweet .Icon--reply:hover {
   color: #1da1f2;

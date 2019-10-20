@@ -5,6 +5,11 @@ import moment from "moment";
 import db from "../firebaseConfig/db";
 
 export default class Tweets extends Component {
+
+  componentDidMount() {
+    console.log(this.props.tweet);
+  }
+
   render() {
     return this.props.tweets.map(tweet => {
       console.log(tweet);

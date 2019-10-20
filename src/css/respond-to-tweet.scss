@@ -4,7 +4,46 @@
     align-items: center;
     padding-top: 1em;
     color: lightblue;
-    opacity: 0.5;
+
+    span {
+        opacity: 0.5;
+    }
+
+    div {
+        display: flex;
+    }
+
+    .hasRetweets {
+        color: rgb(23, 191, 99);
+        font-weight: 600;
+        
+        span {
+            opacity: 1;
+        }
+    }
+
+    .hasLikes {
+        color: rgb(224, 36, 94);
+        font-weight: 600;
+        
+        span {
+            opacity: 1;
+        }
+    }
+
+    .hasReplies {
+        color: rgb(29,161,242);
+        font-weight: 600;
+
+        span {
+            opacity: 1;
+        }
+    }
+
+    .Icon {
+        margin-right: 0.5em;
+        font-weight: bold;
+    }
 
     .Icon--reply:hover {
         color: rgb(29,161,242);
@@ -15,7 +54,7 @@
     }
 
     .Icon--heart:hover {
-        color: rgb(224, 36, 94)
+        color: rgb(224, 36, 94);
     }
 
 }
