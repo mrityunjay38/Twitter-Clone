@@ -25,7 +25,7 @@ export default class Dashboard extends Component {
     const user = fire.auth().currentUser;
     if(user){
       const username = user.displayName.split('|');
-      console.log(user.uid);
+      console.log(user);
       this.setState({
         user : {
           userId : user.uid,

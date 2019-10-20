@@ -7,18 +7,20 @@ import { Link } from "react-router-dom";
 
 export default class Tweets extends Component {
   render() {
+    console.log(this.props.user);
     return this.props.tweets.map(tweet => {
       // console.log(tweet.id);
       return (
         <article>
+          <img className="profile-pic" src={this.props.user.photoURL} />
+          <div className="tweets-container">
           {tweet.is_retweet ? (
             <div className="isRetweet">
               <span className="Icon Icon--retweet Icon--small" />
               <span>{tweet.who_retweeted} Retweeted</span>
             </div>
           ) : null}
-          <img className="profile-pic" src={this.props.user.photoUrl} />
-          <div className="tweets-container">
+
             <div className="user-credentials">
               <span className="name">{tweet.name}</span>
               <span className="username">@{tweet.username}</span>

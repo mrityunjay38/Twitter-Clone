@@ -160,7 +160,7 @@ class UserProfileWithTweets extends Component {
             />
             <div>
               {this.state.sub === 'Tweets' ? (
-                <Tweets tweets={tweets} openReplyModal={this.openReplyModal}/>
+                <Tweets user={user} tweets={tweets} openReplyModal={this.openReplyModal}/>
               ) : ( this.state.sub === 'Replies' ? (
                       <RepliedTweet />
                     ) : ( this.state.sub === 'Media' ? (

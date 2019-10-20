@@ -64,7 +64,7 @@ export default class Search extends Component {
             {this.state.resultantUsers.map(user => {
               return (
                 <li key={user.userId}>
-                  <img src={user.photoUrl} />
+                  <img src={user.photoURL} />
                   <span>
                     <strong>{user.name}</strong>
                     <br />@{user.username}
