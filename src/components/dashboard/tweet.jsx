@@ -60,6 +60,7 @@ export default class Tweet extends Component {
       <div className="tweets-section">
         <span>Home</span>
         <div className="add-tweet">
+        <img className="profile-pic" src={this.props.user.photoUrl}/>
           <form onSubmit={this.newTweet}>
             <input
               value={this.state.text}

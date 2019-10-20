@@ -10,8 +10,7 @@ export default class Search extends Component {
 
   async componentDidMount() {
     await db.collection("users")
-      .get()
-      .then(snap => {
+      .onSnapshot(snap => {
         snap.docs.forEach(doc => {
           // console.log(doc.data());
           this.setState({
@@ -28,15 +27,13 @@ export default class Search extends Component {
   searchUsers = (e) => {
     console.log("hit");
     e.preventDefault();
-    // let char = e.target.value;
-    // if(char == "\\" && char == "?" && char == "^" && char == "." && char == "|"){
-    //   e.target.value = '';
-    // }
-    let escapeChar = [...new Set([...e.target.value])].join('');
+    let escapeChar = "";
+    escapeChar = escapeChar + e.target.value;
+    escapeChar = escapeChar.replace(/[/\\?^.|]/g, "");
     console.log(escapeChar);
-    if (e.target.value !== "" && escapeChar !== "\\" && escapeChar !== "?" && escapeChar !== "^" && escapeChar !== "." && escapeChar !== "|") {
+    if (e.target.value !== ("" || "/" || "\\" || "?" || "^" || "." || "|") && escapeChar !== "") {
       let foundUsers = this.state.users.filter(user => {
-        if (new RegExp(`^${e.target.value}`, "i").test(user.username) || new RegExp(`^${e.target.value}`, "i").test(user.name)) {
+        if (new RegExp(`^${escapeChar}`, "i").test(user.username) || new RegExp(`^${escapeChar}`, "i").test(user.name)) {
           return true;
         }
         return false;

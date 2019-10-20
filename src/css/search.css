@@ -40,7 +40,12 @@
   padding: 1em;
 }
 .search ul li img {
+  background: url("../img/default-profile-small.png") no-repeat;
+  display: block;
+  background-color: white;
+  background-size: 100%;
   width: 15%;
+  height: 3em;
   border: none;
   border-radius: 100%;
   margin-right: 1em;

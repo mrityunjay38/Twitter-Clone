@@ -5,11 +5,6 @@ import moment from "moment";
 import db from "../firebaseConfig/db";
 
 export default class Tweets extends Component {
-
-  componentDidMount() {
-    console.log(this.props.tweet);
-  }
-
   render() {
     return this.props.tweets.map(tweet => {
       console.log(tweet);
@@ -21,6 +16,8 @@ export default class Tweets extends Component {
               <span>{tweet.who_retweeted} Retweeted</span>
             </div>
           ) : null}
+          <img className="profile-pic" src={this.props.user.photoUrl}/>
+          <div className="tweets-container">
           <div className="user-credentials">
             <span className="name">{tweet.name}</span>
             <span className="username">@{tweet.username}</span>
@@ -33,6 +30,7 @@ export default class Tweets extends Component {
             <img src={tweet.img} />
           </div>
           <RespondToTweet tweet={tweet} />
+          </div>
         </article>
       );
     });

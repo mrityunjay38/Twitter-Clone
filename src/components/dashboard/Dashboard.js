@@ -96,7 +96,7 @@ export default class Dashboard extends Component {
         </div>
         <div className="middle">
           <Tweet user={user} newTweet={this.addTweet} />
-          <Tweets tweets={tweets} />
+          <Tweets user={user} tweets={tweets} />
         </div>
         <div className="right-sidebar">
           {/* <h1 style={{ color: "white" }}>Follow/Unfollow snippet</h1> */}
