@@ -114,28 +114,36 @@ class UserProfileWithTweets extends Component {
     this.setState({ show: false })
   }
 
-  addTweet = (tweet,img) => {
-    // console.log(this.state)
+  addRepliedTweet = async (tweet,img) => {
     tweet.isReply = true;
-    console.log(tweet, img);
- 
-    // this.setState({
-    //   tweets: [tweet,...this.state.tweets]
-    // });
     
     if(tweet.img == ''){
-      db.collection('tweets').add(tweet);
+      let addTweetsRef = await db.collection('tweets').add(tweet)
+      this.setState({ tweetId: addTweetsRef.id });
     }
     else{
       let storageRef = file.ref('uploads/' + tweet.uid + '/tweets/' + img.name);
-      storageRef.put(img).then( snap => {
+      storageRef.put(img).then( async snap => {
         console.log(snap);
-        storageRef.getDownloadURL().then( url => {
-          tweet.img = url;
-          db.collection('tweets').add(tweet);
-        });
+        let url = await storageRef.getDownloadURL()
+        
+        tweet.img = url;
+        
+        let addTweetsRef = await db.collection('tweets').add(tweet)
+        this.setState({ tweetId: addTweetsRef.id });
+        
       });
     }
+
+    console.log(this.state.tweetId, this.state.tweet.id);
+
+    let replies = {
+      userId: tweet.uid,
+      repliedTo: this.state.tweet.id,
+      tweetId: this.state.tweetId  
+    }
+
+    db.collection('replies').add(replies);
 
   };
 
@@ -178,7 +186,7 @@ class UserProfileWithTweets extends Component {
               handleClose={this.handleClose}
               tweet={tweet}
             >
-              <Tweet user={user} newTweet={this.addTweet}/>
+              <Tweet user={user} newTweet={this.addRepliedTweet}/>
             </TweetAndReplyModal>
           </div>
         </div>

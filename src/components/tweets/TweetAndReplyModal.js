@@ -9,22 +9,23 @@ const modal = ({ children, showHideClassName, handleClose, tweet }) => {
     if (tweet == undefined) {
         var tweetDetails = null;
     } else {
+        const { name, username, time, text } = tweet
         var tweetDetails = ( 
                 <div className="user-credentials" style={{ color: 'white' }}>
-                    <span style={{ font: 'bold 1rem helvetica' }}>{tweet.name}</span>
+                    <span style={{ font: 'bold 1rem helvetica' }}>{name}</span>
                     <span style={{     
                         padding: '0 1rem',
                         fontSize: 'small',
                         color: 'lightslategray' 
-                    }}>@{tweet.username}</span>
+                    }}>@{username}</span>
                     <span style={{
                         color: 'lightslategray',
                         fontSize: 'small'
                     }}>
-                        {moment(tweet.time.toDate()).fromNow()}
+                        {moment(time.toDate()).fromNow()}
                     </span>
                     <div style={{ fontSize: 'small' }}>
-                        <p>{tweet.text}</p>
+                        <p>{text}</p>
                     </div>
                 </div>
             )         

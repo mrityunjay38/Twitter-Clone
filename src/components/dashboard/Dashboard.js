@@ -82,8 +82,6 @@ export default class Dashboard extends Component {
 
   addRepliedTweet = async (tweet, img) => {
     tweet.isReply = true;
-    console.log(tweet, img);
-    let tweetId = '';
     
     if(tweet.img == ''){
       let addTweetsRef = await db.collection('tweets').add(tweet)

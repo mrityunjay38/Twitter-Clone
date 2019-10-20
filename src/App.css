@@ -200,118 +200,155 @@ h5 {
     flex-direction: column;
 }
 
+.setting-modal {
+    background: black;
+    border-radius: 1rem;
+    color: white;
+}
+
 .edit-profile-page-header {
     display: flex;
     align-items: center;
-    border-bottom: 0.1rem solid blue;
-    position: fixed;
-    z-index: 1;
-    width: 92%;
-    background: white;
-    padding: 1rem;
+    padding-left: 1rem;
+    padding-bottom: 1rem;
+    border-bottom: 0.01rem solid;
 }
 
 .edit-profile-page-header a {
-    position: relative;
-    /* left: -10rem; */
-    align-self: baseline;
+    padding-right: 2rem;
 }
 
 .edit-profile-page-header button {
     background: none;
     border: none;
-    color: blue;
-    cursor: pointer;
+    color: white;
 }
 
 .edit-profile-page-header h1 {
     margin: 0;
+    font: Bold 1.2rem/1rem helvetica;
+}
+
+.edit-page-header-image {
+    margin: 1rem;
+    background: grey;
+    height: 12rem;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
 }
 
 .edit-page-header-image input {
-    position: relative;
-    top: 10rem;
-    left: 10rem;
-    /* width: 2rem; */
     opacity: 0;
     cursor: pointer;
 }
 
-.edit-page-header-image img {
-    width: 100%;
+.svg-container {
+    display: flex;
+    justify-content: center;
+    width: 3rem;
+    height: 3rem;
 }
 
-.edit-page-header-image svg {
-    width: 2rem;
-    position: absolute;
-    top: 9.5rem;
-    left: 50%;
-    opacity: 0.8;
+.edit-page-svg-container svg, .edit-page-profile-image svg {
+    width: 1.5rem;
+    opacity: 0.6;
 }
 
-.edit-profile-profile-image {
-    width: 10rem;
+.edit-page-profile-image {
     height: 10rem;
-    /* margin: 0; */
-    position: relative;
-    top: -6rem;
-    padding: 0 2rem;
-}
-
-.edit-profile-profile-image input {
-    width: 5rem;
-    position: relative;
-    top: 5rem;
-    left: 2.5rem;
-    opacity: 0;
-    cursor: pointer;
-}
-
-.edit-profile-profile-image img {
+    background: lightgrey;
     width: 10rem;
+    margin: 1rem 0rem 0rem 2rem;
+    position: relative;
+    top: -5rem;
     border-radius: 50%;
-    border: 0.2rem solid;
-}
-
-.edit-profile-profile-image svg {
-    width: 2rem;
-    position: absolute;
-    top: 50%;
-    left: 44%;
-    opacity: 0.8;
-}
-
-.edit-profile-bio-textarea {
+    border: 0.5rem solid black;
     display: flex;
     flex-direction: column;
-    position: relative;
-    top: -2rem;
-    padding: 1rem;
+    align-items: center;
+    justify-content: center;
 }
 
-.edit-profile-bio-textarea label {
-    font: bolder 1rem/1rem helvetica;
+.edit-page-profile-image input {
+    opacity: 0;
+    cursor: pointer;
 }
 
-edit-profile-bio-textarea textarea {
-    height: 3rem;
-    border: none;
+.edit-page-bio-textarea {
+    padding: 0rem 1rem 1rem 1rem;
+    display: flex;
+    flex-direction: column;
+}
+
+.edit-page-bio-textarea textarea {
+    background: black;
+    border: 0;
+    border-bottom: 0.1rem solid white;
+    color: white;
     outline: none;
-    border-bottom: 0.1rem solid blue;
 }
 
 .edit-profile-save-btn {
-    background: blue;
-    color: white;
-    border: none;
+    margin: 1rem;
     width: 4rem;
     height: 2rem;
+    background: none;
+    color: white;
+    border: none;
+    border: 0.1rem solid;
     border-radius: 1rem;
-    margin: 0 1rem;
 }
 
-.edit-profile-overflow-scroll {
-    position: relative;
-    top: 2rem;
+.edit-profile-save-btn:hover {
+    background: white;
+    color: black;
 }
 
+.single-tweet-display-header {
+    padding: 1rem;
+    color: white;
+    border-bottom: 0.01rem solid;
+}
+
+.single-tweet-display-header h3 {
+    margin: 0;
+}
+
+.single-tweet-user-credentials {
+    padding: 1rem;
+    color: white;
+    display: flex;
+    flex-direction: column;
+}
+
+.single-tweet-user-credentials .name {
+    padding: 1rem 1rem 0rem 0rem;
+}
+
+.single-tweet-user-credentials .username {
+    color: lightslategray;
+    font-size: small;
+}
+
+.single-tweet-content {
+    padding: 0 1rem 1rem;
+    font-size: larger;
+    color: white;
+    border-bottom: 0.01rem solid;
+}
+
+.single-tweet-content p {
+    margin: 0;
+}
+
+.single-tweet-counts {
+    padding: 0.3rem 1rem;
+    color: white;
+}
+
+.single-tweet-counts span {
+    padding-right: 1rem;
+    font-variant-caps: all-petite-caps;
+}
