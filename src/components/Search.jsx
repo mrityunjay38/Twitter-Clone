@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import "../css/search.scss";
 import db from "../firebaseConfig/db";
+import { Link } from "react-router-dom";
 
 export default class Search extends Component {
   state = {
@@ -29,7 +30,7 @@ export default class Search extends Component {
     e.preventDefault();
     let escapeChar = "";
     escapeChar = escapeChar + e.target.value;
-    escapeChar = escapeChar.replace(/[/\\?^.|]/g, "");
+    escapeChar = escapeChar.replace(/[[/\\?^.|:;+*&#!%$~`_-]/g, "");
     console.log(escapeChar);
     if (e.target.value !== ("" || "/" || "\\" || "?" || "^" || "." || "|") && escapeChar !== "") {
       let foundUsers = this.state.users.filter(user => {
@@ -63,6 +64,7 @@ export default class Search extends Component {
           <ul>
             {this.state.resultantUsers.map(user => {
               return (
+                <Link to={`/${user.username}`}>
                 <li key={user.userId}>
                   <img src={user.photoURL} />
                   <span>
@@ -70,6 +72,7 @@ export default class Search extends Component {
                     <br />@{user.username}
                   </span>
                 </li>
+                </Link>
               );
             })}
           </ul>
