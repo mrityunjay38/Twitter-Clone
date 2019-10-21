@@ -40,6 +40,7 @@ export default class Dashboard extends Component {
       followData.docs.forEach( doc => followerIds.push(doc.data().userId));
       console.log(followerIds);
 
+      
       followerIds.forEach( id => {
         db.collection('tweets').where('uid', '==', id).orderBy('time').get().then( snap => {
           snap.docs.forEach( doc => {
@@ -82,34 +83,46 @@ export default class Dashboard extends Component {
 
   addRepliedTweet = async (tweet, img) => {
     tweet.isReply = true;
+    tweet['replyingTo'] = this.state.tweet.username;
     
     if(tweet.img == ''){
-      let addTweetsRef = await db.collection('tweets').add(tweet)
-      this.setState({ tweetId: addTweetsRef.id });
+      db.collection('tweets').add(tweet).then(ref => {
+        this.setState({ tweetId: ref.id });
+        let replies = {
+          userId: tweet.uid,
+          repliedTo: this.state.tweet.id,
+          tweetId: this.state.tweetId  
+        }
+    
+        db.collection('replies').add(replies);
+      })
     }
     else{
       let storageRef = file.ref('uploads/' + tweet.uid + '/tweets/' + img.name);
-      storageRef.put(img).then( async snap => {
-        console.log(snap);
-        let url = await storageRef.getDownloadURL()
+      storageRef.put(img).then(snap => {
+        storageRef.getDownloadURL().then(url => {
+          tweet.img = url;
+          db.collection('tweets').add(tweet).then(ref => {
+            this.setState({ tweetId: ref.id });
+
+            let replies = {
+              userId: tweet.uid,
+              repliedTo: this.state.tweet.id,
+              tweetId: this.state.tweetId  
+            }
         
-        tweet.img = url;
-        
-        let addTweetsRef = await db.collection('tweets').add(tweet)
-        this.setState({ tweetId: addTweetsRef.id });
-        
-      });
+            db.collection('replies').add(replies);
+
+          })
+        })
+      }) 
     }
 
-    console.log(this.state.tweetId, this.state.tweet.id);
+    let replyCount = this.state.tweet.reply_count + 1 ;
 
-    let replies = {
-      userId: tweet.uid,
-      repliedTo: this.state.tweet.id,
-      tweetId: this.state.tweetId  
-    }
+    db.collection('tweets').doc(this.state.tweet.id).update({reply_count: replyCount});
 
-    db.collection('replies').add(replies);
+    this.setState({ show: false });
   }
 
   showTweet = (id) => {
@@ -122,6 +135,7 @@ export default class Dashboard extends Component {
   }
 
   handleClose = () => {
+    // this.props.history.pop();
     this.setState({ show: false })
   }
 

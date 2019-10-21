@@ -28,7 +28,15 @@ export default class Tweets extends Component {
                 {moment(tweet.time.toDate()).fromNow()}
               </span>
             </div>
-            <Link to={`/${tweet.username}/status/${tweet.id}`}>
+
+            {tweet.isReply ? (
+            <div className="isReply">
+              <span className="replied-to-username" />
+              <span style={{ color: 'lightslategrey', fontSize: 'smaller' }}>replying to @{tweet.replyingTo}</span>
+            </div>
+          ) : null}
+
+            <Link to={`/${tweet.username}/status/${tweet.id}`} style={{ textDecoration: 'none' }}>
               <div className="tweet-content">
                 <p>{tweet.text}</p>
                 <img src={tweet.img} />
