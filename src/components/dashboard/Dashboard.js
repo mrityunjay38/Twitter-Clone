@@ -30,7 +30,8 @@ export default class Dashboard extends Component {
         user : {
           userId : user.uid,
           name : username[0],
-          username: username[1]
+          username: username[1],
+          photoURL : user.photoURL
         }
       });
 
