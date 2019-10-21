@@ -19,6 +19,15 @@ article .profile-pic {
 article .tweets-container {
   width: 80%;
 }
+article .tweets-container .isRetweet {
+  display: flex;
+  align-items: center;
+  color: lightblue;
+  margin-bottom: 1em;
+}
+article .tweets-container .Icon {
+  margin-right: 0.5em;
+}
 article .user-credentials {
   display: flex;
   color: white;
