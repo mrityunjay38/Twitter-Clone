@@ -41,7 +41,7 @@ export default class Tweet extends Component {
       time: firebase.firestore.Timestamp.fromDate(new Date())
     };
 
-    this.props.newTweet(tweet,this.state.img);
+    this.props.newTweet(tweet,this.state.img, );
 
     this.setState({
       text: "",
