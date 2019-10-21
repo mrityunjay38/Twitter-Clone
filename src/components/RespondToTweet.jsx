@@ -9,7 +9,8 @@ export default class RespondToTweet extends Component {
         tweet : {},
         user : {},
         key : "",
-        retweetId: "" 
+        retweetId: "",
+        clickCount: 0
     }
 
     componentDidMount () {
@@ -19,11 +20,15 @@ export default class RespondToTweet extends Component {
     }
 
     addRetweet = (tweet) => {
+
+        const { clickCount } = this.state;
+
         const retweetInfo = {
             tweetId : tweet.id,
             userId : this.state.user.uid
         }
 
+        let currRetweetCount = tweet.retweet_count;
         let isRetweeted = false;
         let retweetCollectionId = "";
 
@@ -33,16 +38,37 @@ export default class RespondToTweet extends Component {
             if(snap.docs.length > 0){
                 isRetweeted = true;
                 retweetCollectionId = snap.docs[0].id;
+                this.setState({
+                    isRetweeted : true
+                });
+            }
+            else {
+                this.setState({
+                    isRetweeted : false
+                });
             }
 
             if(isRetweeted){
                 db.collection('retweets').doc(retweetCollectionId).delete().then( snap => {
-                    tweet.retweet_count -= 1;
-                    console.log('-');
-                    console.log(tweet.retweet_count);
-                    db.collection('tweets').doc(tweet.id).update({
-                        retweet_count : tweet.retweet_count
-                    });
+                   
+                    if((tweet.retweet_count - 1) >= 0 && (tweet.retweet_count === currRetweetCount - 1)){
+                        tweet.retweet_count -= 1;
+                        db.collection('tweets').doc(tweet.id).update({
+                            retweet_count : tweet.retweet_count
+                        });
+                    }
+                    else {
+                        if(currRetweetCount -1 >= 0){
+                            tweet.retweet_count = currRetweetCount - 1;
+                        }
+                        else {
+                            tweet.retweet_count = 0;
+                        }
+                        db.collection('tweets').doc(tweet.id).update({
+                            retweet_count : tweet.retweet_count
+                        });
+                    }
+
                     db.collection('tweets').doc(this.state.retweetId).delete();
                     console.log(`who ${this.state.user.uid}`);
                     console.log(`id ${tweet.id}`);
@@ -51,15 +77,28 @@ export default class RespondToTweet extends Component {
                     });
                 });
             }
-            else{
+            else if((clickCount & 1) == 1 && isRetweeted == false){
                 db.collection('retweets').add(retweetInfo).then( snap => {
-                    console.log(tweet.retweet_count);
-                    tweet.retweet_count += 1;
-                    console.log('+');
-                    console.log(tweet.retweet_count);
-                    db.collection('tweets').doc(tweet.id).update({
-                        retweet_count : tweet.retweet_count
-                    });
+                    
+                    if((tweet.retweet_count + 1) === currRetweetCount + 1){
+                        tweet.retweet_count += 1;
+                        db.collection('tweets').doc(tweet.id).update({
+                            retweet_count : tweet.retweet_count
+                        });
+                        this.setState({
+                            retweetId : snap.id
+                        });
+                    }
+                    else {
+                        tweet.retweet_count = currRetweetCount + 1;
+                        db.collection('tweets').doc(tweet.id).update({
+                            retweet_count : tweet.retweet_count
+                        });
+                        this.setState({
+                            retweetId : snap.id
+                        });
+                    }
+                    
                     db.collection('tweets').add(tweet).then( snapshot => {
                         console.log(snapshot);
                         this.setState({
@@ -83,8 +122,11 @@ export default class RespondToTweet extends Component {
 
         console.log(this.props.tweet);
 
+        const { clickCount} = this.state;
+
         this.setState({
-            tweet : this.props.tweet
+            tweet : this.props.tweet,
+            clickCount : clickCount + 1
         }, () => {
 
         const newRetweet = this.state.tweet;

@@ -40,15 +40,19 @@ export default class Dashboard extends Component {
       followData.docs.forEach( doc => followerIds.push(doc.data().userId));
       console.log(followerIds);
 
-      
+      let cacheTweets = [];
+
       followerIds.forEach( id => {
-        db.collection('tweets').where('uid', '==', id).orderBy('time').get().then( snap => {
+        db.collection('tweets').where('uid', '==', id).orderBy('time').onSnapshot( snap => {
+          cacheTweets = [];
           snap.docs.forEach( doc => {
             let tweet = doc.data();
             tweet.id = doc.id;
-            this.setState({
-            tweets : [tweet,...this.state.tweets]
-          })});
+            cacheTweets.unshift(tweet);
+          });
+          this.setState({
+            tweets : cacheTweets
+          })
         });
       });
 
