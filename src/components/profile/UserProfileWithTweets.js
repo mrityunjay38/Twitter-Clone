@@ -5,9 +5,9 @@ import UserArea from "./UserArea";
 import Tweets from "../../components/tweets";
 import LeftSidebar from "../sidebars/LeftSidebar";
 import RightSidebar from "../sidebars/RightSidebar";
-import RepliedTweet from "../tweets/RepliedTweet";
-import UserMedia from "../media/UserMedia";
-import LikedTweets from "../tweets/LikedTweets";
+// import RepliedTweet from "../tweets/RepliedTweet";
+// import UserMedia from "../media/UserMedia";
+// import LikedTweets from "../tweets/LikedTweets";
 import TweetAndReplyModal from "../tweets/TweetAndReplyModal";
 import Tweet from '../dashboard/tweet'
 import file from '../../firebaseConfig/storage'
@@ -26,12 +26,16 @@ class UserProfileWithTweets extends Component {
       noOfFollowing: 0,
       noOfFollowers: 0, 
       sub: '',
-      show: false
+      show: false,
+      allTweets: [],
+      TweetsAndReplies: [],
+      Media: [],
+      Likes: []
     };
 
     fire.auth().onAuthStateChanged(user => {
       let CreatedTime = user.metadata.creationTime.split(' ');
-      this.setState({createdAt: CreatedTime[2] + ' ' + CreatedTime[3], sub: 'Tweets', middle: 'showProfile'})
+      this.setState({createdAt: CreatedTime[2] + ' ' + CreatedTime[3], middle: 'showProfile', sub: 'Tweets'});
   })
   }
   
@@ -57,20 +61,6 @@ class UserProfileWithTweets extends Component {
       } )
     } )
 
-    await db.collection('tweets').where('uid', '==', this.state.user.userId ).orderBy('time').get().then( snap => {
-      snap.docs.forEach( doc => {
-        // console.log(doc.id);
-        let tweet = doc.data();
-        tweet.id = doc.id;
-        // console.log(doc.data());
-
-        this.setState({
-            tweets : [tweet,...this.state.tweets]
-          })
-        }
-      );
-    });
-
     await db.collection('followers').where('follower_id', '==', this.state.user.userId).get().then( snap => {
       this.setState({ noOfFollowing: snap.docs.length });
       
@@ -79,6 +69,38 @@ class UserProfileWithTweets extends Component {
     await db.collection('followers').where('userId', '==', this.state.user.userId).get().then( snap => {
       this.setState( { noOfFollowers: snap.docs.length } );
     } )
+
+    await db.collection('tweets').where('uid', '==', this.state.user.userId ).orderBy('time').get().then( snap => {
+      snap.docs.forEach( doc => {
+        // console.log(doc.id);
+        let tweet = doc.data();
+        tweet.id = doc.id;
+        // console.log(doc.data());
+        this.setState({
+            tweets : [tweet,...this.state.tweets]
+          })
+        }
+      );
+    });
+
+    let tweetIds = [];
+
+    await db.collection('likes').where('userId', '==', this.state.user.userId).get().then(snap => {
+      snap.docs.forEach(doc => tweetIds.push(doc.data().tweetId))
+    });
+
+    tweetIds.forEach(tweetId => {
+      db.collection('tweets').doc(tweetId).get().then(doc => {
+        this.setState({ Likes: [doc.data(), ...this.state.LikedTweets] })
+      })
+    })
+
+    this.setState({ 
+      allTweets: this.state.tweets.filter(tweet => tweet.isReply !== true),
+      TweetsAndReplies: this.state.tweets.filter(tweet => tweet.isReply === true),
+      Media: this.state.tweets.filter(tweet => tweet.img !== '') 
+    })
+
   }
 
   handleChange = (sub) => {
@@ -116,6 +138,7 @@ class UserProfileWithTweets extends Component {
 
   addRepliedTweet = async (tweet,img) => {
     tweet.isReply = true;
+    tweet['replyingTo'] = this.state.tweet.username;
     
     if(tweet.img == ''){
       let addTweetsRef = await db.collection('tweets').add(tweet)
@@ -145,11 +168,14 @@ class UserProfileWithTweets extends Component {
 
     db.collection('replies').add(replies);
 
+    let replyCount = this.state.tweet.reply_count + 1 ;
+
+    db.collection('tweet').doc(replies.repliedTo).update({reply_count: replyCount});
   };
 
   render() {
     
-    const { tweets, show, tweet, user } = this.state;
+    const { allTweets, TweetsAndReplies, Media, Likes, show, tweet, user } = this.state;
 
     const showHideClassName = show ? { display: 'block'} : {display: 'none'};
 
@@ -168,12 +194,14 @@ class UserProfileWithTweets extends Component {
             />
             <div>
               {this.state.sub === 'Tweets' ? (
-                <Tweets user={user} tweets={tweets} openReplyModal={this.openReplyModal}/>
+                <Tweets user={user} tweets={allTweets} openReplyModal={this.openReplyModal}/>
               ) : ( this.state.sub === 'Replies' ? (
-                      <RepliedTweet />
+                <Tweets user={user} tweets={TweetsAndReplies} openReplyModal={this.openReplyModal}/>
                     ) : ( this.state.sub === 'Media' ? (
-                            <UserMedia />
-                          ) : ( <LikedTweets /> ) ) )}
+                      <Tweets user={user} tweets={Media} openReplyModal={this.openReplyModal}/>
+                          ) : ( 
+                          <Tweets user={user} tweets={Likes} openReplyModal={this.openReplyModal}/>
+                           ) ) )}
             </div>
             </div>
           </div>
