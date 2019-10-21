@@ -1,7 +1,7 @@
 import React from 'react';
 import { Link } from 'react-router-dom'
 
-const modal = ({ path, changeUserDetail, handleClose, show, children }) => {
+const modal = ({ path, changeUserDetail, handleClose, show, children, updateMessage }) => {
     const showHideClassName = show ? "modal display-block": "modal display-none";
 
     return (
@@ -17,6 +17,11 @@ const modal = ({ path, changeUserDetail, handleClose, show, children }) => {
                     {children}
                     <input type="submit" value="Save" className="edit-profile-save-btn"/>
                 </form>
+                {updateMessage != '' ? (
+                    <p style={{ display: 'flex', justifyContent: 'center' }}>{updateMessage}</p>
+                ): (
+                    null
+                )}
             </section>
         </div>
     )

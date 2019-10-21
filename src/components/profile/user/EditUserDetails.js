@@ -10,11 +10,12 @@ export class EditUserDetails extends Component {
     state = {
         show: true,
         headerPhotoURL: '',
-        headerPhoto: {},
-        photo: {},
+        headerPhoto: [],
+        photo: [],
         photoURL: '',
         displayName: '',
-        bio: ''
+        bio: '',
+        updation: ''
     }
 
     async componentDidMount() {
@@ -29,7 +30,7 @@ export class EditUserDetails extends Component {
               this.setState( { 
                   user: doc.data(), 
                   headerPhotoURL: doc.data().headerPhotoURL, 
-                  photoURL: doc.data().profilePhotoURL,
+                  photoURL: doc.data().photoURL,
                   bio: doc.data().bio,
                   displayName: doc.data().name 
                 } );
@@ -42,17 +43,18 @@ export class EditUserDetails extends Component {
     }
 
     handleHeaderPhotoChange = e => {
-        console.log(e.target.files[0]);
+        // console.log(e.target.files[0].length);
         this.setState({
           headerPhotoURL: URL.createObjectURL(e.target.files[0]),
-          headerPhoto: e.target.files[0]
+          headerPhoto: e.target.files
         });
       };
 
     handleProfilePhotoChange = e => {
+        console.log(e.target.files.length);
         this.setState({
             photoURL: URL.createObjectURL(e.target.files[0]),
-            photo: e.target.files[0]
+            photo: e.target.files
           });
     }
 
@@ -68,73 +70,93 @@ export class EditUserDetails extends Component {
         console.log('Ashish');
 
         const userDetails = {
-            profilePhotoURL: this.state.photoURL,
+            photoURL: this.state.photoURL,
             headerPhotoURL: this.state.headerPhotoURL,
             bio: this.state.bio
         }
 
-        console.log(userDetails);
-
-        if(this.state.photo || this.state.headerPhoto) {
-            console.log('Ashish');
-
-            if(this.state.photo) {
-            console.log('Ashish');
-
-                const storageRef = file.ref('uploads/' + this.state.user.userId + '/profile/' + this.state.photo.name);
-                // const profilePhotoRef = storageRef.ref(this.state.photo.name);
-                storageRef.put(this.state.photo).then(snap => {
+        if(userDetails.photoURL == '' && userDetails.headerPhotoURL == '') {
+            db.collection('users').doc(this.state.user.userId).update(userDetails);
+            this.setState({ updation: 'Successfully updated the bio' })
+        } else {
+            console.log(this.state.photo.files);
+            if( this.state.photo.length === 0 && this.state.headerPhoto.length === 0) {
+                console.log('Ashish');
+                db.collection('users').doc(this.state.user.userId).update(userDetails);
+                this.setState({ updation: 'Successfully updated User Bio.' })
+            } else  if(userDetails.headerPhotoURL == '' || this.state.headerPhoto.length === 0) {
+                console.log('Ashish');
+                const storageRef = file.ref('uploads/' + this.state.user.userId + '/profile/' + this.state.photo[0].name);
+                storageRef.put(this.state.photo[0]).then(snap => {
                     console.log(snap);
                     snap.ref.getDownloadURL().then(url => {
-                        userDetails.profilePhotoURL = url;
+                        userDetails.photoURL = url;
 
                         user.updateProfile({
-                            photoURL: userDetails.profilePhotoURL
+                            photoURL: userDetails.photoURL
                         });
 
                         db.collection('users').doc(this.state.user.userId).update(userDetails);
+                        this.setState({ updation: 'Successfully updated the bio and the profile photo.' })
+
                         console.log(url);
                     })
                 })
-            } 
-            
-            if(this.state.headerPhoto) {
-            console.log('Ashish');
-
-                const storageRef = file.ref('uploads/' + this.state.user.userId + '/profile/' + this.state.headerPhoto.name);
-                storageRef.put(this.state.headerPhoto).then(snap => {
+            } else if(userDetails.photoURL == '' || this.state.photo.length === 0) {
+                const storageRef = file.ref('uploads/' + this.state.user.userId + '/profile/' + this.state.headerPhoto[0].name);
+                storageRef.put(this.state.headerPhoto[0]).then(snap => {
                     console.log(snap);
                     snap.ref.getDownloadURL().then(url => {
                         userDetails.headerPhotoURL = url;
                         db.collection('users').doc(this.state.user.userId).update(userDetails);
+                        this.setState({ updation: 'Successfully updated the bio and the header photo.' })
 
-                        // userDetails.headerPhotoURL = url;
+
                         console.log(url);
                     })
                 })
-            }
+            } else {
+                const storageRef1 = file.ref('uploads/' + this.state.user.userId + '/profile/' + this.state.photo[0].name);
+                storageRef1.put(this.state.photo[0]).then(snap => {
+                    console.log(snap);
+                    snap.ref.getDownloadURL().then(url => {
+                        userDetails.photoURL = url;
 
-        } else {
-            console.log(userDetails);
-            db.collection('users').doc(this.state.user.userId).update(userDetails);
+                        user.updateProfile({
+                            photoURL: userDetails.photoURL
+                        });
+
+                        db.collection('users').doc(this.state.user.userId).update(userDetails);
+                    })
+                })
+
+                const storageRef2 = file.ref('uploads/' + this.state.user.userId + '/profile/' + this.state.headerPhoto[0].name);
+                storageRef2.put(this.state.headerPhoto[0]).then(snap => {
+                    console.log(snap);
+                    snap.ref.getDownloadURL().then(url => {
+                        userDetails.headerPhotoURL = url;
+                        db.collection('users').doc(this.state.user.userId).update(userDetails);
+                    })
+                })
+
+                this.setState({ updation: 'Successfully updated the user details' });
+            }
         }
 
         console.log('Success, ', user);
     }
 
         render() {
-
-            // const { name, username, CreatedAt, Followers, Following, userPhoto } = this.props
     
             return (
                 <div>
-                    {/* <UserProfileWithTweets /> */}
 
                     <SettingsProfileModal
                         show={this.state.show}
                         handleClose={this.hideModal}
                         changeUserDetail={this.settingUserDetail}
                         path={this.state.path}
+                        updateMessage={this.state.updation}
                     >
                         <div className="edit-page-header-image">
                             <input

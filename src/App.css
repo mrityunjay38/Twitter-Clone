@@ -232,7 +232,7 @@ h5 {
 .edit-page-header-image {
     margin: 1rem;
     background: grey;
-    height: 12rem;
+    height: 15rem;
     display: flex;
     flex-direction: column;
     justify-content: center;
@@ -242,6 +242,19 @@ h5 {
 .edit-page-header-image input {
     opacity: 0;
     cursor: pointer;
+    position: absolute;
+    z-index: 1;
+}
+
+.edit-page-header-image .svg-container {
+    position: absolute;
+    z-index: 2;
+}
+
+.edit-page-header-image img {
+    width: 100%;
+    position: relative;
+    height: 15rem;
 }
 
 .svg-container {
@@ -253,12 +266,12 @@ h5 {
 
 .edit-page-svg-container svg, .edit-page-profile-image svg {
     width: 1.5rem;
-    opacity: 0.6;
+    opacity: 0.8;
 }
 
 .edit-page-profile-image {
     height: 10rem;
-    background: lightgrey;
+    background: grey;
     width: 10rem;
     margin: 1rem 0rem 0rem 2rem;
     position: relative;
@@ -271,9 +284,28 @@ h5 {
     justify-content: center;
 }
 
+.edit-page-profile-image .svg-container {
+    position: absolute;
+    z-index: 2;
+}
+
 .edit-page-profile-image input {
     opacity: 0;
     cursor: pointer;
+    position: absolute;
+    z-index: 1;
+}
+
+.edit-page-svg-container:hover {
+    background: lightgrey;
+    opacity: 0.7;
+}
+
+.edit-page-profile-image img {
+    width: 100%;
+    position: absolute;
+    height: 10rem;
+    border-radius: 50%;
 }
 
 .edit-page-bio-textarea {
@@ -299,6 +331,7 @@ h5 {
     border: none;
     border: 0.1rem solid;
     border-radius: 1rem;
+    outline: 0;
 }
 
 .edit-profile-save-btn:hover {

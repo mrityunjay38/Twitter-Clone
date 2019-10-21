@@ -24,7 +24,7 @@ export class UserInfo extends Component {
             <div>
                 <div className="user-profile-edit-tab-container">
                     <div className="profile-pic-edit-tab-container">
-                        <img alt="User Profile Pic" src={user.profilePhotoURL} />
+                        <img alt="User Profile Pic" src={user.photoURL} />
                             <Link to={`/settings/${user.username}/profile`}>
                                 <button className="btn edit-profile-btn direct-to-pop-up-btn">Edit Profile</button>
                             </Link>
@@ -33,6 +33,9 @@ export class UserInfo extends Component {
                 <div className="user-details-area">
                     <h3 className="user-name-on-profile-page">{user.name}</h3>
                     <p className="users-choosen-name-as-username">@{user.username}</p>
+                    <div style={{ color: 'white' }}>
+                        <p>{user.bio}</p>
+                    </div>
                     <div className="joining-our-app-date-with-little-calender">
                         <svg viewBox="0 0 24 24" style={{ blockSize: '1rem' }}>
                             <g>
