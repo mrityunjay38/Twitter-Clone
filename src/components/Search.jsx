@@ -29,7 +29,7 @@ export default class Search extends Component {
     e.preventDefault();
     let escapeChar = "";
     escapeChar = escapeChar + e.target.value;
-    escapeChar = escapeChar.replace(/[/\\?^.|)(}{'"`><]/g, "");
+    escapeChar = escapeChar.replace(/[/\\?^.|]/g, "");
     console.log(escapeChar);
     if (e.target.value !== ("" || "/" || "\\" || "?" || "^" || "." || "|") && escapeChar !== "") {
       let foundUsers = this.state.users.filter(user => {
