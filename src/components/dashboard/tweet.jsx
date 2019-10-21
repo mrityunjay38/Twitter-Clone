@@ -1,6 +1,6 @@
 import React, { Component } from "react";
-import firebase from 'firebase/app';
-import 'firebase/firestore';
+import firebase from "firebase/app";
+import "firebase/firestore";
 
 export default class Tweet extends Component {
   state = {
@@ -10,6 +10,8 @@ export default class Tweet extends Component {
   };
 
   handleChange = e => {
+    // let txt = e.target.value.replace(/</g,'&lt;').replace(/>/g,'&gt;');
+    // console.log(txt);
     this.setState({
       text: e.target.value
     });
@@ -33,11 +35,11 @@ export default class Tweet extends Component {
       uid: this.props.user.userId,
       text: this.state.text,
       img: this.state.imgUrl,
-      is_retweet : false,
+      is_retweet: false,
       isReply: false,
       reply_count: 0,
       retweet_count: 0,
-      likes : 0,
+      likes: 0,
       time: firebase.firestore.Timestamp.fromDate(new Date())
     };
 
@@ -63,7 +65,7 @@ export default class Tweet extends Component {
     return (
       <div className="tweets-section">
         <div className="add-tweet">
-        <img className="profile-pic" src={this.props.user.photoURL}/>
+          <img className="profile-pic" src={this.props.user.photoURL} />
           <form onSubmit={this.newTweet}>
             <input
               value={this.state.text}
@@ -72,9 +74,9 @@ export default class Tweet extends Component {
               maxLength="140"
               placeholder="What's happening?"
             />
-            <img src={this.state.imgUrl} alt="Tweet image"/>
+            <img src={this.state.imgUrl} alt="Tweet image" />
             <div>
-              <input
+              <input accept="image/*"
                 onChange={this.handleImgUpload}
                 type="file"
                 name="imgUpload"
