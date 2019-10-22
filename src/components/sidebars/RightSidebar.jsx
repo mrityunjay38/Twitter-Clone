@@ -13,6 +13,7 @@ export default class RightSidebar extends Component {
         super(props);
         this.state = {
           users: [],
+          beforeFilteringUser: [],
           follow:{},
           userId:'',
           followers:[]
@@ -46,7 +47,7 @@ export default class RightSidebar extends Component {
               }
             }
             )
-            this.setState( { users: userArr} )
+            this.setState( { beforeFilteringUser: userArr} )
             this.filteringUsers();
           })
     
@@ -57,7 +58,7 @@ export default class RightSidebar extends Component {
            let userLimit = 4;
            let userList = this.state.users;
           //  for(let i = 0; userList.length;i++){
-            this.state.users.map(user => {
+            this.state.beforeFilteringUser.map(user => {
                 let isExist = false
                 this.state.followers.filter(follower => {
                   if(user.userId === follower.userId && follower.follower_id === this.state.userId){
