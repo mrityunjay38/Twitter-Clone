@@ -10,7 +10,9 @@ export default class RespondToTweet extends Component {
         user : {},
         key : "",
         retweetId: "",
-        clickCount: 0
+        clickCount: 0,
+        likesClickedCount : 0,
+        isRetweeted : false
     }
 
     componentDidMount () {
@@ -145,6 +147,111 @@ export default class RespondToTweet extends Component {
 
     }
 
+
+        // __________________________________End Adding Likes______________________________________________//
+        likes = () => {
+            this.setState({
+                tweet : this.props.tweet,
+                likesClickedCount : this.state.likesClickedCount + 1
+            }, () => {
+            this.addLikes(this.state.tweet);
+            });
+    }
+
+      addLikes = (tweet) => {
+          let currentLike = tweet.likes;
+        console.log("currentLike : ", currentLike)
+        const { likesClickedCount } = this.state;
+        const likeObj = {
+            tweetId : tweet.id,
+            userId : this.state.user.uid
+        }
+
+        let isLiked = false;
+        let likesCollectionId = "";
+
+        db.collection('likes').where('tweetId', '==', tweet.id).where('userId', '==', likeObj.userId).get().then( snap => {
+         if(snap.size > 0){
+                console.log('docs is not empty in likes collection');
+                isLiked = true;
+                likesCollectionId = snap.docs[0].id;
+                this.setState({
+                    isLiked : true
+                });
+            }
+            else{
+                this.setState({isLiked : false});
+            }
+
+            if(isLiked){
+               db.collection('likes').doc(likesCollectionId).delete();
+                if((tweet.likes -1) >= 0) {
+                    if((tweet.likes -1) === currentLike -1){
+                        tweet.likes -= 1;
+                        console.log("Sub likes : ", tweet.likes)
+                        db.collection('tweets').doc(tweet.id).update({
+                            likes : tweet.likes
+                        });
+                    } else {
+                        if((currentLike -1) >= 0) {
+                        tweet.likes = currentLike -1;
+                        } else {
+                            tweet.likes = 0;
+                        }
+                        console.log("Sub likes : ", tweet.likes)
+                        db.collection('tweets').doc(tweet.id).update({
+                            likes : tweet.likes
+                        });
+                    }
+                } else {
+                    tweet.likes = 0;
+                }
+               
+                tweet.styleClassName = "Icon Icon--heart Icon--medium";
+                if((likesClickedCount & 1) == 0){
+                    this.setState({
+                        key : Math.random()
+                    });
+                }
+            }
+            else if((likesClickedCount & 1) == 1 && isLiked == false) {
+                    db.collection('likes').add(likeObj).then( snap => {
+                        if((tweet.likes +1) === currentLike +1){
+                                tweet.likes += 1;
+                                console.log("Add likes : ", tweet.likes)
+
+                                tweet.styleClassName = "heart";
+                                db.collection('tweets').doc(tweet.id).update({
+                                    likes : tweet.likes
+                                });
+                                this.setState({
+                                    likeId : snap.id
+                                });
+                        } else {
+                            tweet.likes = currentLike +1;
+                            console.log("Add likes : ", tweet.likes)
+
+                            tweet.styleClassName = "heart";
+                            db.collection('tweets').doc(tweet.id).update({
+                                likes : tweet.likes
+                            });
+                            this.setState({
+                                likeId : snap.id
+                            });
+                        }
+                            if((likesClickedCount & 1) == 1){
+                                this.setState({
+                                    key : Math.random()
+                                });
+                            }
+                        });
+                    }
+    })
+}
+// __________________________________End Adding Likes______________________________________________//
+
+
+
     render(){
 
         const { reply_count, retweet_count, likes} = this.props.tweet;
@@ -161,7 +268,7 @@ export default class RespondToTweet extends Component {
             <span>{retweet_count}</span>
             </div>
             <div className={likes > 0 ? "hasLikes" : ""}>
-            <span  className={likes > 0 ? "Icon Icon--heartBadge Icon--medium" : "Icon Icon--heart Icon--medium"}/>
+            <span onClick={this.likes} className={likes > 0 ? "Icon Icon--heartBadge Icon--medium" : "Icon Icon--heart Icon--medium"}/>
             <span>{likes}</span>
             </div>
             </div>
