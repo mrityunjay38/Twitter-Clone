@@ -51,7 +51,8 @@ class UserProfileWithTweets extends Component {
           uid : user.uid,
           name : username[0],
           username: username[1]
-        }, isSignedIn: true
+        }, isSignedIn: true,
+        user : user
       });
     }
 
@@ -92,7 +93,7 @@ class UserProfileWithTweets extends Component {
 
     tweetIds.forEach(tweetId => {
       db.collection('tweets').doc(tweetId).get().then(doc => {
-        this.setState({ Likes: [doc.data(), ...this.state.LikedTweets] })
+        this.setState({ Likes: [doc.data(), ...this.state.Likes] })
       })
     })
 

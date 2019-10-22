@@ -21,6 +21,18 @@ article {
 
   .tweets-container {
     width: 80%;
+
+    .isRetweet {
+      display: flex;
+      color: lightblue;
+      padding-bottom: 1em;
+
+      .Icon {
+        padding-right: 0.5em;
+      }
+
+    }
+
   }
 
   .user-credentials {
@@ -47,5 +59,9 @@ article {
       border-radius: 10px;
     }
   }
+}
+
+[src=''] {
+  visibility: hidden;
 }
 

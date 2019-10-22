@@ -6,6 +6,8 @@ import uuid from 'uuid';
 import img from '../../img/twitter_icon.png';
 import OnBoardListItem from './OnBoardListItem';
 import { Link } from "react-router-dom";
+import db from "../../firebaseConfig/db";
+
 class OnBoard extends React.Component {
   constructor(props) {
     super(props);
@@ -13,27 +15,43 @@ class OnBoard extends React.Component {
       users: [],
       follow:{},
       userId:'',
-      followers:[]
-      
+      followers:[],
+      userLoggedIn : false
     };
     this.toggleFollow = this.toggleFollow.bind(this)
   }
+  
   componentDidMount() {
     
-      fire.auth().onAuthStateChanged(user => {
+      fire.auth().onAuthStateChanged( async (user) => {
         // let name = user.displayName.split('|')
-        this.setState({ isSignedIn: !!user ,userId : user.uid, name: "",db:fire.firestore()})
+        if(user){
+        this.setState({
+          userLoggedIn: true,
+          userId : user.uid,
+          name: ""
+          // db:fire.firestore()
+        })
+
+        
+
         // console.log(FetchFollowers.FetchFollowers())
-        FetchFollowers.FetchFollowers().then(data => {
+        await FetchFollowers.FetchFollowers().then(data => {
           this.setState({followers : data});  
        })
         this.getAllUser();
+      }
+      else {
+        if(this.state.userLoggedIn == false){
+          this.props.history.push('/');
+      }
+      }
       })
       
   }
   getAllUser(){
     let userArr = [];
-    this.state.db.collection("users")
+    db.collection("users")
       .get()
       .then(querySnapshot => { 
         querySnapshot.forEach(doc => {
@@ -85,11 +103,11 @@ class OnBoard extends React.Component {
       id:uuid.v4()   
     }
     if(!user.isFollowing) {
-      this.state.db.collection("followers")
+      db.collection("followers")
       .doc(follow.id)
       .set(follow)
       .then(() => {
-          this.state.db.collection("followers")
+          db.collection("followers")
           .where("follower_id","==", follow.follower_id)
           .where("userId","==", follow.userId)
           .get()

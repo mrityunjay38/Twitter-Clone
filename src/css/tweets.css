@@ -19,6 +19,14 @@ article .profile-pic {
 article .tweets-container {
   width: 80%;
 }
+article .tweets-container .isRetweet {
+  display: flex;
+  color: lightblue;
+  padding-bottom: 1em;
+}
+article .tweets-container .isRetweet .Icon {
+  padding-right: 0.5em;
+}
 article .user-credentials {
   display: flex;
   color: white;
@@ -38,4 +46,7 @@ article .tweet-content {
 article .tweet-content img {
   width: 100%;
   border-radius: 10px;
+}
+[src=""] {
+  visibility: hidden;
 }

@@ -5,29 +5,36 @@ import fire from '../../../firebaseConfig/config'
 export class UserInfo extends Component {
 
 
-    // state = {
-    //     isSignedIn: false ,
-    //     // user: this.props.user
-    // }
+    state = {
+        userLoggedIn: false
+    }
 
-    // componentDidMount(){
-    //     fire.auth().onAuthStateChanged(user => {
-    //     this.setState({ isSignedIn: !!user, userID: user.uid })
-    //     })
-    // }
+    componentDidMount(){
+        fire.auth().onAuthStateChanged(user => {
+            this.setState({
+                userLoggedIn: true,
+                userID: user.uid
+            })
+        })
+    }
 
     render() {
 
         const { user, noOfFollowing, noOfFollowers, createdAt } = this.props;
+        const { userLoggedIn } = this.state;
 
         return (
             <div>
                 <div className="user-profile-edit-tab-container">
                     <div className="profile-pic-edit-tab-container">
-                        <img alt="User Profile Pic" src={user.photoURL} />
+                        <img src={user.photoURL}/>
+                        {
+                            userLoggedIn ? (
                             <Link to={`/settings/${user.username}/profile`}>
                                 <button className="btn edit-profile-btn direct-to-pop-up-btn">Edit Profile</button>
                             </Link>
+                            ) : null
+                        }
                     </div>
                 </div>
                 <div className="user-details-area">

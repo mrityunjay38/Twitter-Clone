@@ -2,11 +2,30 @@ import React, { Component } from "react";
 import RespondToTweet from "./RespondToTweet";
 import "../css/tweets.scss";
 import moment from "moment";
+import fire from "../firebaseConfig/config";
 import db from "../firebaseConfig/db";
 import { Link } from "react-router-dom";
 
 export default class Tweets extends Component {
+
+  state = {
+    userLoggedIn : false
+  }
+
+  componentDidMount () {
+    fire.auth().onAuthStateChanged(user => {
+      if(user){
+        this.setState({
+          userLoggedIn : true
+        });
+      }
+    });
+  }
+
   render() {
+
+    const { userLoggedIn } = this.state;
+
     console.log(this.props.user);
     return this.props.tweets.map(tweet => {
       // console.log(tweet.id);
@@ -42,10 +61,13 @@ export default class Tweets extends Component {
                 <img src={tweet.img} />
               </div>
             </Link>
+            {
+              userLoggedIn ? (
             <RespondToTweet
               tweet={tweet}
               openReplyModal={this.props.openReplyModal}
-            />
+            />) : null
+            }
           </div>
         </article>
       );

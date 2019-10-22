@@ -240,6 +240,7 @@ h5 {
 }
 
 .edit-page-header-image input {
+    padding: 8em 4em 8em 4em;
     opacity: 0;
     cursor: pointer;
     position: absolute;
@@ -248,7 +249,7 @@ h5 {
 
 .edit-page-header-image .svg-container {
     position: absolute;
-    z-index: 2;
+    z-index: 0;
 }
 
 .edit-page-header-image img {
@@ -286,10 +287,11 @@ h5 {
 
 .edit-page-profile-image .svg-container {
     position: absolute;
-    z-index: 2;
+    z-index: 0;
 }
 
 .edit-page-profile-image input {
+    padding: 5em 0 5em 0;
     opacity: 0;
     cursor: pointer;
     position: absolute;
