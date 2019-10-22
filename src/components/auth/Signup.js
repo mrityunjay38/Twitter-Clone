@@ -85,10 +85,10 @@ class Signup extends Component {
         <form>
           <h1>Create your Account</h1>
           <div>
-            <input value={this.state.name} onChange={this.handleChange} type="text" name="name" placeholder="Name"/>
-            <input value={this.state.username} onChange={this.handleChange} type="text" name="username" placeholder="Username" />
-            <input value={this.state.email} onChange={this.handleChange} type="email" name="email" placeholder="Email" />
-            <input value={this.state.password} onChange={this.handleChange} type="password" name="password" placeholder="Password" />
+            <input value={this.state.name} onChange={this.handleChange} type="text" name="name" placeholder="Name" required/>
+            <input value={this.state.username} onChange={this.handleChange} type="text" name="username" placeholder="Username" required/>
+            <input value={this.state.email} onChange={this.handleChange} type="email" name="email" placeholder="Email" required/>
+            <input value={this.state.password} onChange={this.handleChange} type="password" name="password" placeholder="Password" required/>
             <button onClick={this.signup} className="btn btn-signUp">Signup</button>
           </div>
           <p>{this.state.errorMessage}</p>

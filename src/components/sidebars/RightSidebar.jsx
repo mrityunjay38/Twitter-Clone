@@ -4,6 +4,7 @@ import Search from "../Search";
 import uuid from 'uuid';
 import RightSideBarListItem from './RightSideBarListItem';
 import fire from '../../firebaseConfig/config';
+import db from "../../firebaseConfig/db";
 import FetchFollowers from '../dashboard/FetchFollowers'
 import "../../css/onboard.css";
 
@@ -13,10 +14,10 @@ export default class RightSidebar extends Component {
         super(props);
         this.state = {
           users: [],
+          beforeFilteringUser: [],
           follow:{},
           userId:'',
           followers:[]
-          
         };
         this.toggleFollow = this.toggleFollow.bind(this)
       }
@@ -24,10 +25,8 @@ export default class RightSidebar extends Component {
         
           fire.auth().onAuthStateChanged(user => {
             // let name = user.displayName.split('|')
-            this.setState({ isSignedIn: !!user ,userId : user.uid, name: "",db:fire.firestore()})
-            FetchFollowers.FetchFollowers().then(data => {
-              this.setState({followers : data});  
-           })
+            this.setState({ isSignedIn: !!user ,userId : user.uid, name: ""})
+          
             this.getAllUser();
           })
           
@@ -46,18 +45,19 @@ export default class RightSidebar extends Component {
               }
             }
             )
-            this.setState( { users: userArr} )
+            this.setState( { beforeFilteringUser: userArr} )
             this.filteringUsers();
           })
     
       }
     
       filteringUsers(){
+        FetchFollowers.FetchFollowers().then(data => {
+          this.setState({followers : data});  
+       
            let userArr = [];
            let userLimit = 4;
-           let userList = this.state.users;
-          //  for(let i = 0; userList.length;i++){
-            this.state.users.map(user => {
+            this.state.beforeFilteringUser.map(user => {
                 let isExist = false
                 this.state.followers.filter(follower => {
                   if(user.userId === follower.userId && follower.follower_id === this.state.userId){
@@ -67,12 +67,10 @@ export default class RightSidebar extends Component {
                     if(!isExist){
                       userArr.push(user)
                     }
-                  // } else {
-                  //   break;
                   }
               })
-            // }
             this.setState({users : userArr});
+        })
       }
      
       toggleFollow(user) {
@@ -84,7 +82,7 @@ export default class RightSidebar extends Component {
           id:uuid.v4()   
         }
         if(!user.isFollowing) {
-          this.state.db.collection("followers")
+          db.collection("followers")
           .doc(follow.id)
           .set(follow)
           .then(() => {

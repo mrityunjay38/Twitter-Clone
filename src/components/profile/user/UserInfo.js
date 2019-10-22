@@ -1,6 +1,7 @@
 import React, { Component } from 'react'
 import { Link } from "react-router-dom"
 import fire from '../../../firebaseConfig/config'
+import defaultProfile from "../../../img/default-profile-large.png";
 
 export class UserInfo extends Component {
 
@@ -27,7 +28,7 @@ export class UserInfo extends Component {
             <div>
                 <div className="user-profile-edit-tab-container">
                     <div className="profile-pic-edit-tab-container">
-                        <img src={user.photoURL}/>
+                        <img src={user.photoURL == null ? defaultProfile : user.photoURL}/>
                         {
                             userLoggedIn ? (
                             <Link to={`/settings/${user.username}/profile`}>
