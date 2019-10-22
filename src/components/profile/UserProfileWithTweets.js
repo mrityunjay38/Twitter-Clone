@@ -30,7 +30,8 @@ class UserProfileWithTweets extends Component {
       allTweets: [],
       TweetsAndReplies: [],
       Media: [],
-      Likes: []
+      Likes: [],
+      // urlPart : this.props
     };
 
     fire.auth().onAuthStateChanged(user => {

@@ -123,7 +123,10 @@ class DisplayTweets extends Component {
                     </div>
                     <div className="single-tweet-content">
                         <p>{text}</p>
-                        <img src={img} />
+                        <div style={{padding: '1rem'}}>
+                            <img src={img} style={{width: '100%', borderRadius: '1rem'}}/>
+
+                        </div>
                         <p>{moment(time).fromNow()}</p>
                     </div>
                     <div className="single-tweet-counts">
