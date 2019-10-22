@@ -92,7 +92,7 @@ class UserProfileWithTweets extends Component {
 
     tweetIds.forEach(tweetId => {
       db.collection('tweets').doc(tweetId).get().then(doc => {
-        this.setState({ Likes: [doc.data(), ...this.state.LikedTweets] })
+        this.setState({ Likes: [doc.data(), ...this.state.Likes] })
       })
     })
 
