@@ -12,6 +12,7 @@
     "react-router-dom": "^5.1.2",
     "react-scripts": "3.2.0"
   },
+  "homepage": "https://mrityunjay.1.gitlab.io/twitter",
   "scripts": {
     "start": "react-scripts start",
     "build": "react-scripts build",
