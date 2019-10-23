@@ -387,3 +387,7 @@ h5 {
     padding-right: 1rem;
     font-variant-caps: all-petite-caps;
 }
+
+body::-webkit-scrollbar {
+    display: none;
+  }

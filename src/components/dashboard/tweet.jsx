@@ -67,7 +67,7 @@ export default class Tweet extends Component {
         <div className="add-tweet">
           <img className="profile-pic" src={this.props.user.photoURL} />
           <form onSubmit={this.newTweet}>
-            <input
+            <input required minLength="1"
               value={this.state.text}
               onChange={this.handleChange}
               type="text"
