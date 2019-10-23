@@ -23,6 +23,7 @@ class UserArea extends Component {
                 )}
                 <HeaderImage headerImage={user.headerPhotoURL}/>  
                 <UserInfo 
+                    match={this.props.match}
                     handleChange={this.props.handleChange}
                     isSignedIn={this.props.isSignedIn}
                     createdAt={createdAt}

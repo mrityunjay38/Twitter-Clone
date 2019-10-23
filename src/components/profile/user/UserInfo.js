@@ -6,18 +6,40 @@ import defaultProfile from "../../../img/default-profile-large.png";
 export class UserInfo extends Component {
 
 
+    // state = {
+    //     userLoggedIn: false
+    // }
+
+    // componentDidMount(){
+    //     fire.auth().onAuthStateChanged(user => {
+    //         this.setState({
+    //             userLoggedIn: true,
+    //             userID: user.uid
+    //         })
+    //     })
+    // }
+
+
     state = {
-        userLoggedIn: false
+        isSignedIn: true 
+        // user: this.props.user
     }
 
     componentDidMount(){
         fire.auth().onAuthStateChanged(user => {
-            this.setState({
-                userLoggedIn: true,
-                userID: user.uid
-            })
+            if(user) {
+                let loggedInUsername = user.displayName.split('|')[1];
+                let viewingUsername = this.props.match.params.id;
+                if(loggedInUsername !== viewingUsername) {
+                    this.setState({ isSignedIn: !this.state.isSignedIn, userID: user.uid })
+                }
+            } else {
+                this.setState({ isSignedIn: !this.state.isSignedIn });
+            }
+            
         })
     }
+
 
     render() {
 
@@ -30,7 +52,7 @@ export class UserInfo extends Component {
                     <div className="profile-pic-edit-tab-container">
                         <img src={user.photoURL == null ? defaultProfile : user.photoURL}/>
                         {
-                            userLoggedIn ? (
+                            this.state.isSignedIn ? (
                             <Link to={`/settings/${user.username}/profile`}>
                                 <button className="btn edit-profile-btn direct-to-pop-up-btn">Edit Profile</button>
                             </Link>

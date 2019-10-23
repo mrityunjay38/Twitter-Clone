@@ -189,7 +189,7 @@ class UserProfileWithTweets extends Component {
           </div>
           <div className="middle">
             <div>
-            <UserArea 
+            <UserArea match={this.props.match}
               state={this.state} 
               isSignedIn={this.state.isSignedIn}
               handleChange={this.handleChange}
