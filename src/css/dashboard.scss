@@ -127,3 +127,7 @@
 [src=""] {
   visibility: hidden;
 }
+
+.middle::-webkit-scrollbar {
+  display: none;
+}
