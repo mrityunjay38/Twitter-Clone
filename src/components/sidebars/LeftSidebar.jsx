@@ -26,7 +26,9 @@ export default class LeftSideBar extends Component {
         
         return (
             <div>
+            <Link to="/">
             <span className="Icon Icon--bird Icon--extraLarge"/>
+            </Link>
             <Link className="home-btn" to="/dashboard"><span className="Icon Icon--homeFilled Icon--extraLarge"/><span>Home</span></Link>
             <Link to={`/${this.props.username}`}><span className="Icon Icon--follower Icon--extraLarge"/><span>Profile</span></Link>
             {
